@@ -9,13 +9,5 @@
  *************************************************************************************/
 
 class EmailTemplates_Field_Model extends Vtiger_Field_Model {
-    
-    /**
-	 * Function to check if the field is named field of the module
-	 * @return <Boolean> - True/False
-	 */
-	public function isNameField() {
-        return false;
-    }
 	
 }

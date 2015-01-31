@@ -29,8 +29,4 @@ class Settings_CustomerPortal_Save_Action extends Settings_Vtiger_Index_Action {
         $responce->setResult(array('success'=>true));
         $responce->emit();
 	}
-        
-        public function validateRequest(Vtiger_Request $request) { 
-            $request->validateWriteAccess(); 
-        } 
 }
