@@ -2,6 +2,18 @@
 
   require_once '../../init.php';
 
+  // vTiger libraries
+  include_once 'include/Webservices/Relation.php';
+  include_once 'vtlib/Vtiger/Module.php';
+  include_once 'includes/main/WebUI.php';
+  require_once 'modules/Users/Users.php';
+  require_once 'include/logging.php';
+  require_once 'modules/Users/models/Module.php';
+
+  // Maestrano libraries
+  require_once 'maestrano/app/sso/MnoSsoUser.php';
+  require_once 'maestrano/connec/init.php';
+
   # Reset session
   try {
     session_unset();

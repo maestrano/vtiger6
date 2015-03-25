@@ -84,7 +84,7 @@ $dbconfigoption['ssl'] = false;
 
 $host_name = $dbconfig['db_hostname'];
 
-$site_URL = 'http://vtiger6.io/';
+$site_URL = 'http://vtiger6.app.dev.maestrano.io';
 
 // root directory path
 $root_directory = '/home/bruno/Workspace/vtiger6/';

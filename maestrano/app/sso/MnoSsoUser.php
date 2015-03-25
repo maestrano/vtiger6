@@ -76,6 +76,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
 
       // Set session
       $this->session['authenticated_user_id'] = $this->local_id;
+      Vtiger_Session::set('AUTHUSERID', $this->local_id);
       $this->session['app_unique_key'] = $this->app_unique_key;
       $this->session['authenticated_user_language'] = $lang;
 

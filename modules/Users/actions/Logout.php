@@ -23,7 +23,12 @@ class Users_Logout_Action extends Vtiger_Action_Controller {
 		$moduleModel = Users_Module_Model::getInstance($moduleName);
 		$moduleModel->saveLogoutHistory();
 		//End
-		
-		header ('Location: index.php');
+
+    // Hook:Maestrano
+    if (Maestrano::sso()->isSsoEnabled()) {
+      header('Location: ' . Maestrano::sso()->getLogoutUrl());
+    } else {
+      header('Location: index.php');
+    }
 	}
 }

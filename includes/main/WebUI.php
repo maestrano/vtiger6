@@ -139,7 +139,17 @@ class Vtiger_WebUI extends Vtiger_EntryPoint {
 						$module = 'Home'; $qualifiedModuleName = 'Home'; $view = 'DashBoard';
 					}
 				} else {
-					$module = 'Users'; $qualifiedModuleName = 'Settings:Users'; $view = 'Login';
+					// Maestrano Hook
+          if(Maestrano::sso()->isSsoEnabled()) {
+            $mnoSession = new Maestrano_Sso_Session($_SESSION);
+            // Check session validity and trigger SSO if not
+            if (!$mnoSession->isValid()) {
+              header('Location: ' . Maestrano::sso()->getInitPath());
+              exit;
+            }
+          } else {
+					 $module = 'Users'; $qualifiedModuleName = 'Settings:Users'; $view = 'Login';
+          }
 				}
 				$request->set('module', $module);
 				$request->set('view', $view);

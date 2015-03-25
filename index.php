@@ -7,6 +7,7 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ************************************************************************************/
+if (!isset($_SESSION)) session_start();
 
 //Overrides GetRelatedList : used to get related query
 //TODO : Eliminate below hacking solution
@@ -18,7 +19,6 @@ include_once 'includes/main/WebUI.php';
 // Load Maestrano
 include_once 'maestrano/init.php';
 if(Maestrano::sso()->isSsoEnabled()) {
-  if (!isset($_SESSION)) session_start();
   $mnoSession = new Maestrano_Sso_Session($_SESSION);
   // Check session validity and trigger SSO if not
   if (!$mnoSession->isValid()) {
