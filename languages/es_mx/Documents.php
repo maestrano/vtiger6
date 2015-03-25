@@ -1,22 +1,25 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'SINGLE_Documents'             => 'Documento'                   , 
-	'Documents'                    => 'Documents'                   , // TODO: Review
+	'Documents'                    => 'Documentos'                   ,
 	'LBL_ADD_RECORD'               => 'Agregar Documento'           , 
 	'LBL_RECORDS_LIST'             => 'Lista de Documentos'         , 
 	'LBL_NOTE_INFORMATION'         => 'Información Básica'        , 
 	'LBL_FILE_INFORMATION'         => 'Información del Archivo'    , 
 	'LBL_DESCRIPTION'              => 'Descripción'                , 
 	'Title'                        => 'Asunto'                      , 
-	'File Name'                    => 'Nombre Archivo'              , 
+	'File Name'                    => 'Nombre del Archivo'              , 
 	'Note'                         => 'Notas'                       , 
 	'File Type'                    => 'Tipo Archivo'                , 
 	'File Size'                    => 'Tamaño'                     , 

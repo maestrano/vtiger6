@@ -21,5 +21,5 @@ $languageStrings = array(
 	'LBL_SELECT_FIELD_TYPE' => 'Selecciona Tipo de Campo',
 
 	'LBL_EMAIL_TEMPLATE_DESCRIPTION'=>'Administrar plantillas de E-Mail',
-	
+
 );

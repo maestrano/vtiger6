@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Potentials'                   => 'Oportunidades'               , 
@@ -35,11 +38,11 @@ $languageStrings = array(
 	'Negotiation/Review'           => 'Negociando/Revisando'        , 
 	'Closed Won'                   => 'Cerrada-Ganada'              , 
 	'Closed Lost'                  => 'Cerrada-Perdida'             , 
-	'--None--'                     => '-----'                       , 
+	'--None--'                     => '--'                       , 
 	'Existing Business'            => 'Negocio Existente'           , 
 	'New Business'                 => 'Nuevo Negocio'               , 
 	'LBL_EXPECTED_CLOSE_DATE_ON'   => 'Fecha esperada de cierre'    , 
-	'LBL_RELATED_CONTACTS'         => 'Related Contacts'            , // TODO: Review
-	'LBL_RELATED_PRODUCTS'         => 'Related Products'            , // TODO: Review
-        'Potentials Won'               =>'Potenciales Ganados',
+	'LBL_RELATED_CONTACTS'         => 'Contactos relacionados'            , 
+	'LBL_RELATED_PRODUCTS'         => 'Productos Relacionados'            , 
+        'Potentials Won'               =>'Oportunidades Ganadass',
 );

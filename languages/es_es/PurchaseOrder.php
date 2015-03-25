@@ -31,7 +31,16 @@ $languageStrings = array(
 	'LBL_COPY_BILLING_ADDRESS' => 'Copiar Dirección Facturación',
 	'LBL_PAID' => 'Pagado',
 	'LBL_BALANCE' => 'Balance',
-        'LBL_LIST_PRICE'               => 'Precio de lista',
-        'List Price'                   => 'Precio de lista',
+	'LBL_LIST_PRICE'               => 'Precio Venta',
+	'List Price'                   => 'Precio Venta',
         'LBL_COPY_COMPANY_ADDRESS' => 'Copiar Dirección de la empresa',
+	//Translation for product not found
+	'LBL_THIS' => 'Este',
+	'LBL_IS_DELETED_FROM_THE_SYSTEM_PLEASE_REMOVE_OR_REPLACE_THIS_ITEM' => 'ha sido eliminado de la aplicación. Por favor, elimina o sustituye este artículo.',
+	'LBL_THIS_LINE_ITEM_IS_DELETED_FROM_THE_SYSTEM_PLEASE_REMOVE_THIS_LINE_ITEM' => 'Este artículo ha sido eliminado de la aplicación. Por favor, elimina o sustituye este artículo.',
+
+);
+
+$jsLanguageStrings = array(
+	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Por favor arregla la línea con artículo eliminado',
 );

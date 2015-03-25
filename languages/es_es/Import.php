@@ -77,4 +77,7 @@ Por favor, asegúrate de que el servidor de correo saliente y tu dirección de c
 	'LBL_DETAILS' => 'Detalles',
 	'skipped' => 'Registros ignorados',
 	'failed' => 'Registros erróneos',
+        'Skip'                         =>'Skip',
+        'Overwrite'                    =>'Sobrescribir',
+        'Merge'                        =>'FusiÃ³n',
 );

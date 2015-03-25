@@ -1,18 +1,21 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'LBL_IMPORT_STEP_1'            => 'Paso 1'                      , 
 	'LBL_IMPORT_STEP_1_DESCRIPTION' => 'Selecciona Archivo'          , 
-	'LBL_IMPORT_SUPPORTED_FILE_TYPES' => 'Formato(s) aceptados: .CSV, .VCF', 
+	'LBL_IMPORT_SUPPORTED_FILE_TYPES' => 'Formatos aceptados: .CSV, .VCF', 
 	'LBL_IMPORT_STEP_2'            => 'Paso 2'                      , 
-	'LBL_IMPORT_STEP_2_DESCRIPTION' => 'Especifica Formato'          , 
+	'LBL_IMPORT_STEP_2_DESCRIPTION' => 'Define el Formato'          , 
 	'LBL_FILE_TYPE'                => 'Tipo Archivo'                , 
 	'LBL_CHARACTER_ENCODING'       => 'Codificación de caracteres' , 
 	'LBL_DELIMITER'                => 'Delimitador'                 , 
@@ -29,7 +32,7 @@ $languageStrings = array(
 	'LBL_IMPORT_STEP_4_DESCRIPTION' => 'Asigna las Columnas a Campos del Módulo', 
 	'LBL_FILE_COLUMN_HEADER'       => 'Encabezado'                  , 
 	'LBL_ROW_1'                    => 'Fila 1'                      , 
-	'LBL_CRM_FIELDS'               => 'Campos CRM'                  , 
+	'LBL_CRM_FIELDS'               => 'Campos del CRM'                  , 
 	'LBL_DEFAULT_VALUE'            => 'Valor por defecto'           , 
 	'LBL_SAVE_AS_CUSTOM_MAPPING'   => 'Guardar como asignación personalizada', 
 	'LBL_IMPORT_BUTTON_LABEL'      => 'Importar'                    , 
@@ -37,7 +40,7 @@ $languageStrings = array(
 	'LBL_TOTAL_RECORDS_IMPORTED'   => 'Número total de registros importados', 
 	'LBL_NUMBER_OF_RECORDS_CREATED' => 'Número de registros creados', 
 	'LBL_NUMBER_OF_RECORDS_UPDATED' => 'Número de registros sobreescritos', 
-	'LBL_NUMBER_OF_RECORDS_SKIPPED' => 'Número de registros descartados', 
+	'LBL_NUMBER_OF_RECORDS_SKIPPED' => 'Número de registros Ignorados', 
 	'LBL_NUMBER_OF_RECORDS_MERGED' => 'Número total de registros combinados', 
 	'LBL_TOTAL_RECORDS_FAILED'     => 'Número total de registros descartados', 
 	'LBL_IMPORT_MORE'              => 'Importar Más'               , 
@@ -58,16 +61,19 @@ $languageStrings = array(
 	'ERR_IMPORT_INTERRUPTED'       => 'La importación actual ha sido interrumpida.', 
 	'ERR_FAILED_TO_LOCK_MODULE'    => 'No se ha podido bloquear el módulo para la importación. Inténtalo de nuevo más tarde.', 
 	'LBL_SELECT_SAVED_MAPPING'     => 'Seleccionar Asignación guardada', 
-	'LBL_IMPORT_ERROR_LARGE_FILE'  => 'Import Error Large file '    , // TODO: Review
-	'LBL_FILE_UPLOAD_FAILED'       => 'File Upload Failed'          , // TODO: Review
-	'LBL_IMPORT_CHANGE_UPLOAD_SIZE' => 'Import Change Upload Size'   , // TODO: Review
-	'LBL_IMPORT_DIRECTORY_NOT_WRITABLE' => 'Import Directory is not writable', // TODO: Review
-	'LBL_IMPORT_FILE_COPY_FAILED'  => 'Import File copy failed'     , // TODO: Review
-	'LBL_INVALID_FILE'             => 'Invalid File'                , // TODO: Review
-	'LBL_NO_ROWS_FOUND'            => 'No rows found'               , // TODO: Review
-	'LBL_SCHEDULED_IMPORT_DETAILS' => 'Your import has been scheduled and will start within 15 minutes. You will receive an email after import is completed.  <br> <br>
-										Please make sure that the Outgoing server and your email address is configured to receive email notification', // TODO: Review
-	'LBL_DETAILS'                  => 'Details'                     , // TODO: Review
-	'skipped'                      => 'Skipped Records'             , // TODO: Review
-	'failed'                       => 'Failed Records'              , // TODO: Review
+	'LBL_IMPORT_ERROR_LARGE_FILE'  => 'Error al importar el archivo por tamaño excedido'    , 
+	'LBL_FILE_UPLOAD_FAILED'       => 'Fallo carga de archivo'          , 
+	'LBL_IMPORT_CHANGE_UPLOAD_SIZE' => 'Cambia el tamaño de archivo de carga permitido'   , 
+	'LBL_IMPORT_DIRECTORY_NOT_WRITABLE' => 'Directorio de importación no escribible', 
+	'LBL_IMPORT_FILE_COPY_FAILED'  => 'Falló la Copia de archivo importado'     , 
+	'LBL_INVALID_FILE'             => 'Archivo inválido'                , 
+	'LBL_NO_ROWS_FOUND'            => 'No se encontraron registros'               , 
+	'LBL_SCHEDULED_IMPORT_DETAILS' => 'La importación ha sido programada e iniciará conforme el Programador de Eventos. Recibirás un correo una vez que la importación haya finalizado. <br> <br>
+										Asegúrate que el servidor de correo de salida y tu dirección de correo tengan la configuración correcta para recibir la notificación.', 
+	'LBL_DETAILS'                  => 'Detalles'                     , 
+	'skipped'                      => 'Registros Ignorados'             , 
+	'failed'                       => 'Registros Descartados'              , 
+        'Skip'                         =>'Ignorar',
+        'Overwrite'                    =>'Sobrescribir',
+        'Merge'                        =>'Combinar',
 );

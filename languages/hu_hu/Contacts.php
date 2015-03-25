@@ -59,8 +59,8 @@ $languageStrings = array(
 );
 
 $jsLanguageStrings = array(
-	'LBL_SYNC_BUTTON'              => 'Synchronize Now'             , // TODO: Review
-	'LBL_SYNCRONIZING'             => 'Synchronizing....'           , // TODO: Review
-	'LBL_NOT_SYNCRONIZED'          => 'You have not synchronized yet', // TODO: Review
-	'LBL_FIELD_MAPPING'            => 'Field Mapping'               , // TODO: Review
+	'LBL_SYNC_BUTTON'              => 'Szinkronizálás most'         ,
+	'LBL_SYNCRONIZING'             => 'Szinkronizálás....'          ,
+	'LBL_NOT_SYNCRONIZED'          => 'Még nincs szinkronizálva'    ,
+	'LBL_FIELD_MAPPING'            => 'Mező hozzárendelés'          ,
 );

@@ -35,7 +35,16 @@ $languageStrings = array(
 	'LBL_SEND_MAIL_PDF' => 'Enviar Email con PDF',
 	'LBL_RECEIVED' => 'Recibido',
 	'LBL_BALANCE' => 'Balance',
-	'LBL_NOT_A_BUNDLE' => 'No es un Bundle',
+	'LBL_NOT_A_BUNDLE' => 'No es Compuesto',
 	'LBL_SUB_PRODUCTS'	=> 'Sub Productos',
 	'LBL_ACTION'	=> 'Acción',
+	//Translation for product not found
+	'LBL_THIS' => 'Este',
+	'LBL_IS_DELETED_FROM_THE_SYSTEM_PLEASE_REMOVE_OR_REPLACE_THIS_ITEM' => 'ha sido eliminado de la aplicación. Por favor, elimina o sustituye este artículo.',
+	'LBL_THIS_LINE_ITEM_IS_DELETED_FROM_THE_SYSTEM_PLEASE_REMOVE_THIS_LINE_ITEM' => 'Este artículo ha sido eliminado de la aplicación. Por favor, elimina o sustituye este artículo.',
+
+);
+
+$jsLanguageStrings = array(
+	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Por favor arregla la línea con artículo eliminado',
 );

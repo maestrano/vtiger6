@@ -1,26 +1,25 @@
 <?php
-/*+***********************************************************************************
+/*+**********************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
- *************************************************************************************/
+ ************************************************************************************/
 $languageStrings = array(
-	'isactive'                     => 'Aktív'                       ,
-	'LBL_ADD_CONFIGURATION'        => 'Új konfiguráció'             ,
-	'LBL_ADD_RECORD'               => 'Új konfiguráció'             ,
-	'LBL_EDIT_CONFIGURATION'       => 'Konfiguráció szerkesztése'   ,
-	'LBL_SELECT_ONE'               => 'Válasszon egyet'             ,
-	'password'                     => 'Jelszó'                      ,
-	'providertype'                 => 'Szolgáltató'                 ,
-	'SMSNotifier'                  => 'SMS szolgáltató konfiguráció',
-	'username'                     => 'Felhasználónév'              ,
+	'LBL_ADD_RECORD'               => 'New Configuration'           , // TODO: Review
+	'SMSNotifier'                  => 'SMS Provider Configuration'  , // TODO: Review
+	'LBL_ADD_CONFIGURATION'        => 'New Configuration'           , // TODO: Review
+	'LBL_EDIT_CONFIGURATION'       => 'Edit Configuration'          , // TODO: Review
+	'LBL_SELECT_ONE'               => 'Select One'                  , // TODO: Review
+	'providertype'                 => 'Provider'                    , // TODO: Review
+	'isactive'                     => 'Active'                      , // TODO: Review
+	'username'                     => 'User Name'                   , // TODO: Review
+	'password'                     => 'Password'                    , // TODO: Review
 );
-
 $jsLanguageStrings = array(
-	'JS_CONFIGURATION_SAVED'       => 'SMS szolgáltató konfiguráció mentve',
-	'JS_RECORD_DELETED_SUCCESSFULLY' => 'SMS szolgáltató sikeresen törölve',
-	'LBL_DELETE_CONFIRMATION'      => 'Biztos ön abban, hogy törölni akarja ezt az SMS szolgáltató konfigurációt?',
+	'LBL_DELETE_CONFIRMATION'      => 'Are you sure, you want to delete this SMSNotifier Configuration', // TODO: Review
+	'JS_RECORD_DELETED_SUCCESSFULLY' => 'SMS Provider Deleted Successfully', // TODO: Review
+	'JS_CONFIGURATION_SAVED'       => 'SMS Provider Configurations saved', // TODO: Review
 );

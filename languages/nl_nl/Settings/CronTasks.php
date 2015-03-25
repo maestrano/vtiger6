@@ -6,18 +6,28 @@
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ * *******************************************************************************
+ * Vicus eBusiness Solutions (www.vicus.nl) Version Control
+ * Dutch language pack for vtiger CRM version 6.x
+ * 
+ * @package   NL-Dutch
+ * @author    $Author: luuk $
+ * @version   CVS: $Revision: 1.3 $ $Date: 2014/09/07 21:06:45 $
+ * @source    $Source: /var/lib/cvs/vtiger600/languages/nl_nl/Settings/CronTasks.php,v $
+ * @copyright 2005-2014 Vicus eBusiness Solutions B.V. <info@.vicus.nl>
+ * @link      http://www.vicus.nl
  ************************************************************************************/
 $languageStrings = array(
-	'CronTasks'                    => 'Scheduler'                   , // TODO: Review
-	'Id'                           => 'Id'                          , // TODO: Review
-	'Cron Job'                     => 'Cron Job'                    , // TODO: Review
-	'Frequency'                    => 'Frequency'                   , // TODO: Review
-	'Status'                       => 'Status'                      , // TODO: Review
-	'Last Start'                   => 'Last scan started'           , // TODO: Review
-	'Last End'                     => 'Last scan ended'             , // TODO: Review
-	'Sequence'                     => 'Sequence'                    , // TODO: Review
-	'LBL_COMPLETED'                => 'Completed'                   , // TODO: Review
-	'LBL_RUNNING'                  => 'Running'                     , // TODO: Review
-	'LBL_ACTIVE'                   => 'Active'                      , // TODO: Review
-	'LBL_INACTIVE'                 => 'In Active'                   , // TODO: Review
+    'CronTasks'                    => 'Crontaak planner'            ,
+    'Id'                           => 'Id'                          ,
+    'Cron Job'                     => 'Crontaak'                    ,
+    'Frequency'                    => 'Frequency'                   ,
+    'Status'                       => 'Status'                      ,
+    'Last Start'                   => 'Start Laatste Scan'          ,
+    'Last End'                     => 'Eind Laatste Scan'           ,
+    'Sequence'                     => 'Volgorde'                    ,
+    'LBL_COMPLETED'                => 'Afgerond'                    ,
+    'LBL_RUNNING'                  => 'Loopt'                       ,
+    'LBL_ACTIVE'                   => 'Actief'                      ,
+    'LBL_INACTIVE'                 => 'Inactief'                    ,
 );

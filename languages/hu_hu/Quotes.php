@@ -22,10 +22,14 @@ $languageStrings = array(
 	'Quote Stage'                  => 'Ajánlati fázis'               , 
 	'Rejected'                     => 'Elutasított'                  , 
 	'SINGLE_Quotes'                => 'Ajánlat'                      , 
-	'Valid Till'                   => 'Érvényes eddig: '             ,
-        'Open Quotes'                  => 'Nyitott idézetek',
+	'Valid Till'                   => 'Érvényes eddig: '             , 
+    'Open Quotes'                  => 'Nyitott ajánlatok'            ,
+    'VAT'      					   => 'Áfa'                          , 
+    'Service'  					   => 'Szolgáltatás'                 , 
+    'Sales'    					   => 'Értékesítés'                  ,
 );
 
 $jsLanguageStrings = array(
-	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Please remove line item that is deleted',
+	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Kérjük, hogy távolítsa el a sorból a törölt tételeket',
+	'JS_PLEASE_ENABLE_PRODUCT_OR_SERVICE_MODULE' => 'Kérjük, hogy engedélyezze a Termék vagy a Szolgáltatás modult',
 );

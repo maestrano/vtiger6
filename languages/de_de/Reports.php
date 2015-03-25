@@ -187,4 +187,5 @@ $languageStrings = array(
 $jsLanguageStrings = array(
 	'JS_DUPLICATE_RECORD'          => 'Duplicate Report'            ,
 	'JS_CALCULATION_LINE_ITEM_FIELDS_SELECTION_LIMITATION' => 'Limitation: Line Item fields(List Price, Discount & Quantity) can only be used when other calculation fields are not selected.',
+        'JS_NO_CHART_DATA_AVAILABLE' => 'Daten nicht verfügbar ist, überprüfen Sie bitte die gewählten Felder',
 );

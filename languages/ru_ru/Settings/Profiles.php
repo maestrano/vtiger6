@@ -38,6 +38,15 @@ $languageStrings = array(
 	'LBL_VIEW_ALL_DESC'            => 'Можно просматривать всю информацию о модули', 
 	'LBL_EDIT_ALL_DESC'            => 'Может редактировать всю информацию о модули', 
 	'LBL_DUPLICATES_EXIST'         => 'Дубликат профиля Существует'    , 
+    
+        'Import' => 'Импорт',
+        'Export' => 'Экспорт',
+	'Merge'  => 'Слияние',
+        'ConvertLead' => 'Преобразование свинец',
+        'DuplicatesHandling' => 'Дубликаты Обработка',
+        'ReceiveIncomingCalls' => 'Принимать входящие звонки',
+        'MakeOutgoingCalls' => 'Сделать исходящий телефонный звонок',
+        'Print' => 'Печать',
 );
 $jsLanguageStrings = array(
 	'JS_RECORD_DELETED_SUCCESSFULLY' => 'Профиль успешно удален', 

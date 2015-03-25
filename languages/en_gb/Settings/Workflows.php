@@ -11,6 +11,7 @@ $languageStrings = array(
 	'LBL_NEW'                      => 'New'                         , // TODO: Review
 	'LBL_WORKFLOW'                 => 'Workflow'                    , // TODO: Review
 	'LBL_CREATING_WORKFLOW'        => 'Creating WorkFlow'           , // TODO: Review
+	'LBL_EDITING_WORKFLOW'         => 'Editing Workflow'            ,
 	'LBL_NEXT'                     => 'Next'                        , // TODO: Review
 	'LBL_STEP_1'                   => 'Step 1'                      , // TODO: Review
 	'LBL_ENTER_BASIC_DETAILS_OF_THE_WORKFLOW' => 'Enter basic details of the Workflow', // TODO: Review
@@ -19,6 +20,7 @@ $languageStrings = array(
 	'ONCE'                         => 'Until the first time the condition is true', // TODO: Review
 	'ON_EVERY_SAVE'                => 'Every time the record is saved', // TODO: Review
 	'ON_MODIFY'                    => 'Every time a record is modified', // TODO: Review
+    'ON_SCHEDULE'                  => 'Schedule',
 	'MANUAL'                       => 'System'                      , // TODO: Review
 	'SCHEDULE_WORKFLOW'            => 'Schedule Workflow'           , // TODO: Review
 	'ADD_CONDITIONS'               => 'Add Conditions'              , // TODO: Review
@@ -81,8 +83,24 @@ $languageStrings = array(
         'LBL_ADD_TEMPLATE' => 'Add Template'                            ,
         'LBL_LINEITEM_BLOCK_GROUP' => 'Line Items Block For Group Tax'   ,
         'LBL_LINEITEM_BLOCK_INDIVIDUAL' => 'Line Items Block For Individual Tax',
+		'LBL_RUN_WORKFLOW' => 'Run Workflow',
+		'LBL_AT_TIME' => 'At Time',
+		'LBL_HOURLY' => 'Hourly',
 	
-	
+	'LBL_DAILY' => 'Daily',
+	'LBL_WEEKLY' => 'Weekly',
+	'LBL_ON_THESE_DAYS' => 'On these days',
+	'LBL_MONTHLY_BY_DATE' => 'Monthly by Date',
+	'LBL_MONTHLY_BY_WEEKDAY' => 'Monthly by Weekday',
+	'LBL_YEARLY' => 'Yearly',
+	'LBL_SPECIFIC_DATE' => 'On Specific Date',
+	'LBL_CHOOSE_DATE' => 'Choose Date',
+	'LBL_SELECT_MONTH_AND_DAY' => 'Select Month and Date',
+	'LBL_SELECTED_DATES' => 'Selected Dates',
+	'LBL_EXCEEDING_MAXIMUM_LIMIT' => 'Maximum limit exceeded',
+	'LBL_NEXT_TRIGGER_TIME' => 'Next trigger time on',
+	'LBL_MESSAGE' => 'Message',
+    
 	//Translation for module
 	'Calendar' => 'To Do',
 );

@@ -43,10 +43,10 @@ $languageStrings = array(
 	'LBL_ENABLE/DISABLE_MESSGAE' => 'Selecciona el valor para Habilitar/Deshabilitarlo. Pulsa Guardar al finalizar',
 	'LBL_ASSIGN_VALUES_TO_ROLES' => 'Asignar Valores a Roles',
 	'LBL_SELECTED_VALUES' => 'Valores Seleccionados',
-    'NO_PICKLIST_FIELDS'=> 'no tiene campos de tipo lista desplegable',
-	
+	'NO_PICKLIST_FIELDS'=> 'no tiene campos de tipo lista desplegable',
+        'LBL_NON_EDITABLE_PICKLIST_VALUES' => 'Valores No Editables',
 	//Translation for module
-	'Calendar' => 'Para hacer',
+	'Calendar' => 'Calendario',
 );
 $jsLanguageStrings = array(
 	//PickList 
@@ -60,5 +60,8 @@ $jsLanguageStrings = array(
 	'JS_LIST_UPDATED_SUCCESSFULLY' => 'Se ha actualizado la Lista',
 	'JS_SEQUENCE_UPDATED_SUCCESSFULLY' => 'Se ha actualizado la secuencia',
 	'JS_VALUE_ASSIGNED_SUCCESSFULLY' => 'Se han asignado los valores',
-    'JS_PLEASE_SELECT_MODULE' => 'Selecciona un módulo'
-);	
+	'JS_PLEASE_SELECT_MODULE' => 'Selecciona un módulo',
+	'JS_SPECIAL_CHARACTERS' => 'No se permiten caracteres especiales como',
+	'JS_NOT_ALLOWED' => '',
+
+);

@@ -193,6 +193,8 @@ $languageStrings = array(
 	'VTLIB_LBL_MODULE_MANAGER'     => 'Modul Menedzser'             , 
 	'Webforms'                     => 'Webes Űrlapok'               , 
 	'website'                      => 'Web oldal'                   ,
+	'vatid'						   => 'Adószám'                     ,
+	'LBL_EXCHANGE_CONNECTOR'       => 'Exchange konnektor'          ,
 );
 
 $jsLanguageStrings = array(

@@ -8,13 +8,13 @@
  * All Rights Reserved.
  ************************************************************************************/
 $languageStrings = array(
-	'LBL_SEND_SMS_TO_SELECTED_NUMBERS' => 'Отправить SMS на выбранные номера', 
-	'LBL_STEP_1'                   => 'Шаг 1'                      , 
-	'LBL_STEP_2'                   => 'Шаг 2'                      , 
-	'LBL_SELECT_THE_PHONE_NUMBER_FIELDS_TO_SEND' => 'Выберите поля на номер телефона для отправки', 
-	'LBL_TYPE_THE_MESSAGE'         => 'Введите сообщение'            , 
-	'LBL_WRITE_YOUR_MESSAGE_HERE'  => 'напишите ваше сообщение здесь'     , 
-	'LBL_ADD_MORE_FIELDS'          => 'Добавить больше полей'             , 
+	'LBL_SEND_SMS_TO_SELECTED_NUMBERS' => 'Send SMS to the selected numbers', // TODO: Review
+	'LBL_STEP_1'                   => 'Step 1'                      , // TODO: Review
+	'LBL_STEP_2'                   => 'Step 2'                      , // TODO: Review
+	'LBL_SELECT_THE_PHONE_NUMBER_FIELDS_TO_SEND' => 'Select the phone number fields to send', // TODO: Review
+	'LBL_TYPE_THE_MESSAGE'         => 'Type the message'            , // TODO: Review
+	'LBL_WRITE_YOUR_MESSAGE_HERE'  => 'write your message here'     , // TODO: Review
+	'LBL_ADD_MORE_FIELDS'          => 'Add more fields'             , // TODO: Review
 	'LBL_SERVER_CONFIG'           => 'Конфигурация Сервера', // KEY 5.x: SERVER_CONFIGURATION
 	'LBL_CHECK_STATUS'             => 'Проверить статус', 
 	'message'                      => 'Сообщение'          , 

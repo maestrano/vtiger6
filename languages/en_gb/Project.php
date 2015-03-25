@@ -47,10 +47,10 @@ $languageStrings = array(
 	'LBL_STATUS' => 'Status',
 	'LBL_TICKET_PRIORITY' => 'Priority',
 	'LBL_MORE' => 'More',
-	
+
 	//Summary View Widgets
 	'LBL_DOWNLOAD_FILE' => 'Download File',
-
+	
 	//picklist values
 	'prospecting' => 'Prospecting',
     'in progress' => 'In Progress',

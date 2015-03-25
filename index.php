@@ -14,5 +14,18 @@ include_once 'include/Webservices/Relation.php';
 include_once 'vtlib/Vtiger/Module.php';
 include_once 'includes/main/WebUI.php';
 
+// Hook: Maestrano
+// Load Maestrano
+include_once 'maestrano/init.php';
+if(Maestrano::sso()->isSsoEnabled()) {
+  if (!isset($_SESSION)) session_start();
+  $mnoSession = new Maestrano_Sso_Session($_SESSION);
+  // Check session validity and trigger SSO if not
+  if (!$mnoSession->isValid()) {
+    header('Location: ' . Maestrano::sso()->getInitPath());
+    exit;
+  }
+}
+
 $webUI = new Vtiger_WebUI();
 $webUI->process(new Vtiger_Request($_REQUEST, $_REQUEST));

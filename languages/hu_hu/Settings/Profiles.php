@@ -38,6 +38,14 @@ $languageStrings = array(
 	'LBL_WRITE'                    => 'Írás'                        ,
 	'Profiles'                     => 'Profilok'                    ,
 	'SINGLE_Profiles'              => 'Profil'                      ,
+    'Import'                       => 'Import'                      ,
+    'Export'                       => 'Export'                      ,
+	'Merge'                        => 'Összefűzés'                  ,
+    'ConvertLead'                  => 'Vevőjelölt átalakítása'      ,
+    'DuplicatesHandling'           => 'Duplikáció kezelése'         ,
+    'ReceiveIncomingCalls'         => 'Bejövő hívások fogadása'     ,
+    'MakeOutgoingCalls'            => 'Kimenő hívást kezdeményezni' ,
+    'Print'                        => 'Nyomtatás'                   ,
 );
 
 $jsLanguageStrings = array(

@@ -16,6 +16,7 @@ $languageStrings = array(
 	'LBL_PRIVACY_POLICY' => 'Polityka prywatności (EN)',
 
 	// Common Actions
+    'LBL_SELECT_OPTION'=>'Wybierz opcję',
 	'LBL_SELECT_ALL' => 'Zaznacz wszystkie rekordy',
 	'LBL_CREATING_NEW' => 'Tworzenie nowych',
 	'LBL_EDITING' => 'Edytowanie',
@@ -90,7 +91,6 @@ $languageStrings = array(
 	'Last Modified By' => 'Ostatnio zmodyfikowane przez',
 	'Created Time' => 'Czas utworzenia',
 	'Modified Time' => 'Czas modyfikacji',
-	'Description' => 'Opis',
 	'Assigned To'=>'Przydzielone do',
 
 	//Loading Labels
@@ -140,19 +140,31 @@ $languageStrings = array(
 	'Potentials' => 'Szanse Sprzedaży',
 	'PriceBooks' => 'Czenniki',
 	'Products' => 'Produkty',
-	'Project' => 'Projekty',
+	'Projects' => 'Projekty',
 	'ProjectMilestone' => 'Etapy projektów',
 	'ProjectTask' => 'Zadania dla projektów',
-	'ServiceContracts' => 'Umowy serwisowe',
+	'Service Contracts' => 'Umowy serwisowe',
 	'Services' => 'Usługi',
 	'Vendors' => 'Dostawcy',
 	'Rss' => 'Kanały RSS',
 	'Quotes'=>'Oferty',
 	'PurchaseOrder'=>'Zamówienia do Dostawców',
-	'SalesOrder'=>'Zamówienia od Klientów',
+	'Sales Order'=>'Zamówienia od Klientów',
 	'Invoice'=>'Faktury',
-    'Portal' => 'Nasze strony',
-
+        'Portal' => 'Nasze strony',
+        'Activities'=>'DziaÅ‚alnoÅ›Ä‡',
+        'PBXManager'=>'PBXManager',
+        'Emails'=>'Emails',
+        'Project Tasks'=>'Zadania projektu',
+        'Project Milestones'=>'Etapy projektu',
+    
+        //Related List
+        'Recurrence'=>'nawrÃ³t',
+        'Status'=>'Status',
+        'Access Count'=>'LiczyÄ‡ DostÄ™p',
+        'Parent ID'=>'ID rodzic',
+        'Date & Time Sent'=>'wysÅ‚any Data',
+        'Time Start'=>'Godzina wysÅ‚ania',
 
 	//Basic String Translation
 	'LBL_ADD_RECORD' => 'Dodaj rekord',
@@ -213,6 +225,7 @@ $languageStrings = array(
 	'LBL_NOT_ACCESSIBLE' => 'Dostęp zabroniony',
 
 	//Line Items
+        'individual'=>'indywidualne',
 	'LBL_ITEM_DETAILS'=> 'Szczegóły powiązanych produktów / usług',
 	'LBL_CURRENCY' => 'Waluta',
 	'LBL_TAX_MODE' => 'Podatek',
@@ -528,6 +541,7 @@ $languageStrings = array(
 	'First Name' => 'Imię',
 
 	'High' => 'Wysoki',
+        'Medium'=>'Normalny', 
 	'Low' => 'Niski',
 
 	'In Progress' => 'W realizacji',
@@ -625,8 +639,7 @@ $languageStrings = array(
     'LBL_SETUP_WEBFORMS' => 'Konfiguracja formularzy WWW',
     
     'LBL_MERGE'                    => 'Łączyć',
-    
-    	'LBL_CONVERSION_RATE'          => 'Conversion Rate', //TOreview
+    'LBL_CONVERSION_RATE'          => 'Conversion Rate', //TOreview
 	
 );
 
@@ -721,4 +734,7 @@ $jsLanguageStrings = array(
 	'JS_PBX_OUTGOING_FAILURE'=>'Połączenie nie powiodło się',
 	'JS_PBX_FILL_ALL_FIELDS'=>'Proszę wypełnić wszystkie pola',
 	// ends	
+    
+        //No Tax exist 
+        'JS_LBL_NO_TAXES'=>'Brak Podatki', 
 	);

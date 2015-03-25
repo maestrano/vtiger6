@@ -19,6 +19,11 @@ $languageStrings = array(
 	'Valid Till'                   => 'Valid pana la'               , 
 	'Inventory Manager'            => 'Manager inventar'            , 
 	'Accepted'                     => 'Acceptat'                    , 
-	'Rejected'                     => 'Respins'                     ,
-        'Open Quotes'                  => 'Citate deschise',
+	'Rejected'                     => 'Respins'                     , 
+	'Open Quotes'                  => 'Citate deschise',
+    
+    //Taxes 
+    'VAT'      => 'TVA', 
+    'Service'  => 'Serviciu', 
+    'Sales'    => 'Vânzări'
 );

@@ -21,7 +21,6 @@ $languageStrings = array(
 	'Milestone Date' => 'Milestone Date',
 	'Project Milestone No' => 'Project Milestone No.',
 	
-	//picklist values
 	'administrative' => 'Administrative',
     'operative' => 'Operative',
     'other' => 'Other',

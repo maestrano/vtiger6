@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Products'                     => 'Productos'                   , 
@@ -13,8 +16,8 @@ $languageStrings = array(
 	'LBL_ADD_RECORD'               => 'Agregar Producto'            , 
 	'LBL_RECORDS_LIST'             => 'Lista de productos'          , 
 	'LBL_PRODUCT_INFORMATION'      => 'Información del Producto'   , 
-	'LBL_IMAGE_INFORMATION'        => 'Información de la Imagen del Producto:', 
-	'LBL_STOCK_INFORMATION'        => 'Información del Stock:'     , 
+	'LBL_IMAGE_INFORMATION'        => 'Imagen del Producto:', 
+	'LBL_STOCK_INFORMATION'        => 'Información de Stock:'     , 
 	'LBL_MORE_CURRENCIES'          => 'más monedas'                , 
 	'LBL_PRICES'                   => 'Precios Productos'           , 
 	'LBL_PRICE'                    => 'Precio'                      , 
@@ -40,7 +43,7 @@ $languageStrings = array(
 	'GL Account'                   => 'Cuenta Contable'             , 
 	'Product Image'                => 'Imagen del Producto'         , 
 	'Unit Price'                   => 'Precio Unitario'             , 
-	'Commission Rate'              => 'Comisión (%)'               , 
+	'Commission Rate'              => 'Comisión'                    , 
 	'Qty/Unit'                     => 'Cantidad/Unidad'             , 
 	'--None--'                     => '-----'                       , 
 	'Hardware'                     => 'Hardware'                    , 
@@ -64,12 +67,12 @@ $languageStrings = array(
 	'Impressions'                  => 'Impresiones'                 , 
 	'Lb'                           => 'Kg'                          , 
 	'M'                            => 'M'                           , 
-	'Pack'                         => 'Pack'                        , 
+	'Pack'                         => 'Paquete'                        , 
 	'Pages'                        => 'Páginas'                    , 
 	'Pieces'                       => 'Piezas'                      , 
 	'Reams'                        => 'Resma'                       , 
 	'Sheet'                        => 'Hoja'                        , 
 	'Spiral Binder'                => 'Encuadernado Espiral'        , 
-	'Sq Ft'                        => 'm&sup2;'                     , 
-    'LBL_PRODUCTSMOD_DISABLED' => 'Habilitar Productos Módulo para ver Productos',
+	'Sq Ft'                        => 'm&sup2;'                     ,
+    'LBL_PRODUCTSMOD_DISABLED' => 'Habilita el módulo de Productos para poder ver Productos',
 );

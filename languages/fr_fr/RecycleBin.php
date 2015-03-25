@@ -6,6 +6,9 @@
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ * Translated by ABOnline solutions - http://www.abo-s.com/
+ * Boris CLEMENT
+ * December 2013    
  ************************************************************************************/
 $languageStrings = array(
 	'Recycle Bin'                   => 'Corbeille'                 , 
@@ -18,5 +21,5 @@ $languageStrings = array(
 );
 $jsLanguageStrings = array(
 	'JS_MSG_EMPTY_RB_CONFIRMATION' => 'Confirmer la suppression définitive et irréverssible des éléments sélectionnés?', 
-	'JS_LBL_RESTORE_RECORDS_CONFIRMATION' => 'Confirmer la restauration des éléments sélectionnés?',
+	'JS_LBL_RESTORE_RECORDS_CONFIRMATION' => 'Confirmer la restauration des éléments sélectionnés?', 
 );

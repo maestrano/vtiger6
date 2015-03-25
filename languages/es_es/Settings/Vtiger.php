@@ -16,8 +16,8 @@
  *  Author       : JPL TSolucio, S. L. Joe Bordes
  ************************************************************************************/
 $languageStrings = array(
-        'LBL_INTEGRATION' => 'Integración',
-        'LBL_PBXMANAGER' => 'PBXManager',
+	'LBL_INTEGRATION' => 'Integración',
+	'LBL_PBXMANAGER' => 'PBXManager',
 	'Settings'                     => 'Configuración',
 	'LBL_SEARCH_SETTINGS_PLACEHOLDER' => 'Configuración Búsqueda',
 	'LBL_SUMMARY' => 'Resumen',
@@ -31,7 +31,7 @@ $languageStrings = array(
 	// Blocks
 	'LBL_STUDIO'                   => 'Diseñador',
 	'LBL_COMMUNICATION_TEMPLATES'  => 'Plantillas',
-	'LBL_USER_MANAGEMENT'          => 'Administración Usuarios y Acceso',
+	'LBL_USER_MANAGEMENT'          => 'Usuarios y Acceso',
 	'LBL_ACCESS_MANAGEMENT'        => 'Administración Acceso',
 	'LBL_MODULE_MANAGER'           => 'Administración Módulos',
 	'LBL_NOTIFICATIONS'            => 'Notificaciones',
@@ -90,7 +90,9 @@ $languageStrings = array(
 	'LBL_MAIL_SCANNER_DESCRIPTION' => 'Configura el buzón para clasificación',
 	'LBL_LIST_WORKFLOWS'           => 'Flujos de Trabajo',
 	'LBL_LIST_WORKFLOWS_DESCRIPTION' => 'Crear y editar flujos de trabajo',
+	'LBL_SELECT_DATE' => 'Selecciona fechas',
 	'Configuration Editor'         => 'Editor de Configuración',
+	'Update configuration file of the application' => 'Actualizar el fichero de configuración de la aplicación.',
 	'LBL_CUSTOMER_PORTAL'          => 'Portal del Cliente',
 	'PORTAL_EXTENSION_DESCRIPTION' => 'Permite configurar la extensión del portal del cliente',
 
@@ -212,23 +214,32 @@ $languageStrings = array(
     'LBL_ACTIVE' => 'Activo',
     'LBL_INACTIVE' => 'Inactivo',
 
-    //show last scan in workflows and mailconverter
-    'LBL_DISABLED' => 'Deshabilitado',
-    'LBL_RUNNING' => 'En ejecución',
-    'LBL_LAST_SCAN_TIMED_OUT' => 'Tiempo agotado en última revisión',
-    'LBL_LAST_SCAN_AT' => 'Ultima revisión @ ',
-    'LBL_TIME_TAKEN' => ' tiempo invertido ',
-    'LBL_SHORT_SECONDS' => 'seg',
-	
+        //show last scan in workflows and mailconverter
+        'LBL_DISABLED' => 'Deshabilitado',
+        'LBL_RUNNING' => 'En ejecución',
+        'LBL_LAST_SCAN_TIMED_OUT' => 'Tiempo agotado en última revisión',
+        'LBL_LAST_SCAN_AT' => 'Ultima revisión @ ',
+        'LBL_TIME_TAKEN' => ' tiempo invertido ',
+        'LBL_SHORT_SECONDS' => 'seg',
+
+	//Email Templates
+	'EmailTemplate' => 'Plantilla de Email',
+	'LBL_TEMPLATE_NAME' => 'Nombre Plantilla',
+	'LBL_DESCRIPTION' => 'Descripción',
+	'LBL_SUBJECT' => 'Asunto',
+
 	//User Login History
-	'LoginHistory' => 'User Login History',
-	'LBL_LOGIN_HISTORY_DETAILS' => 'Login History',
-	'LBL_LOGIN_HISTORY_DESCRIPTION' => 'Login History Details',
-	'LBL_USER_NAME'=> 'User Name',
-	'LBL_USER_IP_ADDRESS'=> 'User IP Address', 
-	'LBL_LOGIN_TIME' => 'Sign-in Time',
-	'LBL_LOGGED_OUT_TIME' => 'Sign-out Time', 
-	'LBL_STATUS' => 'Status'
+	'LoginHistory' => 'Histórico de Acceso de Usuario',
+	'LBL_LOGIN_HISTORY_DETAILS' => 'Histórico de Acceso',
+	'LBL_LOGIN_HISTORY_DESCRIPTION' => 'Detalles del Histórico de Acceso',
+	'LBL_USER_NAME'=> 'Nombre Usuario',
+	'LBL_USER_IP_ADDRESS'=> 'Dirección IP Usuario',
+	'LBL_LOGIN_TIME' => 'Hora de Conexión',
+	'LBL_LOGGED_OUT_TIME' => 'Hora de Desconexión',
+	'LBL_STATUS' => 'Estado',
+	'LBL_LOGIN_HISTORY_DETAILS' => 'Histórico de Accesos',
+	'LBL_LOGIN_HISTORY_DESCRIPTION' => 'Muestra el Histórico de Accesos de todos los Usuarios',
+	'LBL_CONFIG_EDITOR_DESCRIPTION' => 'Editar las variables de Configuración del Sistema',
 );
 
 $jsLanguageStrings = array(
@@ -243,10 +254,12 @@ $jsLanguageStrings = array(
 	'JS_PLEASE_ENTER_NUMBER_IN_RANGE_1TO5' => 'Introduce un valor entre 1-5',
 	'JS_PLEASE_ENTER_NUMBER_IN_RANGE_1TO100' => 'Introduce un valor entre 1-100',
 	'JS_RECORD_NUMBERING_SAVED_SUCCESSFULLY_FOR' => 'Se ha guardado la numeración de registro para',
+	'LBL_PREFIX_IN_USE' => 'Prefijo en uso',
 	'JS_RECORD_NUMBERING_UPDATED_SUCCESSFULLY_FOR' => 'Se ha actualizado la numeración de registro para',
 	'JS_SEQUENCE_NUMBER_MESSAGE' => 'La secuencia de numeración debe ser igual o superior a',
 	'LBL_WRONG_IMAGE_TYPE' => 'tipo de imagen no soportado',
 	'LBL_MAXIMUM_SIZE_EXCEEDS' => 'El tamaño máximo permitido es de 1MB',
 	'LBL_NO_LOGO_SELECTED' => 'No se ha seleccionado ningún logo',
 	'JS_CONFIGURATION_DETAILS_SAVED' => 'Se ha guardado la información de configuración',
+	'JS_TERMS_AND_CONDITIONS_SAVED' => 'Se han guardado las Condiciones Generaless',
 );

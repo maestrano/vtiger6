@@ -15,6 +15,7 @@
  *  Author       : JPL TSolucio, S. L. Joe Bordes
  *************************************************************************************/
 $languageStrings = array(
+	'LayoutEditor' => 'Editor de Disposición',
 	'LBL_FIELDS_AND_LAYOUT_EDITOR' => 'Editor de Campos y Disposición',
 	'LBL_CREATE_CUSTOM_FIELD' => 'Añadir Campo Personalizado',
 	'LBL_DETAILVIEW_LAYOUT' => 'Disposición de la Vista Detalle',
@@ -53,10 +54,25 @@ $languageStrings = array(
 	'LBL_DUPLICATE_FIELD_EXISTS' => 'Existe un Campo Duplicado',
 	'LBL_WRONG_FIELD_TYPE' => 'Tipo de Campo Erróneo',
 	'LBL_ROLE_BASED_PICKLIST' => 'Lista Desplegable con Roles',
-	
+	'LBL_CLICK_HERE_TO_EDIT' => 'Pulsa aquí para editar',
+	//Field Types
+	'Text'=>'Texto',
+	'Decimal'=>'Decimal',
+	'Integer'=>'Entero',
+	'Percent'=>'Porcentaje',
+	'Currency'=>'Moneda',
+	'Date'=>'Fecha',
+	'Email'=>'Email',
+	'Phone'=>'Teléfono',
+	'PickList'=>'Lista Desplegable',
+	'MultiSelectCombo'=>'Lista Multi-Selección',
+	'URL' => 'URL',
+	'Checkbox' => 'Checkbox',
+	'TextArea' => 'Area de Texto',
+	'Skype'=>'Skype',
+	'Time'=>'Hora',
 	//Translation for module
-	'Calendar' => 'Para hacer',
-
+	'Calendar' => 'Calendario',
 );
 
 $jsLanguageStrings = array(
@@ -77,4 +93,6 @@ $jsLanguageStrings = array(
 	'JS_NO_HIDDEN_FIELDS_EXISTS' => 'No hay campos Inactivos',
 	'JS_SPECIAL_CHARACTERS' => 'No se permiten caracteres especiales como',
 	'JS_NOT_ALLOWED' => '',
+	'JS_FIELD_SEQUENCE_UPDATED' => 'Secuencia de Campos Actualizado',
+	'JS_DUPLICATES_VALUES_FOUND' => 'Se han encontrado valores duplicados'
 );

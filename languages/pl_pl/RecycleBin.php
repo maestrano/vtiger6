@@ -7,8 +7,9 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ************************************************************************************/
-$languageStrings = array(
-'Recycle Bin' => 'Kosz',
+
+$languageStrings = Array(
+	'Recycle Bin' => 'Kosz',
 	'LBL_SELECT_MODULE' => 'Zaznacz moduł',
 	'LBL_EMPTY_RECYCLEBIN' => 'Opróżnij cały kosz',
 	'LBL_RESTORE' => 'Przywróć',
@@ -22,3 +23,6 @@ $jsLanguageStrings = array(
 	'JS_LBL_RESTORE_RECORDS_CONFIRMATION' => 'Czy jesteś pewien, że chcesz przywrócić rekordy?',
 	'JS_RESTORING_RECORDS' => 'Przywracanie rekordów',
 );
+
+
+?>

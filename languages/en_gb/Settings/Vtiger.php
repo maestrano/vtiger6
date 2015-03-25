@@ -180,6 +180,7 @@ $languageStrings = array(
 	'LBL_LAST_SCAN_AT'             => 'Last scanned at '            , // TODO: Review
 	'LBL_TIME_TAKEN'               => ' time taken '                , // TODO: Review
 	'LBL_SHORT_SECONDS'            => 'sec'                         , // TODO: Review
+	'LBL_EXTENSION_STORE'	       => 'Extension Store'             ,
 	//User Login History
 	'LoginHistory' => 'User Login History',
 	'LBL_LOGIN_HISTORY_DETAILS' => 'Login History',

@@ -28,6 +28,9 @@ $languageStrings = array(
 	'Industry'                     => 'Industria',
 	'Lead Status'                  => 'Estado Pre-Contacto',
 	'No Of Employees'              => 'Numero de Empleados',
+	'Secondary Email' => 'Email (Alternativo)',
+	'Phone' => 'Teléfono',
+	'Email' => 'Email',
 	'--None--'                     => '--Ninguno--',
 	'Mr.'                          => 'Sr.',
 	'Ms.'                          => 'Sra.',
@@ -56,7 +59,7 @@ $languageStrings = array(
 	'LBL_MANDATORY_FIELDS_ARE_EMPTY' => 'Algún campo obligatorio está vacío',
 	'LBL_LEADS_FIELD_MAPPING'      => 'Vinculación de Campos',
 	'LBL_CUSTOM_FIELD_MAPPING'     => 'Editar Vinculación de Campos',
-	
+	'LBL_WEBFORMS'                 => 'Crear Formulario Web',
 );
 $jsLanguageStrings = array(
 	'JS_SELECT_CONTACTS'           => 'Selecciona Contactos para seguir',

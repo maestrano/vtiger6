@@ -137,9 +137,37 @@ $languageStrings = array(
 	'Tickets related to Products'  => 'Kérések,amelyek Termékekhez tartoznak',
 	'Tickets that are Open'        => 'Kérések,amelyek nyitva vannak',
 	'Vendors Email Report'         => 'Beszállítók E-mail Jelentés',
+
+	//charts labels
+	'LBL_SELECT_CHART_TYPE' => 'Válasszon diagram típust',
+	'LBL_CLICK_THROUGH_NOT_AVAILABLE' => 'A kattintáson keresztül nem elérhető mivel ön egynél több modult választott ki.',
+	'LBL_TOTAL_SUM_OF' => '%s összege',
+	'LBL_AVG_OF' => '%s átlaga'      ,
+	'LBL_MIN_OF' => '%s minimuma'    ,
+	'LBL_MAX_OF' => '%s maximuma'    ,
+	'LBL_RECORD_COUNT' => 'Rekordok száma',
+	'LBL_PIE_CHART' => 'Torta diagram',
+	'LBL_VERTICAL_BAR_CHART' => 'Függőleges oszlop diagram',
+	'LBL_HORIZONTAL_BAR_CHART' => 'Vízszintes oszlop diagram',
+	'LBL_LINE_CHART' => 'Vonal diagram',
+	'LBL_SELECT_CHART' => 'Válasszon diagramot',
+	'LBL_CREATING_CHART_REPORT' => 'Diagram jelentés létrehozása',
+	'LBL_EDITING_CHART_REPORT' => 'Diagram jelentés szerkesztése',
+	'LBL_GENERATE_CHART' => 'Diagram készítés',
+	'LBL_SELECT_GROUP_BY_FIELD' => 'Válasszon Csoportosítás általa mezőt',
+	'LBL_SELECT_DATA_FIELD' => 'Válasszon adatmezőket',
+	'LBL_MODIFY_CONDITION' => 'Feltételek módosítása',
+	'LBL_PLEASE_SELECT_ATLEAST_ONE_GROUP_FIELD_AND_DATA_FIELD' => 'Válasszon legalább egy Csoportosítás általa és egy Adatmezőt.',
+	'LBL_FOR_BAR_GRAPH_AND_LINE_GRAPH_SELECT_3_MAX_DATA_FIELDS' => 'Az oszlop és vonal diagramok számára max 3 adatmezőt választhat.',
+	'LBL_DETAIL_REPORT' => 'Részletes jelentés',
+	'LBL_CHARTS' => 'Diagramok',
+    //Schedule Reports - Mail Content
+    'LBL_AUTO_GENERATED_REPORT_EMAIL' => 'Ez egy automatikusan generált e-mail, amit a vtiger jelentés időzítő küldött.',
+
 );
 
 $jsLanguageStrings = array(
 	'JS_CALCULATION_LINE_ITEM_FIELDS_SELECTION_LIMITATION' => 'Korlátozás: A tételsor mezői (Lista ár,Kedvezmény és Mennyiség) csak akkor használhatók,ha egyéb számítási mezők nem lettek kiválasztva.',
 	'JS_DUPLICATE_RECORD'          => 'Duplikált jelentés'            ,
+    'JS_NO_CHART_DATA_AVAILABLE'   => 'Adat nem áll rendelkezésre itt. Kérjük, hogy ellenőrizze a kiválasztott mezőt.',
 );

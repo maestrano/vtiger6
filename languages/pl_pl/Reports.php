@@ -140,3 +140,8 @@ $languageStrings = array(
 	'LBL_PRINT_REPORT' => 'Wydruk z raportu',
 	'LBL_RECORDS' => 'rekordów',
 );
+$jsLanguageStrings = array(
+	'JS_DUPLICATE_RECORD' => 'Duplicate Report',
+	'JS_CALCULATION_LINE_ITEM_FIELDS_SELECTION_LIMITATION' => 'Limitation: Line Item fields(List Price, Discount & Quantity) can only be used when other calculation fields are not selected.',
+	'JS_NO_CHART_DATA_AVAILABLE' => 'Dane nie są dostępne, należy sprawdzić wybrane pola',
+);

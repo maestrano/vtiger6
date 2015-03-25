@@ -84,7 +84,7 @@ $dbconfigoption['ssl'] = false;
 
 $host_name = $dbconfig['db_hostname'];
 
-$site_URL = 'http://vtiger6.app.dev.maestrano.io/';
+$site_URL = 'http://vtiger6.io/';
 
 // root directory path
 $root_directory = '/home/bruno/Workspace/vtiger6/';
@@ -186,7 +186,7 @@ $display_empty_home_blocks = false;
 $disable_stats_tracking = false;
 
 // Generating Unique Application Key
-$application_unique_key = '5c4de954f473a91b2d9fb217815b08f5';
+$application_unique_key = '4aff91db2905088656897d924a4de2e9';
 
 // trim descriptions, titles in listviews to this value
 $listview_max_textlength = 40;

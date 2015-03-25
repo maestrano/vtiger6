@@ -37,4 +37,9 @@ $languageStrings = array(
 	'Tax' => 'Taxe',
 	'Contact Name' => 'Nom contact',
 	'Grand Total:' => 'Total:',
+    
+        //Taxes 
+        'VAT'      => 'TVA', 
+        'Service'  => 'Service', 
+        'Sales'    => 'Ventes'
 );

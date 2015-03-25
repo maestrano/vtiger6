@@ -6,21 +6,31 @@
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ * *******************************************************************************
+ * Vicus eBusiness Solutions (www.vicus.nl) Version Control
+ * Dutch language pack for vtiger CRM version 6.x
+ * 
+ * @package   NL-Dutch
+ * @author    $Author: luuk $
+ * @version   CVS: $Revision: 1.5 $ $Date: 2014/09/07 21:06:45 $
+ * @source    $Source: /var/lib/cvs/vtiger600/languages/nl_nl/Settings/CustomerPortal.php,v $
+ * @copyright 2005-2014 Vicus eBusiness Solutions B.V. <info@.vicus.nl>
+ * @link      http://www.vicus.nl
  ************************************************************************************/
 $languageStrings = array(
-	'CustomerPortal'               => 'Customer Portal'             , // TODO: Review
-	'LBL_PORTAL_DESCRIPTION'       => 'Setup Privileges of Portal User', // TODO: Review
-	'LBL_PRIVILEGES'               => 'Privileges'                  , // TODO: Review
-	'LBL_DEFAULT_ASSIGNEE'         => 'Default Assignee'            , // TODO: Review
-	'LBL_PORTAL_URL'               => 'Portal Url'                  , // TODO: Review
-	'LBL_MODULE_NAME'              => 'Module Name'                 , // TODO: Review
-	'LBL_ENABLE_MODULE'            => 'Enable Module'               , // TODO: Review
-	'LBL_VIEW_ALL_RECORDS'         => 'See Records across Organization', // TODO: Review
-	'LBL_PREVILEGES_MESSAGE'       => 'This User\'s privileges will be applied to the Portal User.', // TODO: Review
-	'LBL_DEFAULT_ASSIGNEE_MESSAGE' => 'Tickets will be Assigned to the selected Assignee by the default Group/User from the Customer Portal.', // TODO: Review
-	'LBL_PORTAL_URL_MESSAGE'       => 'This is URL for the Portal where your contacts can login to submit/track tickets, access knowledge base and do more. Contacts will be sent the login details when Portal access is enabled from Contact details page.', // TODO: Review
-	'LBL_DRAG_AND_DROP_MESSAGE'    => 'Drag and Drop modules to reorder in the Customer Portal', // TODO: Review
+    'CustomerPortal'               => 'Portaal'             ,
+    'LBL_PORTAL_DESCRIPTION'       => 'Instellen Privileges van Portaalgebruiker',
+    'LBL_PRIVILEGES'               => 'Privileges'                  ,
+    'LBL_DEFAULT_ASSIGNEE'         => 'Standaard Toegewezen'            ,
+    'LBL_PORTAL_URL'               => 'Portaal URL'                  ,
+    'LBL_MODULE_NAME'              => 'Modulenaam'                 ,
+    'LBL_ENABLE_MODULE'            => 'Activeer Module'               ,
+    'LBL_VIEW_ALL_RECORDS'         => 'Zie alle Records van de Organisatie',
+    'LBL_PREVILEGES_MESSAGE'       => 'De privileges van deze crm-gebruiker worden toegepast op de Portaalgebruiker.',
+    'LBL_DEFAULT_ASSIGNEE_MESSAGE' => 'Tickets zullen toegewezen worden aan de geselecteerde toegewezene door de Groep/Gebruiker van het Portaal.',
+    'LBL_PORTAL_URL_MESSAGE'       => 'Dit is de URL van het Portaal waar uw contacten kunnen inloggen om tickets aan te melden en te volgen, de knowledge base en andere informatie kunnen benaderen. Contacten ontvangen de logingegevens zodra de Portaaltoegang op de Contactdetailpagina wordt geactiveerd.',
+    'LBL_DRAG_AND_DROP_MESSAGE'    => 'Sleep modules om de volgorde in het Portaal te veranderen',
 );
 $jsLanguageStrings = array(
-	'JS_PORTAL_INFO_SAVED'         => 'Customer Portal settings saved', // TODO: Review
+    'JS_PORTAL_INFO_SAVED'         => 'Portaalinstellingen opgeslagen',
 );

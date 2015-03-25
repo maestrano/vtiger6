@@ -1,71 +1,74 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
-	'LBL_FIELDS_AND_LAYOUT_EDITOR' => 'Fields and Layout Editor'    , // TODO: Review
-	'LBL_CREATE_CUSTOM_FIELD'      => 'Create Custom Field'         , // TODO: Review
-	'LBL_DETAILVIEW_LAYOUT'        => 'Detail View Layout'          , // TODO: Review
-	'LBL_ARRANGE_RELATED_TABS'     => 'Arrange Related Tabs'        , // TODO: Review
-	'LBL_ADD_CUSTOM_FIELD'         => 'Add Custom Field'            , // TODO: Review
-	'LBL_ADD_CUSTOM_BLOCK'         => 'Add Custom Block'            , // TODO: Review
-	'LBL_SAVE_FIELD_SEQUENCE'      => 'Save Field Sequence'         , // TODO: Review
-	'LBL_BLOCK_NAME'               => 'Block Name'                  , // TODO: Review
-	'LBL_ADD_AFTER'                => 'Add After'                   , // TODO: Review
-	'LBL_ACTIONS'                  => 'Actions'                     , // TODO: Review
-	'LBL_ALWAYS_SHOW'              => 'Always Show'                 , // TODO: Review
-	'LBL_INACTIVE_FIELDS'          => 'Inactive Fields'             , // TODO: Review
-	'LBL_DELETE_CUSTOM_BLOCK'      => 'Delete Custom Block'         , // TODO: Review
-	'LBL_MANDATORY_FIELD'          => 'Mandatory Field'             , // TODO: Review
-	'LBL_ACTIVE'                   => 'Active'                      , // TODO: Review
-	'LBL_QUICK_CREATE'             => 'Quick Create'                , // TODO: Review
-	'LBL_SUMMARY_FIELD'            => 'Summary View'                , // TODO: Review
-	'LBL_MASS_EDIT'                => 'Mass Edit'                   , // TODO: Review
-	'LBL_DEFAULT_VALUE'            => 'Default Value'               , // TODO: Review
-	'LBL_SELECT_FIELD_TYPE'        => 'Select Field Type'           , // TODO: Review
-	'LBL_LABEL_NAME'               => 'Label Name'                  , // TODO: Review
-	'LBL_LENGTH'                   => 'Length'                      , // TODO: Review
-	'LBL_DECIMALS'                 => 'Decimals'                    , // TODO: Review
-	'LBL_ENTER_PICKLIST_VALUES'    => 'Enter Picklist Values..'     , // TODO: Review
-	'LBL_PICKLIST_VALUES'          => 'Picklist Values'             , // TODO: Review
-	'LBL_REACTIVATE'               => 'Reactivate'                  , // TODO: Review
-	'LBL_ARRANGE_RELATED_LIST'     => 'Arrange Related List'        , // TODO: Review
-	'LBL_SELECT_MODULE_TO_ADD'     => 'Select Module To Add'        , // TODO: Review
-	'LBL_NO_RELATED_INFORMATION'   => 'No Related Information'      , // TODO: Review
-	'LBL_RELATED_LIST_INFO'        => 'Drag and drop the module to reorder the list', // TODO: Review
-	'LBL_REMOVE_INFO'              => 'Click on the close icon to remove the module from the list', // TODO: Review
-	'LBL_ADD_MODULE_INFO'          => 'Select the module from the removed modules to add back to list', // TODO: Review
-	'LBL_SELECT_MODULE'            => 'Select Module..'             , // TODO: Review
-	'LBL_DUPLICATES_EXIST'         => 'Block Name already exists'   , // TODO: Review
-	'LBL_NON_ROLE_BASED_PICKLIST'  => 'Non Role Based Picklist'     , // TODO: Review
-	'LBL_DUPLICATE_FIELD_EXISTS'   => 'Duplicate Field Exists'      , // TODO: Review
-	'LBL_WRONG_FIELD_TYPE'         => 'Wrong Field Type'            , // TODO: Review
-	'LBL_ROLE_BASED_PICKLIST'      => 'Role Based Picklist'         , // TODO: Review
+	'LBL_FIELDS_AND_LAYOUT_EDITOR' => 'Editor de Disposición y campos'    , 
+	'LBL_CREATE_CUSTOM_FIELD'      => 'Crear Campo Personalizado'         , 
+	'LBL_DETAILVIEW_LAYOUT'        => 'Disposición de vista detalle'          , 
+	'LBL_ARRANGE_RELATED_TABS'     => 'Organizar bloques relacionados'        , 
+	'LBL_ADD_CUSTOM_FIELD'         => 'Agregar Campo Personalizado'            , 
+	'LBL_ADD_CUSTOM_BLOCK'         => 'Agregar Bloque personalizado'            , 
+	'LBL_SAVE_FIELD_SEQUENCE'      => 'Guardar secuencia de Campos'         , 
+	'LBL_BLOCK_NAME'               => 'Nombre del Bloque'                  , 
+	'LBL_ADD_AFTER'                => 'Agregar después'                   , 
+	'LBL_ACTIONS'                  => 'Acciones'                     , 
+	'LBL_ALWAYS_SHOW'              => 'Mostrar Siempre'                 , 
+	'LBL_INACTIVE_FIELDS'          => 'Campos ocultos'             , 
+	'LBL_DELETE_CUSTOM_BLOCK'      => 'Borrar bloque personalizado'         , 
+	'LBL_MANDATORY_FIELD'          => 'Campo Obligatorio'             , 
+	'LBL_ACTIVE'                   => 'Activo'                      , 
+	'LBL_QUICK_CREATE'             => 'Creación Rápida'                , 
+	'LBL_SUMMARY_FIELD'            => 'Vista de resumen'                , 
+	'LBL_MASS_EDIT'                => 'Edición masiva'                   , 
+	'LBL_DEFAULT_VALUE'            => 'Valor por defecto'               , 
+	'LBL_SELECT_FIELD_TYPE'        => 'Seleccionar tipo de campo'           , 
+	'LBL_LABEL_NAME'               => 'Nombre de etiqueta'                  , 
+	'LBL_LENGTH'                   => 'Longitud'                      , 
+	'LBL_DECIMALS'                 => 'Decimales'                    , 
+	'LBL_ENTER_PICKLIST_VALUES'    => 'Ingresa valores de lista desplegable..'     , 
+	'LBL_PICKLIST_VALUES'          => 'Valores de lista '             , 
+	'LBL_REACTIVATE'               => 'Reactivar'                  , 
+	'LBL_ARRANGE_RELATED_LIST'     => 'Organizar lista desplegable'        , 
+	'LBL_SELECT_MODULE_TO_ADD'     => 'Seleccionar Módulo para agregar'        , 
+	'LBL_NO_RELATED_INFORMATION'   => 'Sin información relacionada'      , 
+	'LBL_RELATED_LIST_INFO'        => 'Arrastra y suelta el módulo para reordenar la lista', 
+	'LBL_REMOVE_INFO'              => 'Clic en el icono de cerrar para eliminar el módulo de la lista', 
+	'LBL_ADD_MODULE_INFO'          => 'Seleccionar el módulo de los módulos eliminados para devolverlo a la lista', 
+	'LBL_SELECT_MODULE'            => 'Seleccionar Módulo´..'             , 
+	'LBL_DUPLICATES_EXIST'         => 'El nombre del bloque ya existe'   , 
+	'LBL_NON_ROLE_BASED_PICKLIST'  => 'Lista desplagable independiente de roles'     , 
+	'LBL_DUPLICATE_FIELD_EXISTS'   => 'Campo duplicado existe'      , 
+	'LBL_WRONG_FIELD_TYPE'         => 'Tipo de campo incorrecto'            , 
+	'LBL_ROLE_BASED_PICKLIST'      => 'Lista desplegable basada en roles'         , 
 	
 	//Translation for module
-	'Calendar' => 'Para hacer',
+	'Calendar' 						=> 'Por hacer',
 );
 $jsLanguageStrings = array(
-	'JS_BLOCK_VISIBILITY_SHOW'     => 'Block show enabled'          , // TODO: Review
-	'JS_BLOCK_VISIBILITY_HIDE'     => 'Block hide enabled'          , // TODO: Review
-	'JS_CUSTOM_BLOCK_ADDED'        => 'New Custom Block added'      , // TODO: Review
-	'JS_BLOCK_SEQUENCE_UPDATED'    => 'Blocks Sequence Updated'     , // TODO: Review
-	'JS_SELECTED_FIELDS_REACTIVATED' => 'Selected Fields Reactivated' , // TODO: Review
-	'JS_FIELD_DETAILS_SAVED'       => 'Field Details Saved'         , // TODO: Review
-	'JS_CUSTOM_BLOCK_DELETED'      => 'Custom Block Deleted'        , // TODO: Review
-	'JS_CUSTOM_FIELD_ADDED'        => 'New Custom Field Added'      , // TODO: Review
-	'JS_CUSTOM_FIELD_DELETED'      => 'Custom Field Deleted'        , // TODO: Review
-	'JS_LENGTH_SHOULD_BE_LESS_THAN_EQUAL_TO' => 'Length Should be less than or equal to', // TODO: Review
-	'JS_PLEASE_ENTER_NUMBER_IN_RANGE_2TO5' => 'Decimal should be in the range 2 to 5', // TODO: Review
-	'JS_SAVE_THE_CHANGES_TO_UPDATE_FIELD_SEQUENCE' => 'Save the changes to update Field sequence', // TODO: Review
-	'JS_RELATED_INFO_SAVED'        => 'Related Info Saved'          , // TODO: Review
-	'JS_BLOCK_NAME_EXISTS'         => 'Block Name already exists'   , // TODO: Review
-	'JS_NO_HIDDEN_FIELDS_EXISTS'   => 'No Inactive Fields'          , // TODO: Review
-	'JS_SPECIAL_CHARACTERS'        => 'Special Characters like'     , // TODO: Review
-	'JS_NOT_ALLOWED'               => 'are not allowed'             , // TODO: Review
+	'JS_BLOCK_VISIBILITY_SHOW'     => 'Mostrar bloque habilitado'          , 
+	'JS_BLOCK_VISIBILITY_HIDE'     => 'Ocultar bloque habilitado'          , 
+	'JS_CUSTOM_BLOCK_ADDED'        => 'Nuevo bloque personalizado agregado'      , 
+	'JS_BLOCK_SEQUENCE_UPDATED'    => 'Secuencia de bloques actualizada'     , 
+	'JS_SELECTED_FIELDS_REACTIVATED' => 'Campos seleccionados reactivados' , 
+	'JS_FIELD_DETAILS_SAVED'       => 'Detalles de campos guardados'         , 
+	'JS_CUSTOM_BLOCK_DELETED'      => 'Bloque personalizado eliminado'        , 
+	'JS_CUSTOM_FIELD_ADDED'        => 'Nuevo campo personalizado agregado'      , 
+	'JS_CUSTOM_FIELD_DELETED'      => 'Campo personalizado eliminado'        , 
+	'JS_LENGTH_SHOULD_BE_LESS_THAN_EQUAL_TO' => 'Longitud debe ser menor o igual a', 
+	'JS_PLEASE_ENTER_NUMBER_IN_RANGE_2TO5' => 'Decimal debe estar en el rango de 2 a 5', 
+	'JS_SAVE_THE_CHANGES_TO_UPDATE_FIELD_SEQUENCE' => 'Guardar los cambios para actualizar la secuencia de campos', 
+	'JS_RELATED_INFO_SAVED'        => 'Información relacionada guardada'          , 
+	'JS_BLOCK_NAME_EXISTS'         => 'El nombre del bloque ya existe'   , 
+	'JS_NO_HIDDEN_FIELDS_EXISTS'   => 'No hay campos ocultos'          , 
+	'JS_SPECIAL_CHARACTERS'        => 'Caracteres especiales como'     , 
+	'JS_NOT_ALLOWED'               => 'no están permitidos'             , 
 );

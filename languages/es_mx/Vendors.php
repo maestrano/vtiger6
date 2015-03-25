@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Vendors'                      => 'Proveedores'                 , 
@@ -31,5 +34,5 @@ $languageStrings = array(
 $jsLanguageStrings = array(
 	'LBL_RELATED_RECORD_DELETE_CONFIRMATION' => 'Seguro que lo quieres borrar?', 
 	'LBL_DELETE_CONFIRMATION'      => 'Borrando a este proveedor, se eliminarán también sus ordenes de compra relacionadas; Estas seguro que deseas eliminar a este proveedor?', 
-	'LBL_MASS_DELETE_CONFIRMATION' => 'Borrando a estos proveedores, se eliminarán también sus ordenes de compra relacionadas; Estas seguro que deseas eliminar estos registros?', 
+	'LBL_MASS_DELETE_CONFIRMATION' => 'Borrando a estos proveedores, se eliminarán también sus ordenes de compra relacionadas; Estas seguro que deseas eliminar estos proveedores?', 
 );

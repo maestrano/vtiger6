@@ -38,6 +38,7 @@ $languageStrings = array(
 	'LBL_FOLDER_HAS_DOCUMENTS'     => 'Por favor, mueve los documentos a otra carpeta antes de eliminarla',
 	'LBL_DOWNLOAD_FILE'            => 'Descargar fichero',
 	'LBL_CHECK_FILE_INTEGRITY'     => 'Comprobar integridad fichero',
+	'LBL_EMAIL_FILE_AS_ATTACHMENT' => 'Mandar fichero por Email',
 	'LBL_INTERNAL'                 => 'Interno',
 	'LBL_EXTERNAL'                 => 'Externo',
 	'LBL_MAX_UPLOAD_SIZE'          => 'Tamaño máximo fichero',
@@ -55,9 +56,13 @@ $languageStrings = array(
 	'LBL_FILE_NOT_AVAILABLE'       => 'Este fichero no está disponible para descarga',
 );
 $jsLanguageStrings = array(
+	'JS_EXCEEDS_MAX_UPLOAD_SIZE'   => 'Se ha superado el tamaño máximo de fichero',
 	'JS_NEW_FOLDER'                => 'Nueva Carpeta',
 	'JS_MOVE_DOCUMENTS'            => 'Mover Documentos',
 	'JS_ARE_YOU_SURE_YOU_WANT_TO_MOVE_DOCUMENTS_TO' => '¿Estás seguro que quieres mover el fichero(s) a',
 	'JS_FOLDER'                    => 'carpeta',
 	'JS_OPERATION_DENIED'          => 'Operación Denegada',
+	'JS_FOLDER_IS_NOT_EMPTY' => 'La carpeta no está vacía',
+	'JS_SPECIAL_CHARACTERS' => 'No se permiten caracteres especiales como',
+	'JS_NOT_ALLOWED' => '',
 );

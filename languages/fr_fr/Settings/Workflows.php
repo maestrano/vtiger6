@@ -19,6 +19,7 @@ $languageStrings = array(
 	'ONCE'                         => 'Until the first time the condition is true', // TODO: Review
 	'ON_EVERY_SAVE'                => 'Every time the record is saved', // TODO: Review
 	'ON_MODIFY'                    => 'Every time a record is modified', // TODO: Review
+        'ON_SCHEDULE'                  => 'Calendrier',
 	'MANUAL'                       => 'System'                      , // TODO: Review
 	'SCHEDULE_WORKFLOW'            => 'Schedule Workflow'           , // TODO: Review
 	'ADD_CONDITIONS'               => 'Add Conditions'              , // TODO: Review
@@ -77,11 +78,27 @@ $languageStrings = array(
 	'LBL_FROM' => 'À partir de',
 	'Optional' => 'Optionnel',
 	'LBL_ADD_TASK' => 'Add Tâche',
-    'Portal Pdf Url' =>'Portail Client lien PDF',
+        'Portal Pdf Url' =>'Portail Client lien PDF',
 	'LBL_ADD_TEMPLATE' => 'Ajouter un modèle',
 	'LBL_LINEITEM_BLOCK_GROUP' => 'Bloc LineItems pour groupe fiscal',
-    'LBL_LINEITEM_BLOCK_INDIVIDUAL' => 'Bloc LineItems pour impôts des particuliers',
+        'LBL_LINEITEM_BLOCK_INDIVIDUAL' => 'Bloc LineItems pour impôts des particuliers',
+        'LBL_RUN_WORKFLOW' => 'Exécuter workflow',
+	'LBL_AT_TIME' => 'Au temps',
+	'LBL_HOURLY' => 'Horaires',
 	
+	'LBL_DAILY' => 'Quotidien',
+	'LBL_WEEKLY' => 'Hebdomadaire',
+	'LBL_ON_THESE_DAYS' => 'Lors de ces journées',
+	'LBL_MONTHLY_BY_DATE' => 'Mensuel par date',
+	'LBL_MONTHLY_BY_WEEKDAY' => 'Mensuel par jour de la semaine',
+	'LBL_YEARLY' => 'Annuel',
+	'LBL_SPECIFIC_DATE' => 'Sur une date spécifique',
+	'LBL_CHOOSE_DATE' => 'Choisir une date',
+	'LBL_SELECT_MONTH_AND_DAY' => 'Choisir un mois et date',
+	'LBL_SELECTED_DATES' => 'Dates sélectionnées',
+	'LBL_EXCEEDING_MAXIMUM_LIMIT' => 'Limite dépassée',
+	'LBL_NEXT_TRIGGER_TIME' => 'Suivant le temps de déclenchement sur',
+	'LBL_MESSAGE' => 'Message',
 	
 	//Translation for module
 	'Calendar' => 'Pour faire',

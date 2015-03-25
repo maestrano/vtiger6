@@ -77,6 +77,22 @@ $languageStrings = array(
 	'ON_MODIFY'                    => 'Minden alkalomkor, amikor a rekord módosítva lesz',
 	'ON_SCHEDULE'                  => 'Időzített pillanatban'       ,
 	'SCHEDULE_WORKFLOW'            => 'Munkafolyamat időzítése'     ,
+	'LBL_RUN_WORKFLOW' 			   => 'Munkafolyamat futtatása'     ,
+	'LBL_AT_TIME' 				   => 'Megadott időben'             ,
+	'LBL_HOURLY'                   => 'Óránként'                    ,
+	'LBL_DAILY'                    => 'Naponta'                     ,
+	'LBL_WEEKLY'                   => 'Hetente'                     ,
+	'LBL_ON_THESE_DAYS'            => 'Ezeken a napokon'            ,
+	'LBL_MONTHLY_BY_DATE'          => 'Havonta dátum alapján'       ,
+	'LBL_MONTHLY_BY_WEEKDAY'       => 'Havonta, a hét meghatározott napján',
+	'LBL_YEARLY'                   => 'Évente'                      ,
+	'LBL_SPECIFIC_DATE'            => 'Megadott dátummal'           ,
+	'LBL_CHOOSE_DATE'              => 'Válasszon dátumot'           ,
+	'LBL_SELECT_MONTH_AND_DAY'     => 'Válasszon Hónapot és dátumot',
+	'LBL_SELECTED_DATES'           => 'Kiválasztott dátumok'        ,
+	'LBL_EXCEEDING_MAXIMUM_LIMIT'  => 'A maximális limitet túlléptük',
+	'LBL_NEXT_TRIGGER_TIME'        => 'Következő futtatás ideje'    ,
+	'LBL_MESSAGE'                  => 'Üzenet'                      ,
 );
 
 $jsLanguageStrings = array(

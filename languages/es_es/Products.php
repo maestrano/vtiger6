@@ -79,5 +79,5 @@ $languageStrings = array(
 	'Sheet'                        => 'Hoja',
 	'Spiral Binder'                => 'Cuaderno espiral',
 	'Sq Ft'                        => 'm<sup>2</sup>',
-    'LBL_PRODUCTSMOD_DISABLED' => 'Habilitar Productos Módulo para ver Productos',
+        'LBL_PRODUCTSMOD_DISABLED' => 'Habilita el módulo de Productos para verlos',
 );

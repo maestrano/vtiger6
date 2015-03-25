@@ -11,6 +11,7 @@ $languageStrings = array(
 	'AutoCreated'                  => 'Automatikusan létrehozva'    ,
 	'Credit Invoice'               => 'Átutalásos díjbekérő'        ,
 	'Customer No'                  => 'Ügyfél száma'                ,
+    'Recurring Invoive Information'=> 'Ismétlődő számlázás információi',
 	'Enable Recurring'             => 'Díjbekérő-ismétlődés engedélyezve',
 	'End Period'                   => 'Utolsó Díjbekérő'            ,
 	'Frequency'                    => 'Gyakoriság'                  ,
@@ -37,8 +38,16 @@ $languageStrings = array(
 	'Sub Total'                    => 'Részösszeg'                  ,
 	'Tracking Number'              => 'Nyomkövető szám'             ,
 	'Vendor Terms'                 => 'Szállítói határidők'         ,
+    'Daily'                        => 'Napi'                        ,
+    'Monthly'                      => 'Havi'                        ,
+    'Quarterly'                    => 'Negyedéves'                  ,
+    'Yearly'                       => 'Éves'                        ,
+    'Net 30 days'                  => '30 napos átutalás'           ,
+    'Net 45 days'                  => '45 napos átutalás'           ,
+    'Net 60 days'                  => '60 napos átutalás'           , 
 );
 
 $jsLanguageStrings = array(
-	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Please remove line item that is deleted',
+	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Kérjük, hogy távolítsa el a törölt tételt a sorból',
+	'JS_PLEASE_ENABLE_PRODUCT_OR_SERVICE_MODULE' => 'Kérjük, hogy engedélyezze a Termék vagy a Szolgáltatás modult',
 );

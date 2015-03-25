@@ -29,6 +29,11 @@ $languageStrings = array(
 
 	'Accepted'=>'Zaakceptowana',
 	'Rejected'=>'Odrzucona',
-        'Open Quotes'=>'Otwarte Cytaty',
+	'Open Quotes'=>'Otwarte Cytaty',
+    
+        //Taxes 
+        'VAT'      => 'VAT', 
+        'Service'  => 'Serwis', 
+        'Sales'    => 'Obroty'
 
 );

@@ -556,7 +556,7 @@ $languageStrings = array(
 	'ProjectMilestone'             => 'Projekt Mérföldkövek'        ,
 	'Projects'                     => 'Projektek'                   ,
 	'ProjectTask'                  => 'Projekt Feladatok'           ,
-	'Public Relations'             => 'Public Relations'            ,
+	'Public Relations'             => 'Közönségkapcsolatok'         ,
 	'Public'                       => 'Nyilvános'                   ,
 	'Purchase Order'               => 'Beszerzések'                 ,
 	'PurchaseOrder'                => 'Beszerzések'                 ,
@@ -628,9 +628,9 @@ $languageStrings = array(
 	'Web Site'                     => 'Weboldal'                    ,
 	'Website: '                    => 'weboldal: '                  ,
 	'Word of mouth'                => 'Szóbeszéd'                   ,
-    
-	'LBL_CONVERSION_RATE'          => 'Konverziós arány'           ,
 	
+	'LBL_CONVERSION_RATE'          => 'Konverziós arány'           ,
+    
 	//Missing keys - TO-DO handle en_us file (Calendar settings)
 	'Starting Day of the week'     => 'A hét kezdő napja'           ,
 	'Day starts at'                => 'Nap kezdete'                 ,
@@ -807,7 +807,10 @@ $jsLanguageStrings = array(
 	'SHOULD_BE_LESS_THAN_TODAY'    => 'Ennek a mai nap előttinek kell lennie',
 	'SINGLE_Accounts'              => 'Szervezet'                   ,
 	'SINGLE_Contacts'              => 'Kapcsolat'                   ,
-     
-//Edit view mode Translations
+    'JS_LBL_NO_TAXES'              => 'Nincsenek adók'    ,
+    'JS_HIDE_PROMOTION' 		   => 'Reklám elrejtése'  ,
+    'JS_SHOW_PROMOTION'            => 'Reklám mutatása'   ,
+    
+     //Edit view mode Translations
         'JS_CHANGES_WILL_BE_LOST' => 'A változtatások elvesznek!',
 );

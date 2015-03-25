@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Contacts'                     => 'Contactos'                   , 
@@ -13,10 +16,10 @@ $languageStrings = array(
 	'LBL_ADD_RECORD'               => 'Agregar Contacto'            , 
 	'LBL_RECORDS_LIST'             => 'Lista de Contactos'          , 
 	'LBL_CONTACT_INFORMATION'      => 'Datos Personales'            , 
-	'LBL_CUSTOMER_PORTAL_INFORMATION' => 'Información del Cliente'    , 
-	'LBL_IMAGE_INFORMATION'        => 'Información de Foto del Contacto:', 
-	'LBL_COPY_OTHER_ADDRESS'       => 'Copy Other Address'          , // TODO: Review
-	'LBL_COPY_MAILING_ADDRESS'     => 'Copy Mailing Address'        , // TODO: Review
+	'LBL_CUSTOMER_PORTAL_INFORMATION' => 'Información del Cliente'  , 
+	'LBL_IMAGE_INFORMATION'        => 'Foto del Contacto:', 
+	'LBL_COPY_OTHER_ADDRESS'       => 'Copiar Dirección de Envío'   , 
+	'LBL_COPY_MAILING_ADDRESS'     => 'Copiar Dirección de Factura' ,
 	'Office Phone'                 => 'Tel. Empresa'                , 
 	'Home Phone'                   => 'Tel. Particular'             , 
 	'Title'                        => 'Cargo'                       , 
@@ -26,7 +29,7 @@ $languageStrings = array(
 	'Assistant'                    => 'Secretaria'                  , 
 	'Assistant Phone'              => 'Teléfono de la Secretaria'  , 
 	'Do Not Call'                  => 'No Llamar por Teléfono'     , 
-	'Reference'                    => 'Referencias'                 , 
+	'Reference'                    => 'Es Referencia'               , 
 	'Portal User'                  => 'Usuario de Portal'           , 
 	'Mailing Street'               => 'Dirección (Factura)'        , 
 	'Mailing City'                 => 'Deleg./Mpio. (Factura)'      , 
@@ -47,9 +50,9 @@ $languageStrings = array(
 	'Dr.'                          => 'Dr.'                         , 
 	'Prof.'                        => 'Prof.'                       , 
 	'User List'                    => 'Lista de Usuarios'           , 
-	'Contact Id' => 'Contacto Id',
+	'Contact Id'				   => 'Contacto Id',
     'Support Start Date'           => 'Soporte Fecha de Inicio'     ,
-    'Support End Date'             => 'Soporte Fecha de finalización',
+    'Support End Date'             => 'Soporte Fecha de fin',
 );
 $jsLanguageStrings = array(
 );

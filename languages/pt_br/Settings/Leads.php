@@ -1,62 +1,63 @@
 <?php
-/*+**********************************************************************************
+/*+***********************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
- * Portions created by vtiger are Copyright (C) vtiger.
- * All Rights Reserved.
- ************************************************************************************/
+ * Portions created by vtiger are Copyright (C) vtiger. All Rights Reserved.
+ * Contributor(s): Valmir C. Trindade - Translate to Brazilian Portuguese - 17/05/2013 - www.ttcasolucoes.com.br
+ *************************************************************************************/
 $languageStrings = array(
-	'LBL_SAVED_SUCCESSFULLY'       => 'Saved Successfully'          , // TODO: Review
-	'LBL_DELETED_SUCCESSFULLY'     => 'Deleted Successfully'        , // TODO: Review
-	'LBL_INVALID_MAPPING'          => 'Invalid Mapping'             , // TODO: Review
-	'LBL_CONVERT_LEAD_FIELD_MAPPING' => 'Convert Lead Mapping'        , // TODO: Review
-	'LBL_FIELD_LABEL'              => 'Field Label'                 , // TODO: Review
-	'LBL_FIELD_TYPE'               => 'Field Type'                  , // TODO: Review
-	'LBL_MAPPING_WITH_OTHER_MODULES' => 'Mapping with other Modules'  , // TODO: Review
-	'LBL_ORGANIZATIONS'            => 'Organizations'               , // TODO: Review
-	'LBL_CONTACTS'                 => 'Contacts'                    , // TODO: Review
-	'LBL_OPPURTUNITIES'            => 'Oppurtunities'               , // TODO: Review
-	'LBL_ADD_MAPPING'              => 'Add Mapping'                 , // TODO: Review
-	'LBL_NONE'                     => 'None'                        , // TODO: Review
-	'phone'                        => 'Phone'                       , // TODO: Review
-	'picklist'                     => 'Pick List'                   , // TODO: Review
-	'email'                        => 'Email'                       , // TODO: Review
-	'text'                         => 'String'                      , // TODO: Review
-	'currency'                     => 'Currency'                    , // TODO: Review
-	'multiSelectCombo'             => 'Multi-Select Combo Box'      , // TODO: Review
-	'time'                         => 'Time'                        , // TODO: Review
-	'textArea'                     => 'Text Area'                   , // TODO: Review
-	'url'                          => 'Url'                         , // TODO: Review
-	'string'                       => 'String'                      , // TODO: Review
-	'checkBox'                     => 'Check Box'                   , // TODO: Review
-	'date'                         => 'Date'                        , // TODO: Review
-	'decimal'                      => 'Decimal'                     , // TODO: Review
-	'percent'                      => 'Percent'                     , // TODO: Review
-	'skype'                        => 'Skype'                       , // TODO: Review
+	'checkBox' => 'Caixa Seleção',
+	'currency' => 'Moeda',
+	'date' => 'Data',
+	'decimal' => 'Decimal',
+	'email' => 'Email',
+	'LBL_ADD_MAPPING' => 'Adicionar Mapeamento',
+	'LBL_CONTACTS' => 'Contatos',
+	'LBL_CONVERT_LEAD_FIELD_MAPPING' => 'Mapeamento Conversão Lead',
+	'LBL_DELETED_SUCCESSFULLY' => 'Apagado com Sucesso',
+	'LBL_FIELD_LABEL' => 'Rótulo Campo',
+	'LBL_FIELD_TYPE' => 'Tipo Campo',
+	'LBL_INVALID_MAPPING' => 'Mapeamento Inválido',
+	'LBL_MAPPING_WITH_OTHER_MODULES' => 'Mapeamento com outros Módulos',
+	'LBL_NONE' => 'Nenhum',
+	'LBL_OPPURTUNITIES' => 'Oportunidades',
+	'LBL_ORGANIZATIONS' => 'Organizações',
+	'LBL_SAVED_SUCCESSFULLY' => 'Salvo com Sucesso',
+	'multiSelectCombo' => 'Caixa Multi-Seleção',
+	'percent' => 'Percentual',
+	'phone' => 'Telefone',
+	'picklist' => 'Lista Opções',
+	'skype' => 'Skype',
+	'string' => 'String',
+	'textArea' => 'Área Texto',
+	'text' => 'Texto',
+	'time' => 'Hora',
+	'url' => 'Url',
 );
+
 $jsLanguageStrings = array(
-	'JS_NONE'                      => 'None'                        , // TODO: Review
-	'JS_IS_ALREADY_BEEN_MAPPED'    => 'is already been mapped'      , // TODO: Review
-	'JS_CANT_MAP'                  => 'Cant map'                    , // TODO: Review
-	'JS_WITH'                      => 'with'                        , // TODO: Review
-	'JS_MAPPING_DELETED_SUCCESSFULLY' => 'Mapping Deleted Successfully', // TODO: Review
-	'JS_phone'                     => 'Phone'                       , // TODO: Review
-	'JS_picklist'                  => 'Pick List'                   , // TODO: Review
-	'JS_email'                     => 'Email'                       , // TODO: Review
-	'JS_text'                      => 'String'                      , // TODO: Review
-	'JS_currency'                  => 'Currency'                    , // TODO: Review
-	'JS_multiSelectCombo'          => 'Multi-Select Combo Box'      , // TODO: Review
-	'JS_time'                      => 'Time'                        , // TODO: Review
-	'JS_textArea'                  => 'Text Area'                   , // TODO: Review
-	'JS_url'                       => 'Url'                         , // TODO: Review
-	'JS_string'                    => 'String'                      , // TODO: Review
-	'JS_checkBox'                  => 'Check Box'                   , // TODO: Review
-	'JS_date'                      => 'Date'                        , // TODO: Review
-	'JS_decimal'                   => 'Decimal'                     , // TODO: Review
-	'JS_percent'                   => 'Percent'                     , // TODO: Review
-	'JS_skype'                     => 'Skype'                       , // TODO: Review
-	'JS_None'                      => 'None'                        , // TODO: Review
-	'JS_integer'					=> 'Integer',
+	'JS_CANT_MAP' => 'Não é possível mapear',
+	'JS_checkBox' => 'Caixa Seleção',
+	'JS_currency' => 'Moeda',
+	'JS_date' => 'Data',
+	'JS_decimal' => 'Decimal',
+	'JS_email' => 'Email',
+	'JS_integer' => 'Número Inteiro',
+	'JS_IS_ALREADY_BEEN_MAPPED' => 'já está mapeado',
+	'JS_MAPPING_DELETED_SUCCESSFULLY' => 'Mapeamento Apagado com Sucesso',
+	'JS_multiSelectCombo' => 'Caixa Multi-Seleção',
+	'JS_NONE' => 'Nada',
+	'JS_None' => 'Nada',
+	'JS_percent' => 'Percentual',
+	'JS_phone' => 'Fone',
+	'JS_picklist' => 'Lista Opções',
+	'JS_skype' => 'Skype',
+	'JS_string' => 'String',
+	'JS_textArea' => 'Área de Texto',
+	'JS_text' => 'Texto',
+	'JS_time' => 'Data',
+	'JS_url' => 'Url',
+	'JS_WITH' => 'com',
 );

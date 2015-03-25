@@ -57,7 +57,6 @@ $languageStrings = array(
 	'LBL_TASK' => 'Uwagi',
 	'LBL_TASKS' => 'Uwagi',
 
-	'LBL_RECORDS_LIST' => 'Widok listy',
 	'LBL_CALENDAR_VIEW' => 'Widok kalendarza',
 	
 	'Mobile Call' => 'Mobile Call',

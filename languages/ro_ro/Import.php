@@ -69,4 +69,7 @@ $languageStrings = array(
 	'LBL_DETAILS'                  => 'Details'                     , // TODO: Review
 	'skipped'                      => 'Skipped Records'             , // TODO: Review
 	'failed'                       => 'Failed Records'              , // TODO: Review
+        'Skip'                         =>'Skip',
+        'Overwrite'                    =>'Suprascrie',
+        'Merge'                        =>'ÃŽmbinare',
 );

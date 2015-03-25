@@ -19,6 +19,7 @@ $languageStrings = array(
 
 	// Blocks
 	'LBL_SO_INFORMATION' => 'Szczegóły zamówienia od Klienta',
+    'Recurring Invoive Information'=>'Informacja faktury cykliczne',
 	
 	//Field labels
 	'SalesOrder No'=>'Numer zamówienia od Klienta',
@@ -44,4 +45,11 @@ $languageStrings = array(
 	'Sent'=>'Wysłana',
 	'Credit Invoice'=>'Faktura kredytowa',
 	'Paid'=>'Zapłacona',
+    'Daily'=>'Codziennie',
+    'Monthly'=>'Miesięcznie',
+    'Quarterly'=>'Kwartalnie',
+    'Yearly'=>'Rocznie',
+    'Net 30 days'=>'Netto 30 dni',
+    'Net 45 days'=>'Netto 45 dni',
+    'Net 60 days'=>'Netto 60 dni',
 );

@@ -24,7 +24,8 @@ $languageStrings = array(
 	'LBL_GROUP_MEMBERS' => 'Miembros Grupo',
 	'LBL_ADD_USERS_ROLES' => 'Añadir Usuarios, Roles...',
 	'LBL_ROLEANDSUBORDINATE' => 'Rol y Subordinados',
-	'RoleAndSubordinates' => 'Rol y Subordinados'
+	'RoleAndSubordinates' => 'Rol y Subordinados',
+	'LBL_DUPLICATES_EXIST' => 'Nombre de Grupo ya existe',
 );
 
 $jsLanguageStrings = array(

@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Leads'                        => 'Prospectos'                  , 
@@ -15,7 +18,7 @@ $languageStrings = array(
 	'LBL_LEAD_INFORMATION'         => 'Información del Prospecto'   , 
 	'Lead No'                      => 'Núm. Prospecto'             , 
 	'Company'                      => 'Empresa'                     , 
-	'Designation'                  => 'Puesto'                      , 
+	'Designation'                  => 'Cargo'                      , 
 	'Website'                      => 'Página Web'                 , 
 	'Industry'                     => 'Actividad'                   , 
 	'Lead Status'                  => 'Estado del Prospecto'        , 
@@ -31,14 +34,14 @@ $languageStrings = array(
 	'Contact in Future'            => 'Contactar más adelante'     , 
 	'Contacted'                    => 'Contactado'                  , 
 	'Hot'                          => 'Caliente'                    ,
-        'Hot Leads'                    => 'Leads calientes',
+        'Hot Leads'                    => 'Prospectos calientes',
 	'Junk Lead'                    => 'Prospecto Basura'            , 
 	'Lost Lead'                    => 'Prospecto Fallido'           , 
 	'Not Contacted'                => 'No Contactado'               , 
 	'Pre Qualified'                => 'Pre Calificado'              , 
 	'Qualified'                    => 'Calificado'                  , 
 	'Warm'                         => 'Tibio'                       , 
-	'LBL_CONVERT_LEAD'             => 'Convertir Prospecto:'        , 
+	'LBL_CONVERT_LEAD'             => 'Convertir Prospecto'        , 
 	'LBL_TRANSFER_RELATED_RECORD'  => 'Transferir registro relacionado a', 
 	'LBL_CONVERT_LEAD_ERROR'       => 'Necesitas tener habilitado el módulo de Cuentas o Contactos pasra convertir el prospecto', 
 	'LBL_CONVERT_LEAD_ERROR_TITLE' => 'Módulos deshabilitados'     , 

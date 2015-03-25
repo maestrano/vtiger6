@@ -70,4 +70,7 @@ $languageStrings = array(
 	'LBL_DETAILS'                  => 'Details'                     , 
 	'skipped'                      => 'Skipped Records'             , 
 	'failed'                       => 'Failed Records'              , 
+        'Skip'=>'Ãœberspringen',
+        'Overwrite'=>'Ãœberschreiben',
+        'Merge'=>'Merge',
 );

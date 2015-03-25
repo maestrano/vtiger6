@@ -8,15 +8,15 @@
  * All Rights Reserved.
  ************************************************************************************/
 $languageStrings = array(
-	'Recycle Bin'                   => 'Papierkorb'                 , 
+	'RecycleBin'                   => 'Recycle Bin'                 , 
 	'LBL_SELECT_MODULE'            => 'Select Module'               , 
-	'LBL_EMPTY_RECYCLEBIN'         => 'Papierkorb leeren'           , 
-	'LBL_RESTORE'                  => 'Wiederherstellen'                     , 
-	'LBL_NO_PERMITTED_MODULES'     => 'Keine zulässigen Module', 
-	'LBL_RECORDS_LIST'             => 'Papierkorb Liste'            , 
-	'LBL_NO_RECORDS_FOUND'         => 'Keine Datensätze gefunden, um in Modul wiederherstellen', 
+	'LBL_EMPTY_RECYCLEBIN'         => 'Empty Recycle Bin'           , 
+	'LBL_RESTORE'                  => 'Restore'                     , 
+	'LBL_NO_PERMITTED_MODULES'     => 'No permitted modules available', 
+	'LBL_RECORDS_LIST'             => 'Recycle Bin List'            , 
+	'LBL_NO_RECORDS_FOUND'         => 'No records found to Restore in module', 
 );
 $jsLanguageStrings = array(
-	'JS_MSG_EMPTY_RB_CONFIRMATION' => 'Sind Sie sicher, Sie wollen, um alle gelöschten Datensätze aus Ihrer Datenbank dauerhaft zu entfernen?', 
-	'JS_LBL_RESTORE_RECORDS_CONFIRMATION' => 'Sind Sie sicher, dass Sie die Datensätze wiederherstellen?', 
+	'JS_MSG_EMPTY_RB_CONFIRMATION' => 'Are you sure you want to permanently remove all the deleted records from your database?', 
+	'JS_LBL_RESTORE_RECORDS_CONFIRMATION' => 'Are you sure you want to restore the records?', 
 );

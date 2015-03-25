@@ -9,6 +9,6 @@
  *************************************************************************************/
 $languageStrings = array(
 	'LBL_TEMPLATE_NAME' => 'Nazwa szablonu',
-	'LBL_DESCRIPTION' => 'Opis '
+	'LBL_DESCRIPTION' => 'Opis ',
+	'LBL_SUBJECT' => 'Temat'
 );
-

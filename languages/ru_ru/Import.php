@@ -69,4 +69,7 @@ $languageStrings = array(
 	'LBL_DETAILS'                  => 'Детали'                     , 
 	'skipped'                      => 'Пропущенные отчеты'             , 
 	'failed'                       => 'Ошибка записи'              , 
+        'Skip' =>'пропускать',
+        'Overwrite'=>'переписывать',
+        'Merge'=>'слияние',
 );

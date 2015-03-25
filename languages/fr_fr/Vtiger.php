@@ -531,7 +531,7 @@ $languageStrings = array(
 	'LBL_GLOBAL_SEARCH_MAX_MESSAGE_FOR_MODULE' => 'Only the first 100 results are shown below. Please do Advanced Search if you are not satisfied with the result', // TODO: Review
 	'LBL ACTION'                   => 'Action'                      , // TODO: Review
 	'LBL_NOTE'                     => 'Note'                        , // TODO: Review
-	'LBL_SELECT_OPTION'            => 'Select an Option'            , // TODO: Review
+	'LBL_SELECT_OPTION'            => 'Sélectionner une option'            , // TODO: Review
 	'LBL_TOOLTIP'                  => 'Tooltip Management'          , // TODO: Review
 	'LBL_MODULE_SEQUENCE_NUMBERING' => 'Module Sequence Numbering'   , // TODO: Review
 	'LBL_CUSTOM_FIELD_MAPPING'     => 'Custom Field Mapping'        , // TODO: Review
@@ -722,6 +722,9 @@ $jsLanguageStrings = array(
 	'JS_PBX_FILL_ALL_FIELDS'=>"S'il vous plaît remplir tous les champs",
 	// ends
         
+        //No Tax exist 
+        'JS_LBL_NO_TAXES'=>'Pas de taxes', 
+    
      //Edit view mode Translations
         'JS_CHANGES_WILL_BE_LOST' => 'Vos modifications seront perdues!',
 );

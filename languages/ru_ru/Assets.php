@@ -9,8 +9,8 @@
  ************************************************************************************/
 $languageStrings = array(
 	'SINGLE_Assets'                => 'Активы'                , 
-	'LBL_ADD_RECORD'               => 'Добавить актив',
-	'LBL_RECORDS_LIST'             => 'Активы Список',
+	'LBL_ADD_RECORD'               => 'Add Asset'                   , // TODO: Review
+	'LBL_RECORDS_LIST'             => 'Assets List'                 , // TODO: Review
 	'LBL_ASSET_INFORMATION'        => 'Информация Актива', 
 	'Asset No'                     => 'Актив №'              , 
 	'Serial Number'                => 'Серийный Номер' , 

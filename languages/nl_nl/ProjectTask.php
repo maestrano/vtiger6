@@ -6,41 +6,51 @@
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ * *******************************************************************************
+ * Vicus eBusiness Solutions (www.vicus.nl) Version Control
+ * Dutch language pack for vtiger CRM version 6.x
+ * 
+ * @package   NL-Dutch
+ * @version   $Author: luuk $
+ * @version   CVS: $Revision: 1.5 $ $Date: 2014/09/07 22:42:08 $
+ * @source    $Source: /var/lib/cvs/vtiger600/languages/nl_nl/ProjectTask.php,v $
+ * @copyright Copyright (c)2005-2014 Vicus eBusiness Solutions B.V. <info@vicus.nl>
+ * @link      http://www.vicus.nl
  ************************************************************************************/
 $languageStrings = array(
-	'SINGLE_ProjectTask'           => 'Projecttaak'                 , 
-	'LBL_ADD_RECORD'               => 'Voeg Projecttaak toe'        , 
-	'LBL_RECORDS_LIST'             => 'Projecttaak List'            , 
-	'LBL_PROJECT_TASK_INFORMATION' => 'Projecttaak Informatie'      , 
-	'LBL_PROJECTS_LIST'            => 'Projects List'               , // TODO: Review
-	'LBL_TASKS_LIST'               => 'Tasks List'                  , // TODO: Review
-    'LBL_MILESTONES_LIST'          => 'Mijlpalen Lijst'             ,
-	
+    'SINGLE_ProjectTask'           => 'Projecttaak'                 ,
+    'LBL_ADD_RECORD'               => 'Voeg Projecttaak toe'        ,
+    'LBL_RECORDS_LIST'             => 'Projecttaak Lijst'           ,
+    'LBL_PROJECT_TASK_INFORMATION' => 'Projecttaak Informatie'      , 
+    'LBL_PROJECTS_LIST'            => 'Projectenlijst'              ,
+    'LBL_TASKS_LIST'               => 'Takenlijst'                  ,
+	'LBL_MILESTONES_LIST'          => 'Mijlpalenlijst'              ,
+    
 	//Field Labels
-	'Project Task Name' => 'Project Task Name',
-    'Project Task No' => 'Project Task No',
-    'Project Task Number' => 'Project Task Number',
-	'Status' => 'Status',
-	'Priority' => 'Priority',
-    'Progress' => 'Progress',
+    'Project Task Name' => 'Projecttaak Naam',
+    'Project Task No' => 'Projecttaak Nr',
+    'Project Task Number' => 'Projecttaak Nummer',
+    'Status' => 'Status',
+    'Priority' => 'Prioriteit',
+    'Progress' => 'Voortgang',
     'Type'=>'Type',
-    'Worked Hours'=>'Worked Hours',
-    'Start Date'=>'Start Date',
-    'End Date'=>'End Date',
-    'Related To' => 'Related To',
+    'Worked Hours'=>'Gewerkte uren',
+    'Start Date'=>'Startdatum',
+    'End Date'=>'Einddatum',
+    'Related to' => 'Gerelateerd aan',
     'administrative' => 'Administratief',
-    'operative' => 'Arbeider',
-    'other' => 'Ander',
+    'operative' => 'Operationeel',
+    'other' => 'Anders',
     'low' => 'Laag',
     'normal' => 'Normaal',
     'high' => 'Hoog',
-    'Created Time' => 'Created Time',
-    'Modified Time' => 'Modified Time',
-    'description' => 'Description',
-	'Assigned To' => 'Assigned To',
-	'Open' => 'Open',
-	'In Progress' => 'In Progress',
-	'Completed' => 'Completed',
-	'Deferred' => 'Deferred',
-	'Canceled ' => 'Canceled',
+    'Created Time' => 'Gemaakt tijd',
+    'Modified Time' => 'Gewijzigd tijd',
+    'description' => 'Omschrijving',
+    'Assigned To' => 'Toegewezen aan',
+    'Open' => 'Open',
+    'In Progress' => 'Onder handen',
+    'Completed' => 'Afgerond',
+    'Deferred' => 'Uitgesteld',
+    'Canceled ' => 'Geannuleerd',
 );

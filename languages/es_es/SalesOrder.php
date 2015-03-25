@@ -30,6 +30,7 @@ $languageStrings = array(
 	'Purchase Order'               => 'Orden Compra',
 	'Vendor Terms'                 => 'Términos del Proveedor',
 	'Pending'                      => 'Pendiente',
+    'Recurring Invoive Information'=>'Recurrente Información Factura',
 	'Enable Recurring'             => 'Habilitar facturación recurrente',
 	'Frequency'                    => 'Frecuencia',
 	'Start Period'                 => 'Inicio Periodo',
@@ -42,4 +43,20 @@ $languageStrings = array(
 	'Credit Invoice'               => 'Rectificativa',
 	'Paid'                         => 'Pagada',
 	'LBL_SEND_MAIL_PDF' => 'Enviar Email con PDF',
+    'Daily'=>'Diario',
+    'Monthly'=>'Mensual',
+    'Quarterly'=>'Trimestral',
+    'Yearly'=>'Anual',
+    'Net 30 days'=>'30 días netos',
+    'Net 45 days'=>'Net 45 días',
+    'Net 60 days'=>'Netos 60 días',
+
+	//Translation for product not found
+	'LBL_THIS' => 'Este',
+	'LBL_IS_DELETED_FROM_THE_SYSTEM_PLEASE_REMOVE_OR_REPLACE_THIS_ITEM' => 'ha sido eliminado de la aplicación. Por favor, elimina o sustituye este artículo.',
+	'LBL_THIS_LINE_ITEM_IS_DELETED_FROM_THE_SYSTEM_PLEASE_REMOVE_THIS_LINE_ITEM' => 'Este artículo ha sido eliminado de la aplicación. Por favor, elimina o sustituye este artículo.',
+);
+
+$jsLanguageStrings = array(
+		'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Por favor arregla la línea con artículo eliminado',
 );

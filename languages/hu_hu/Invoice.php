@@ -36,5 +36,6 @@ $languageStrings = array(
 );
 
 $jsLanguageStrings = array(
-	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Kérjük, hogy távolítsd el a törölt tételt a sorból.',
+	'JS_PLEASE_REMOVE_LINE_ITEM_THAT_IS_DELETED' => 'Kérjük, hogy távolítsa el a törölt tételt a sorból.',
+	'JS_PLEASE_ENABLE_PRODUCT_OR_SERVICE_MODULE' => 'Kérjük, hogy engedélyezze a Termék vagy a Szolgáltatás modult' ,
 );

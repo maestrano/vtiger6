@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Accounts'                     => 'Cuentas'                     , 
@@ -36,11 +39,11 @@ $languageStrings = array(
 	'LBL_START_DATE'               => 'Inicio'                      , 
 	'LBL_END_DATE'                 => 'Vencimiento'                 , 
 	'LBL_DUPLICATES_EXIST'         => 'El nombre de esta cuenta ya existe', 
-	'LBL_COPY_SHIPPING_ADDRESS'    => 'Copy Shipping Address'       , // TODO: Review
-	'LBL_COPY_BILLING_ADDRESS'     => 'Copy Billing Address'        , // TODO: Review
+	'LBL_COPY_SHIPPING_ADDRESS'    => 'Copiar Dirección de Envío'       , // TODO: Review
+	'LBL_COPY_BILLING_ADDRESS'     => 'Copiar Dirección de Factura'        , // TODO: Review
 );
 $jsLanguageStrings = array(
 	'LBL_RELATED_RECORD_DELETE_CONFIRMATION' => 'Seguro que lo quieres borrar?', 
 	'LBL_DELETE_CONFIRMATION'      => 'Eliminando esta cuenta, se eliminarán también todas las oportunidades y cotizaciones relacionadas. ¿Estás seguro de que quieres eliminar esta cuenta?', 
-	'LBL_MASS_DELETE_CONFIRMATION' => 'Eliminando esta cuenta, se eliminarán también todas las oportunidades y cotizaciones relacionadas. ¿Estás seguro de que quieres eliminar esta cuenta', 
+	'LBL_MASS_DELETE_CONFIRMATION' => 'Eliminando esta cuenta, se eliminarán también todas las oportunidades y cotizaciones relacionadas. ¿Estás seguro de que quieres eliminar estas cuentas?', 
 );

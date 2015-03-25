@@ -1,11 +1,14 @@
 <?php
-/*+**********************************************************************************
+/************************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *  Author       : Francisco Hernandez Odin Consultores S de RL de CV
+ *  Author       : www.odin.mx
+ *  Author       : Proudly, the best Vtiger's Partner in Mexico
  ************************************************************************************/
 $languageStrings = array(
 	'Services'                     => 'Servicios'                   , 
@@ -21,11 +24,11 @@ $languageStrings = array(
 	'LBL_ADD_TO_PRICEBOOKS'        => 'Agregar a Lista de precios'  , 
 	'Service Name'                 => 'Nombre Servicio'             , 
 	'Service Active'               => 'Servicio Activo'             , 
-	'Service Category'             => 'Categoría Servicio'         , 
+	'Service Category'             => 'Categoría de Servicio'         , 
 	'Service No'                   => 'Número Servicio'            , 
-	'Owner'                        => 'Propietario'                 , 
-	'No of Units'                  => 'Número unidades'            , 
-	'Commission Rate'              => 'Comisión (%)'               , 
+	'Owner'                        => 'Encargado'                 , 
+	'No of Units'                  => 'Número de unidades'            , 
+	'Commission Rate'              => 'Comisión'                   , 
 	'Price'                        => 'Precio'                      , 
 	'Usage Unit'                   => 'Unidades de consumo'         , 
 	'Tax Class'                    => 'Tipo impuesto'               , 

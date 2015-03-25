@@ -56,5 +56,8 @@ $languageStrings = array(
 	'ERR_UNIMPORTED_RECORDS_EXIST' => 'Nie można zaimportować więcej rekordów w tym imporcie, uruchom ponownie import.',
 	'ERR_IMPORT_INTERRUPTED' => 'Obecny import został przerwany. Spróbuj ponownie później',
 	'ERR_FAILED_TO_LOCK_MODULE' => 'Nie można zablokować modułu do importu. Spróbuj ponownie później',
-	'LBL_SELECT_SAVED_MAPPING' => 'Wybierz zapisany szablon importu'
+	'LBL_SELECT_SAVED_MAPPING' => 'Wybierz zapisany szablon importu',
+        'Skip'  => 'Pomiń',
+        'Overwrite' => 'Zastąpić',
+        'Merge' =>  'seryjnej',
 );

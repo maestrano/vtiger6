@@ -121,8 +121,8 @@ $languageStrings = array(
 	'Emails sent to Vendors'       => 'Emails enviados a Proveedores',
 	'Reports' => 'Informes',
 	'SINGLE_Reports' => 'Informe',
-	'LBL_NO_OF_RECORDS' => 'Registros en total : ',
-	'LBL_MORE_RECORDS_TXT'=>'Sólo 1.000 registros se muestran abajo. Por favor, exportar a ver todos los registros',
+	'LBL_NO_OF_RECORDS' => 'Número de registros',
+	'LBL_MORE_RECORDS_TXT'=>'Sólo 1.000 registros se muestran a continuación. Por favor, exporta para ver todos los registros',
 	'LBL_GENERATE_NOW' => 'Generar ahora',
 	'LBL_PRINT_REPORT' => 'Imprimir Informe',
 	'LBL_RECORDS' => 'Registros',
@@ -135,4 +135,5 @@ $languageStrings = array(
 $jsLanguageStrings = array(
 	'JS_DUPLICATE_RECORD' => 'Informe Duplicado',
 	'JS_CALCULATION_LINE_ITEM_FIELDS_SELECTION_LIMITATION' => 'Limitación: Campos de las líneas de producto (Precio Unitario, Descuento y Cantidad) solo se pueden utilizar si no hay otros campos de cálculo seleccionados.',
+        'JS_NO_CHART_DATA_AVAILABLE' => 'Datos no disponibles, por favor revise los campos seleccionados',
 );
