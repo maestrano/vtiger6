@@ -1643,6 +1643,19 @@ class Accounts extends CRMEntity {
 		}
 		return $entityIds;
 	}
+
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+    
+    $mapper = 'OrganizationMapper';
+    if(class_exists($mapper)) {
+      $organizationMapper = new $mapper();
+      $organizationMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
 }
 
 ?>

@@ -1,11 +1,10 @@
 <?php
 
 require_once '../init.php';
-// require_once '../connec/init.php';
 
 if(!Maestrano::param('connec.enabled')) { return false; }
 
-$filepath = '../var/_data_sequence';
+$filepath = 'maestrano/var/_data_sequence';
 $status = false;
 
 if (file_exists($filepath)) {
@@ -16,7 +15,7 @@ if (file_exists($filepath)) {
 
   // Fetch updates
   $client = new Maestrano_Connec_Client();
-  $msg = $client->get("updates/$timestamp?\$filter[entity]=Company,Employee,WorkLocation,PaySchedule,PayItem,TimeActivity");
+  $msg = $client->get("updates/$timestamp?\$filter[entity]=Organization");
   $code = $msg['code'];
   $body = $msg['body'];
 

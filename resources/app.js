@@ -391,24 +391,19 @@ var app = {
 
 	formAlignmentAfterValidation : function(form){
 		// to avoid hiding of error message under the fixed nav bar
-		var destination = form.find(".formError:not('.greenPopup'):first").offset().top;
-		var resizedDestnation = destination-105;
-		jQuery('html').animate({
-			scrollTop:resizedDestnation
-		}, 'slow');
-	},
-
-	/**
-	 * Function to push down the error message size when validation is invoked
-	 * @params : form Element
-	 */
-	formAlignmentAfterValidation : function(form){
-		// to avoid hiding of error message under the fixed nav bar
-		var destination = form.find(".formError:not('.greenPopup'):first").offset().top;
-		var resizedDestnation = destination-105;
-		jQuery('html').animate({
-			scrollTop:resizedDestnation
-		}, 'slow');
+		if(form != undefined) {
+			var formError = form.find(".formError:not('.greenPopup'):first");
+			if(formError != undefined) {
+				var offset = formError.offset();
+				if(offset != undefined) {
+					var destination = offset.top;
+					var resizedDestnation = destination-105;
+					jQuery('html').animate({
+						scrollTop:resizedDestnation
+					}, 'slow');
+				}
+			}
+		}
 	},
 
 	convertToDatePickerFormat: function(dateFormat){

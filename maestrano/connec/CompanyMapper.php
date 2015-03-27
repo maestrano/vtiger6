@@ -1,8 +1,5 @@
 <?php
 
-require_once 'BaseMapper.php';
-require_once 'MnoIdMap.php';
-
 /**
 * Map Connec Company representation to/from TimeTrex Company
 */

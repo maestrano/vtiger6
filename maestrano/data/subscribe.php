@@ -19,25 +19,9 @@ try {
       $companyMapper = new CompanyMapper();
       $companyMapper->fetchConnecResource($entity_id);
       break;
-    case "WORKLOCATIONS":
-      $workLocationMapper = new WorkLocationMapper();
-      $workLocationMapper->fetchConnecResource($entity_id);
-      break;
-    case "PAYSCHEDULES":
-      $payScheduleMapper = new PayScheduleMapper();
-      $payScheduleMapper->fetchConnecResource($entity_id);
-      break;
-    case "PAYITEMS":
-      $payItemMapper = new PayItemMapper();
-      $payItemMapper->fetchConnecResource($entity_id);
-      break;
-    case "EMPLOYEES":
-      $employeeMapper = new EmployeeMapper();
-      $employeeMapper->fetchConnecResource($entity_id);
-      break;
-    case "TIMEACTIVITIES":
-      $timeActivityMapper = new TimeActivityMapper();
-      $timeActivityMapper->fetchConnecResource($entity_id);
+    case "ORGANIZATIONS":
+      $organizationMapper = new OrganizationMapper();
+      $organizationMapper->fetchConnecResource($entity_id);
       break;
   }
 } catch (Exception $e) {

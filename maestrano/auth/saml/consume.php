@@ -12,7 +12,6 @@
 
   // Maestrano libraries
   require_once 'maestrano/app/sso/MnoSsoUser.php';
-  require_once 'maestrano/connec/init.php';
 
   # Reset session
   try {
@@ -30,10 +29,10 @@
     
     // Get Maestrano User
     $sso_user = new MnoSsoUser($resp);
-    
+
     // Find or create the User
     $sso_user->findOrCreate();
-    
+
     $_SESSION["loggedIn"] = true;
     $_SESSION["firstName"] = $user->getFirstName();
     $_SESSION["lastName"] = $user->getLastName();

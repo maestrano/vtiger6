@@ -37,7 +37,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
     // Find user by uid or email
     $local_id = $this->getLocalIdByUid();
     if($local_id == null) { $local_id = $this->getLocalIdByEmail(); }
-    
+
     if ($local_id) {
       // User found, load it
       $this->local_id = $local_id;
@@ -114,8 +114,6 @@ class MnoSsoUser extends Maestrano_Sso_User {
   
   /**
    * Build a local user for creation
-   *
-   * @return a timetrex user
    */
   protected function buildLocalUser() {
     $fields = &$this->_user->column_fields;
@@ -175,28 +173,20 @@ class MnoSsoUser extends Maestrano_Sso_User {
   
   /**
    * Return the role to give to the user based on context
-   * If the user is the owner of the app or at least Admin
-   * for each organization, then it is given the role of 'Admin'.
-   * Return 'User' role otherwise
-   *
-   * @return the ID of the user created, null otherwise
    */
   protected function isLocalUserAdmin() {
-    $ret_value = false;
-    
-    if ($this->app_owner) {
-      $ret_value = true; // Admin
-    } else {
-      foreach ($this->organizations as $organization) {
-        if ($organization['role'] == 'Admin' || $organization['role'] == 'Super Admin') {
-          $ret_value = true;
-        } else {
-          $ret_value = false;
-        }
-      }
+    switch($this->getGroupRole()) {
+      case 'Member':
+        return false;
+      case 'Power User':
+        return false;
+      case 'Admin':
+        return true;
+      case 'Super Admin':
+        return true;
+      default:
+        return false;
     }
-    
-    return $ret_value;
   }
   
   

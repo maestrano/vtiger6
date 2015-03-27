@@ -1,16 +1,14 @@
 <?php
 
-require_once 'MnoIdMap.php';
-
 /**
-* Map Connec Resource representation to/from TimeTrex Model
+* Map Connec Resource representation to/from vTiger Model
 * You need to extend this class an implement the following methods:
-* - getId($model) Returns the TimeTrex entity local id
-* - loadModelById($local_id) Loads the TimeTrex entity by its id
-* - mapConnecResourceToModel($resource_hash, $model) Maps the Connec resource to the TimeTrex entity
-* - mapModelToConnecResource($model) Maps the TimeTrex entity into a Connec resource
-* - persistLocalModel($model) Saves the TimeTrex entity
-* - matchLocalModel($resource_hash) (Optional) Returns an TimeTrex entity matched by attributes
+* - getId($model) Returns the vTiger entity local id
+* - loadModelById($local_id) Loads the vTiger entity by its id
+* - mapConnecResourceToModel($resource_hash, $model) Maps the Connec resource to the vTiger entity
+* - mapModelToConnecResource($model) Maps the vTiger entity into a Connec resource
+* - persistLocalModel($model) Saves the vTiger entity
+* - matchLocalModel($resource_hash) (Optional) Returns an vTiger entity matched by attributes
 */
 abstract class BaseMapper {
   private $_connec_client;
@@ -38,21 +36,27 @@ abstract class BaseMapper {
   abstract protected function loadModelById($local_id);
 
   // Overwrite me!
-  // Map the Connec resource attributes onto the TimeTrex model
+  // Map the Connec resource attributes onto the vTiger model
   abstract protected function mapConnecResourceToModel($resource_hash, $model);
 
   // Overwrite me!
-  // Map the TimeTrex model to a Connec resource hash
+  // Map the vTiger model to a Connec resource hash
   abstract protected function mapModelToConnecResource($model);
 
   // Overwrite me!
-  // Persist the TimeTrex model
-  abstract protected function persistLocalModel($modell, $resource_hash);
+  // Persist the vTiger model
+  abstract protected function persistLocalModel($model, $resource_hash);
 
   // Overwrite me!
   // Optional: Match a local Model from hash attributes
   protected function matchLocalModel($resource_hash) {
     return null;
+  }
+
+  // Overwrite me!
+  // Optional: Check the hash is valid for mapping, if false, resource is skipped
+  protected function validate($resource_hash) {
+    return true;
   }
 
   public function getConnecResourceName() {
@@ -92,7 +96,7 @@ abstract class BaseMapper {
     return false;
   }
 
-  // Persist a list of Connec Resources as TimeTrex Models
+  // Persist a list of Connec Resources as vTiger Models
   public function persistAll($resources_hash) {
     if(!is_null($resources_hash)) {
       foreach($resources_hash as $resource_hash) {
@@ -105,9 +109,11 @@ abstract class BaseMapper {
     }
   }
 
-  // Map a Connec Resource to an TimeTrex Model
+  // Map a Connec Resource to an vTiger Model
   public function saveConnecResource($resource_hash, $persist=true, $model=null, $retry=true) {
     error_log("saveConnecResource entity=$this->connec_entity_name, hash=" . json_encode($resource_hash));
+
+    if(!$this->validate($resource_hash)) { return null; }
     
     // Load existing Model or create a new instance
     try {
@@ -125,22 +131,11 @@ abstract class BaseMapper {
 
       // Save and map the Model id to the Connec resource id
       if($persist) {
-        if($model->isValid()) {
-          error_log("persistLocalModel entity=$this->connec_entity_name");
-          $this->persistLocalModel($model, $resource_hash);
-          $this->findOrCreateIdMap($resource_hash, $model);
-        } else {
-          error_log("cannot save entity_name=$this->connec_entity_name, entity_id=" . $resource_hash['id'] . ", error=" . $model->Validator->getTextErrors());
-          // Notify Connec! of error
-          $transaction_log = array('entity_id' => $resource_hash['id'], 'entity_name' => $this->connec_entity_name, 'message' => $model->Validator->getTextErrors(),
-                                   'status' => 'ERROR');
-          $hash = array('transaction_logs' => $transaction_log);
-          $this->_connec_client->post('transaction_logs', $hash);
-        }
+        error_log("persistLocalModel entity=$this->connec_entity_name");
+        $this->persistLocalModel($model, $resource_hash);
+        $this->findOrCreateIdMap($resource_hash, $model);
       }
 
-      // Clear model
-      $model->clearData();
       return $model;
     } catch (Exception $e) {
       error_log("Error when saving Connec resource entity=".$this->connec_entity_name.", error=" . $e->getMessage());
@@ -153,7 +148,7 @@ abstract class BaseMapper {
     return null;
   }
 
-  // Map a Connec Resource to an TimeTrex Model
+  // Map a Connec Resource to an vTiger Model
   public function findOrCreateIdMap($resource_hash, $model) {
     $local_id = $this->getId($model);
     error_log("findOrCreateIdMap entity=$this->connec_entity_name, local_id=$local_id, entity_id=".$resource_hash['id']);
@@ -186,7 +181,7 @@ abstract class BaseMapper {
     }
   }
 
-  // Find an TimeTrex entity matching the Connec resource or initialize a new one
+  // Find an vTiger entity matching the Connec resource or initialize a new one
   protected function findOrInitializeModel($resource_hash) {
     $model = null;
 
@@ -211,16 +206,21 @@ abstract class BaseMapper {
     if($model == null) { $model = $this->matchLocalModel($resource_hash); }
 
     // Create a new Model if none found
-    if($model == null) { $model = TTnew($this->local_entity_name . 'Factory'); }
+    $entity_class = $this->local_entity_name;
+    if($model == null) { $model = new $entity_class(); }
 
     return $model;
   }
 
-  // Transform an TimeTrex Model into a Connec Resource and push it to Connec
+  // Transform an vTiger Model into a Connec Resource and push it to Connec
   protected function pushToConnec($model) {
+    error_log("push entity to connec entity=$this->connec_entity_name, local_id=" . $this->getId($model));
+
     // Transform the Model into a Connec hash
     $resource_hash = $this->mapModelToConnecResource($model);
     $hash = array($this->connec_resource_name => $resource_hash);
+    error_log("generated connec hash " . json_encode($hash));
+
     // Find Connec resource id
     $local_id = $this->getId($model);
     $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
