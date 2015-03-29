@@ -1,7 +1,13 @@
 <?php
 
 require_once '../init.php';
-// require_once '../connec/init.php';
+
+// Set default user for entities creation
+global $current_user;
+if(is_null($current_user)) { $current_user = array(); }
+if(!isset($current_user->id)) {
+  $current_user->id = "1";
+}
 
 try {
   if(!Maestrano::param('connec.enabled')) { return false; }

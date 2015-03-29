@@ -36,9 +36,3 @@ require_once('vendor/maestrano/maestrano-php/lib/Maestrano.php');
 require_once('maestrano/connec/init.php');
 
 Maestrano::configure(ROOT_PATH . 'maestrano.json');
-
-// Set default user for entities creation
-global $current_user;
-if(!isset($current_user->id)) {
-	$current_user->id = "1";
-}
