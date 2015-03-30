@@ -52,6 +52,9 @@ class ProductMapper extends BaseMapper {
   protected function mapModelToConnecResource($product) {
     $product_hash = array();
 
+    // Default product type to PURCHASED on creation
+    if($this->is_new($product)) { $product_hash['type'] = 'PURCHASED'; }
+
     // Map attributes
     if($this->is_set($product->column_fields['product_no'])) { $product_hash['code'] = $product->column_fields['product_no']; }
     if($this->is_set($product->column_fields['productname'])) { $product_hash['name'] = $product->column_fields['productname']; }
