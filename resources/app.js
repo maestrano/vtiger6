@@ -406,6 +406,17 @@ var app = {
 		}
 	},
 
+
+	// Maestrano: Previous implementation causing JS errors
+	// formAlignmentAfterValidation : function(form){
+	// 	// to avoid hiding of error message under the fixed nav bar
+	// 	var destination = form.find(".formError:not('.greenPopup'):first").offset().top;
+	// 	var resizedDestnation = destination-105;
+	// 	jQuery('html').animate({
+	// 		scrollTop:resizedDestnation
+	// 	}, 'slow');
+	// },
+
 	convertToDatePickerFormat: function(dateFormat){
 		if(dateFormat == 'yyyy-mm-dd'){
 			return 'Y-m-d';
