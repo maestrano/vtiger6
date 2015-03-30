@@ -63,6 +63,9 @@ class SupplierOrganizationMapper extends BaseMapper {
     // Save as Supplier
     $organization_hash['is_supplier'] = true;
 
+    // Unset Customer flag when creating a new Vendor
+    if($this->is_new($organization)) { $organization_hash['is_customer'] = false; }
+
     // Map attributes
     if($this->is_set($organization->column_fields['vendor_no'])) { $organization_hash['code'] = $organization->column_fields['vendor_no']; }
     if($this->is_set($organization->column_fields['vendorname'])) { $organization_hash['name'] = $organization->column_fields['vendorname']; }

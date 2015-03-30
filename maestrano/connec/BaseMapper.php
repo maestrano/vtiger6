@@ -27,6 +27,10 @@ abstract class BaseMapper {
     return (!is_null($variable) && isset($variable) && !(is_string($variable) && trim($variable)===''));
   }
 
+  protected function is_new($entity) {
+    return ($entity->column_fields['createdtime'] == $entity->column_fields['modifiedtime']);
+  }
+
   // Overwrite me!
   // Return the Model local id
   abstract protected function getId($model);
