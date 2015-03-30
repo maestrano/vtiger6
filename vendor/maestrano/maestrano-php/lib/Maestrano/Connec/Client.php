@@ -80,8 +80,7 @@ class Maestrano_Connec_Client
     return array(
       'Authorization: Basic ' . base64_encode($apiToken),
       'Accept: ' . 'application/vnd.api+json',
-      'Content-Type: ' . 'application/vnd.api+json',
-      'Connec-Country-Format: alpha2'
+      'Content-Type: ' . 'application/vnd.api+json'
     );
   }
   
