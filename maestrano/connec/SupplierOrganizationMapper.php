@@ -18,7 +18,7 @@ class SupplierOrganizationMapper extends BaseMapper {
     return $organization->id;
   }
 
-  // // Return a local Organization by id
+  // Return a local Organization by id
   protected function loadModelById($local_id) {
     $organization = CRMEntity::getInstance("Vendors");
     $organization->retrieve_entity_info($local_id, "Vendors");

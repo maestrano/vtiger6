@@ -1574,6 +1574,19 @@ function get_contactsforol($user_name)
 		}
 		return $list_buttons;
 	}
+
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+
+    $mapper = 'ContactMapper';
+    if(class_exists($mapper)) {
+      $contactMapper = new $mapper();
+      $contactMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
 }
 
 ?>

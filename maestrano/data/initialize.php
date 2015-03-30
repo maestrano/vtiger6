@@ -4,10 +4,8 @@ require_once '../init.php';
 
 // Set default user for entities creation
 global $current_user;
-if(is_null($current_user)) { $current_user = array(); }
-if(!isset($current_user->id)) {
-  $current_user->id = "1";
-}
+if(is_null($current_user)) { $current_user = (object) array(); }
+if(!isset($current_user->id)) { $current_user->id = "1"; }
 
 if(!Maestrano::param('connec.enabled')) { return false; }
 
@@ -43,7 +41,7 @@ if (file_exists($filepath)) {
 }
 
 if ($status) {
-  file_put_contents($filepath, $current_timestamp);
+  // file_put_contents($filepath, $current_timestamp);
 }
 
 ?>

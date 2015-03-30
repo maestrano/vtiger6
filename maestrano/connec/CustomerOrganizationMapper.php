@@ -18,7 +18,7 @@ class CustomerOrganizationMapper extends BaseMapper {
     return $organization->id;
   }
 
-  // // Return a local Organization by id
+  // Return a local Organization by id
   protected function loadModelById($local_id) {
     $organization = CRMEntity::getInstance("Accounts");
     $organization->retrieve_entity_info($local_id, "Accounts");
@@ -125,7 +125,7 @@ class CustomerOrganizationMapper extends BaseMapper {
     $email_hash = array();
     if($this->is_set($organization->column_fields['email1'])) { $email_hash['address'] = $organization->column_fields['email1']; }
     if($this->is_set($organization->column_fields['email2'])) { $email_hash['address2'] = $organization->column_fields['email2']; }
-    if(!empty($phone_hash)) { $organization_hash['email'] = $email_hash; }
+    if(!empty($email_hash)) { $organization_hash['email'] = $email_hash; }
 
     if($this->is_set($organization->column_fields['website'])) { $organization_hash['website'] = array('url' => $organization->column_fields['website']); }
 

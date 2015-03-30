@@ -4,10 +4,8 @@ require_once '../init.php';
 
 // Set default user for entities creation
 global $current_user;
-if(is_null($current_user)) { $current_user = array(); }
-if(!isset($current_user->id)) {
-  $current_user->id = "1";
-}
+if(is_null($current_user)) { $current_user = (object) array(); }
+if(!isset($current_user->id)) { $current_user->id = "1"; }
 
 try {
   if(!Maestrano::param('connec.enabled')) { return false; }
@@ -26,8 +24,14 @@ try {
       $companyMapper->fetchConnecResource($entity_id);
       break;
     case "ORGANIZATIONS":
-      $organizationMapper = new OrganizationMapper();
+      $organizationMapper = new CustomerOrganizationMapper();
       $organizationMapper->fetchConnecResource($entity_id);
+      $organizationMapper = new SupplierOrganizationMapper();
+      $organizationMapper->fetchConnecResource($entity_id);
+      break;
+    case "PERSONS":
+      $contactMapper = new ContactMapper();
+      $contactMapper->fetchConnecResource($entity_id);
       break;
   }
 } catch (Exception $e) {
