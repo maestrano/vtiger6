@@ -75,6 +75,12 @@ class ContactMapper extends BaseMapper {
 
     if($this->is_set($person_hash['email']['address'])) { $person->column_fields['email'] = $person_hash['email']['address']; }
     if($this->is_set($person_hash['email']['address2'])) { $person->column_fields['secondaryemail'] = $person_hash['email']['address2']; }
+
+    // Map Organization
+    if($this->is_set($person_hash['organization_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($person_hash['organization_id'], 'ORGANIZATION');
+      if($mno_id_map) { $person_hash['account_id'] = $mno_id_map['app_entity_id']; }
+    }
   }
 
   // Map the vTiger Person to a Connec resource hash
@@ -122,6 +128,12 @@ class ContactMapper extends BaseMapper {
     if($this->is_set($person->column_fields['email'])) { $email_hash['address'] = $person->column_fields['email']; }
     if($this->is_set($person->column_fields['secondaryemail'])) { $email_hash['address2'] = $person->column_fields['secondaryemail']; }
     if(!empty($email_hash)) { $person_hash['email'] = $email_hash; }
+
+    // Map Organization
+    if($this->is_set($person->column_fields['account_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($person->column_fields['account_id'], 'ACCOUNTS');
+      if($mno_id_map) { $person_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+    }
 
     return $person_hash;
   }
