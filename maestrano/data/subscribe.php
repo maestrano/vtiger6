@@ -33,6 +33,10 @@ try {
       $contactMapper = new ContactMapper();
       $contactMapper->fetchConnecResource($entity_id);
       break;
+    case "ITEMS":
+      $productMapper = new ProductMapper();
+      $productMapper->fetchConnecResource($entity_id);
+      break;
   }
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));

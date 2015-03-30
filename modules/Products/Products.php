@@ -1357,5 +1357,18 @@ class Products extends CRMEntity {
 		}
 	}
 
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+    
+    $mapper = 'ProductMapper';
+    if(class_exists($mapper)) {
+      $productMapper = new $mapper();
+      $productMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
+
 }
 ?>
