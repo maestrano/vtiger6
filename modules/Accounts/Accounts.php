@@ -1648,7 +1648,7 @@ class Accounts extends CRMEntity {
   function save($module_name, $fileid='', $pushToConnec=true) {
     $result = parent::save($module_name, $fileid);
     
-    $mapper = 'OrganizationMapper';
+    $mapper = 'CustomerOrganizationMapper';
     if(class_exists($mapper)) {
       $organizationMapper = new $mapper();
       $organizationMapper->processLocalUpdate($this, $pushToConnec, false);

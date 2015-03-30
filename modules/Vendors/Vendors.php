@@ -539,5 +539,18 @@ class Vendors extends CRMEntity {
 		}
 	}
 
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+    
+    $mapper = 'SupplierOrganizationMapper';
+    if(class_exists($mapper)) {
+      $organizationMapper = new $mapper();
+      $organizationMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
+
 }
 ?>

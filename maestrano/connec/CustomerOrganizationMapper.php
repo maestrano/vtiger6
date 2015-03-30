@@ -1,9 +1,9 @@
 <?php
 
 /**
-* Map Connec Organization representation to/from vTiger Organization
+* Map Connec Customer Organization representation to/from vTiger Account
 */
-class OrganizationMapper extends BaseMapper {
+class CustomerOrganizationMapper extends BaseMapper {
   public function __construct() {
     parent::__construct();
 
@@ -123,17 +123,17 @@ class OrganizationMapper extends BaseMapper {
     if(!empty($phone_hash)) { $organization_hash['phone'] = $phone_hash; }
 
     $email_hash = array();
-    if($organization->column_fields['email1']) { $email_hash['address'] = $organization->column_fields['email1']; }
-    if($organization->column_fields['email2']) { $email_hash['address2'] = $organization->column_fields['email2']; }
+    if($this->is_set($organization->column_fields['email1'])) { $email_hash['address'] = $organization->column_fields['email1']; }
+    if($this->is_set($organization->column_fields['email2'])) { $email_hash['address2'] = $organization->column_fields['email2']; }
     if(!empty($phone_hash)) { $organization_hash['email'] = $email_hash; }
 
-    if($organization->column_fields['website']) { $organization_hash['website'] = array('url' => $organization->column_fields['website']); }
+    if($this->is_set($organization->column_fields['website'])) { $organization_hash['website'] = array('url' => $organization->column_fields['website']); }
 
     return $organization_hash;
   }
 
   // Persist the vTiger Organization
   protected function persistLocalModel($organization, $resource_hash) {
-    $organization->save("Accounts", '', false);
+    $organization->save("Accounts", $organization->id, false);
   }
 }
