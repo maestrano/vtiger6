@@ -136,4 +136,12 @@ class CustomerOrganizationMapper extends BaseMapper {
   protected function persistLocalModel($organization, $resource_hash) {
     $organization->save("Accounts", $organization->id, false);
   }
+
+  // Find an Account entity by name
+  public static function findByName($accountname) {
+    global $adb;
+    $result = $adb->pquery("SELECT * from vtiger_account WHERE accountname = '".$accountname."'");
+    if($result) { return $result->fields; }
+    return null;
+  }
 }

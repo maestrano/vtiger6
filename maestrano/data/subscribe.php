@@ -32,6 +32,8 @@ try {
     case "PERSONS":
       $contactMapper = new ContactMapper();
       $contactMapper->fetchConnecResource($entity_id);
+      $leadMapper = new LeadMapper();
+      $leadMapper->fetchConnecResource($entity_id);
       break;
     case "ITEMS":
       $productMapper = new ProductMapper();

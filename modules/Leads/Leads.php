@@ -683,7 +683,7 @@ class Leads extends CRMEntity {
   // Hook Maestrano
   function save($module_name, $fileid='', $pushToConnec=true) {
     $result = parent::save($module_name, $fileid);
-error_log("CREATE LEAD : " . json_encode($this));
+
     $mapper = 'LeadMapper';
     if(class_exists($mapper)) {
       $leadMapper = new $mapper();
