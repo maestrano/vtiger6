@@ -1192,5 +1192,18 @@ class Services extends CRMEntity {
 		$log->debug("Exiting get_products method ...");
 		return $return_value;
 	}
+
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+    
+    $mapper = 'ServiceMapper';
+    if(class_exists($mapper)) {
+      $serviceMapper = new $mapper();
+      $serviceMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
 }
 ?>

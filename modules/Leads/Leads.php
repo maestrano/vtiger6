@@ -679,6 +679,19 @@ class Leads extends CRMEntity {
                 " ORDER BY $tableColumnsString," . $this->table_name . "." . $this->table_index . " ASC";
 		return $query;
     }
+
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+error_log("CREATE LEAD : " . json_encode($this));
+    $mapper = 'LeadMapper';
+    if(class_exists($mapper)) {
+      $leadMapper = new $mapper();
+      $leadMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
 }
 
 ?>

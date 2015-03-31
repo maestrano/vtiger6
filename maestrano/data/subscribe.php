@@ -36,6 +36,8 @@ try {
     case "ITEMS":
       $productMapper = new ProductMapper();
       $productMapper->fetchConnecResource($entity_id);
+      $serviceMapper = new ServiceMapper();
+      $serviceMapper->fetchConnecResource($entity_id);
       break;
   }
 } catch (Exception $e) {
