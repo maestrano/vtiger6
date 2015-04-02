@@ -23,6 +23,10 @@ try {
       $companyMapper = new CompanyMapper();
       $companyMapper->fetchConnecResource($entity_id);
       break;
+    case "ACCOUNTS":
+      $accountMapper = new AccountMapper();
+      $accountMapper->fetchConnecResource($entity_id);
+      break;
     case "ORGANIZATIONS":
       $organizationMapper = new CustomerOrganizationMapper();
       $organizationMapper->fetchConnecResource($entity_id);

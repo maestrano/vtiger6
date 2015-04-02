@@ -65,14 +65,11 @@ class LeadMapper extends BaseMapper {
 
     // Map Organization
     if($this->is_set($lead_hash['organization_id'])) {
-error_log("PULL ORG " . json_encode($lead_hash['organization_id']));
       $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['organization_id'], 'ORGANIZATION');
-error_log("PULL ORG mno_id_map" . json_encode($mno_id_map));
       if($mno_id_map) {
         $account_id = $mno_id_map['app_entity_id'];
         $account = CRMEntity::getInstance("Accounts");
         $account->retrieve_entity_info($account_id, "Accounts");
-error_log("MAPPED TO ACCOUNT NAME " . $account->column_fields['accountname']);
         $lead->column_fields['website'] = $account->column_fields['accountname'];
       }
     }
@@ -119,12 +116,9 @@ error_log("MAPPED TO ACCOUNT NAME " . $account->column_fields['accountname']);
 
     // Map Organization by Name
     if($this->is_set($lead->column_fields['company'])) {
-error_log("PUSH ORG " . json_encode($lead->column_fields['company']));
       $organization_fields = CustomerOrganizationMapper::findByName($lead->column_fields['company']);
-error_log("LOAD ORGANIZATION " . json_encode($organization_fields));
       if($this->is_set($organization_fields)) {
         $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($organization_fields['accountid'], 'ACCOUNTS');
-error_log("MAP ORGANIZATION mno_id_map " . json_encode($mno_id_map));
         if($mno_id_map) { $lead_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
       }
     }
