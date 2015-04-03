@@ -86,12 +86,10 @@ class ProductMapper extends BaseMapper {
     if($mno_id_map) {
       $tax_id = $mno_id_map['app_entity_id'];
       $tax = Settings_Vtiger_TaxRecord_Model::getInstanceById($tax_id, Settings_Vtiger_TaxRecord_Model::PRODUCT_AND_SERVICE_TAX);
-
+      
       // Delete existing Tax
-      if(!$this->is_new($product)) {
-        $query = "DELETE FROM vtiger_producttaxrel WHERE productid=? AND taxid=?";
-        $adb->pquery($query, array($product->id, $tax_id));
-      }
+      $query = "DELETE FROM vtiger_producttaxrel WHERE productid=? AND taxid=?";
+      $adb->pquery($query, array($product->id, $tax_id));
 
       // Insert Tax for this product
       $query = "INSERT INTO vtiger_producttaxrel VALUES(?,?,?)";
