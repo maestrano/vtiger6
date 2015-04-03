@@ -81,7 +81,7 @@ class Settings_Vtiger_TaxRecord_Model extends Vtiger_Base_Model{
         return $tablename;
     }
     
-    public function save() {
+    public function save($pushToConnec=true) {
         $db = PearDatabase::getInstance();
         
         $tablename = $this->getTableNameFromType();
@@ -99,6 +99,14 @@ class Settings_Vtiger_TaxRecord_Model extends Vtiger_Base_Model{
         }else{
             $taxId = $this->addTax();   
         }
+
+        // Hook Maestrano
+        $mapper = 'TaxMapper';
+        if(class_exists($mapper)) {
+          $taxMapper = new $mapper();
+          $taxMapper->processLocalUpdate($this, $pushToConnec, false);
+        }
+
         return $taxId;
     }
     
