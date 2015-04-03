@@ -65,7 +65,7 @@ class ProductMapper extends BaseMapper {
 
     if($this->is_set($product->column_fields['unit_price'])) { $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']); }
 
-    $this->mapTaxToConnecResource($product, $product_hash);
+    ProductMapper::mapTaxToConnecResource($product, $product_hash);
 
     return $product_hash;
   }
@@ -74,11 +74,11 @@ class ProductMapper extends BaseMapper {
   protected function persistLocalModel($product, $product_hash) {
     $product->save("Products", $product->id, false);
 
-    $this->mapConnecTaxToProduct($product_hash, $product);
+    ProductMapper::mapConnecTaxToProduct($product_hash, $product);
   }
 
   // Save sales tax against product
-  public function mapConnecTaxToProduct($product_hash, $product) {
+  public static function mapConnecTaxToProduct($product_hash, $product) {
     global $adb;
 
     $sale_tax_code_id = $product_hash['sale_tax_code_id'];
@@ -100,12 +100,12 @@ class ProductMapper extends BaseMapper {
   }
 
   // Add tax to product hash
-  public function mapTaxToConnecResource($product, $product_hash) {
+  public static function mapTaxToConnecResource($product, &$product_hash) {
     global $adb;
 
     // Select first product tax
     $query = "SELECT * FROM vtiger_producttaxrel WHERE productid=? LIMIT 1";
-    $result = $adb->pquery($query);
+    $result = $adb->pquery($query, array($product->id));
     if($result) {
       $tax_id = $result->fields['taxid'];
       // Map connec tax id

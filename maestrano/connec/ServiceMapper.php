@@ -28,9 +28,9 @@ class ServiceMapper extends BaseMapper {
     return $service;
   }
 
-  protected function validate($resource_hash) {
+  protected function validate($service_hash) {
     // Process only Services
-    return $resource_hash['type'] == 'SERVICE';
+    return $service_hash['type'] == 'SERVICE';
   }
 
   // Map the Connec resource attributes onto the vTiger Service
@@ -65,11 +65,15 @@ class ServiceMapper extends BaseMapper {
 
     if($this->is_set($service->column_fields['unit_price'])) { $service_hash['sale_price'] = array('net_amount' => $service->column_fields['unit_price']); }
 
+    ProductMapper::mapTaxToConnecResource($service, $service_hash);
+
     return $service_hash;
   }
 
   // Persist the vTiger Service
-  protected function persistLocalModel($service, $resource_hash) {
+  protected function persistLocalModel($service, $service_hash) {
     $service->save("Services", $service->id, false);
+
+    ProductMapper::mapConnecTaxToProduct($service_hash, $service);
   }
 }
