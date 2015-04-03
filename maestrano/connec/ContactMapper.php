@@ -78,8 +78,9 @@ class ContactMapper extends BaseMapper {
 
     // Map Organization
     if($this->is_set($person_hash['organization_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($person_hash['organization_id'], 'ORGANIZATION');
-      if($mno_id_map) { $person_hash['account_id'] = $mno_id_map['app_entity_id']; }
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($person_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
+error_log("ORG MNO ID: " . $person_hash['organization_id'] . ' -> ' . json_encode($mno_id_map));
+      if($mno_id_map) { $person->column_fields['account_id'] = $mno_id_map['app_entity_id']; }
     }
   }
 

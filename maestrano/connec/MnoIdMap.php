@@ -8,9 +8,18 @@ class MnoIdMap {
     return $result;
   }
 
-  public static function findMnoIdMapByMnoIdAndEntityName($mno_id, $mno_entity_name) {
+  public static function findMnoIdMapByMnoIdAndEntityName($mno_id, $mno_entity_name, $local_entity_name=null) {
     global $adb;
-    $result = $adb->pquery("SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."'");
+
+    $query = '';
+    
+    if(is_null($local_entity_name)) {
+      $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."'";
+    } else {
+      $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."' AND app_entity_name = '".strtoupper($local_entity_name)."'";
+    }
+    
+    $result = $adb->pquery($query);
     if($result) { return $result->fields; }
     return null;
   }

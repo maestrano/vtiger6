@@ -65,7 +65,7 @@ class LeadMapper extends BaseMapper {
 
     // Map Organization
     if($this->is_set($lead_hash['organization_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['organization_id'], 'ORGANIZATION');
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
       if($mno_id_map) {
         $account_id = $mno_id_map['app_entity_id'];
         $account = CRMEntity::getInstance("Accounts");
