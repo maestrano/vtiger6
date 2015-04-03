@@ -36,6 +36,7 @@ class ServiceMapper extends BaseMapper {
   // Map the Connec resource attributes onto the vTiger Service
   protected function mapConnecResourceToModel($service_hash, $service) {
     // Map hash attributes to Service
+    if(is_null($service->column_fields['discontinued'])) { $service->column_fields['discontinued'] = 1; }
     if($this->is_set($service_hash['code'])) { $service->column_fields['service_no'] = $service_hash['code']; }
     if($this->is_set($service_hash['name'])) { $service->column_fields['servicename'] = $service_hash['name']; }
     if($this->is_set($service_hash['description'])) { $service->column_fields['description'] = $service_hash['description']; }

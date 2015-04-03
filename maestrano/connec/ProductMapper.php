@@ -36,6 +36,7 @@ class ProductMapper extends BaseMapper {
   // Map the Connec resource attributes onto the vTiger Product
   protected function mapConnecResourceToModel($product_hash, $product) {
     // Map hash attributes to Product
+    if(!$this->is_set($product->column_fields['discontinued'])) { $product->column_fields['discontinued'] = 1; }
     if($this->is_set($product_hash['code'])) { $product->column_fields['product_no'] = $product_hash['code']; }
     if($this->is_set($product_hash['name'])) { $product->column_fields['productname'] = $product_hash['name']; }
     if($this->is_set($product_hash['description'])) { $product->column_fields['description'] = $product_hash['description']; }

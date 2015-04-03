@@ -635,6 +635,19 @@ class Invoice extends CRMEntity {
 		return $query;
 	}
 
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+
+    $mapper = 'InvoiceMapper';
+    if(class_exists($mapper)) {
+      $invoiceMapper = new $mapper();
+      $invoiceMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
+
 }
 
 ?>
