@@ -115,10 +115,10 @@ abstract class BaseMapper {
 
   // Map a Connec Resource to an vTiger Model
   public function saveConnecResource($resource_hash, $persist=true, $model=null, $retry=true) {
-    error_log("saveConnecResource entity=$this->connec_entity_name, hash=" . json_encode($resource_hash));
-
     if(!$this->validate($resource_hash)) { return null; }
     
+    error_log("saveConnecResource entity=$this->connec_entity_name, hash=" . json_encode($resource_hash));
+
     // Load existing Model or create a new instance
     try {
       if(is_null($model)) {

@@ -23,6 +23,10 @@ try {
       $companyMapper = new CompanyMapper();
       $companyMapper->fetchConnecResource($entity_id);
       break;
+    case "TAXCODES":
+      $taxMapper = new TaxMapper();
+      $taxMapper->fetchConnecResource($entity_id);
+      break;
     case "ACCOUNTS":
       $accountMapper = new AccountMapper();
       $accountMapper->fetchConnecResource($entity_id);
