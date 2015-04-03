@@ -21,6 +21,7 @@ require_once 'modules/Documents/Documents.php';
 require_once 'modules/Potentials/Potentials.php';
 require_once 'modules/Users/Users.php';
 require_once 'modules/Products/Products.php';
+require_once 'modules/Services/Services.php';
 require_once 'modules/HelpDesk/HelpDesk.php';
 require_once 'modules/Vendors/Vendors.php';
 require_once 'include/utils/UserInfoUtil.php';

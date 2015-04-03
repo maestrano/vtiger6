@@ -210,8 +210,14 @@ abstract class BaseMapper {
     if($model == null) { $model = $this->matchLocalModel($resource_hash); }
 
     // Create a new Model if none found
-    $entity_class = $this->local_entity_name;
-    if($model == null) { $model = new $entity_class(); }
+    if($model == null) {
+      $entity_class = $this->local_entity_name;
+      if(class_exists($entity_class)) {
+        $model = new $entity_class();
+      } else {
+        error_log("Class $entity_class not loaded, model cannot be created");
+      }
+    }
 
     return $model;
   }

@@ -65,11 +65,52 @@ class ProductMapper extends BaseMapper {
 
     if($this->is_set($product->column_fields['unit_price'])) { $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']); }
 
+    $this->mapTaxToConnecResource($product, $product_hash);
+
     return $product_hash;
   }
 
   // Persist the vTiger Product
-  protected function persistLocalModel($product, $resource_hash) {
+  protected function persistLocalModel($product, $product_hash) {
     $product->save("Products", $product->id, false);
+
+    $this->mapConnecTaxToProduct($product_hash, $product);
+  }
+
+  // Save sales tax against product
+  public function mapConnecTaxToProduct($product_hash, $product) {
+    global $adb;
+
+    $sale_tax_code_id = $product_hash['sale_tax_code_id'];
+    $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($sale_tax_code_id, 'TAXCODE');
+    if($mno_id_map) {
+      $tax_id = $mno_id_map['app_entity_id'];
+      $tax = Settings_Vtiger_TaxRecord_Model::getInstanceById($tax_id, Settings_Vtiger_TaxRecord_Model::PRODUCT_AND_SERVICE_TAX);
+
+      // Delete existing Tax
+      if(!$this->is_new($product)) {
+        $query = "DELETE FROM vtiger_producttaxrel WHERE productid=? AND taxid=?";
+        $adb->pquery($query, array($product->id, $tax_id));
+      }
+
+      // Insert Tax for this product
+      $query = "INSERT INTO vtiger_producttaxrel VALUES(?,?,?)";
+      $adb->pquery($query, array($product->id, $tax_id, $tax->getTax()));
+    }
+  }
+
+  // Add tax to product hash
+  public function mapTaxToConnecResource($product, $product_hash) {
+    global $adb;
+
+    // Select first product tax
+    $query = "SELECT * FROM vtiger_producttaxrel WHERE productid=? LIMIT 1";
+    $result = $adb->pquery($query);
+    if($result) {
+      $tax_id = $result->fields['taxid'];
+      // Map connec tax id
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($tax_id, 'TAXRECORD');
+      if($mno_id_map) { $product_hash['sale_tax_code_id'] = $mno_id_map['mno_entity_guid']; }
+    }
   }
 }
