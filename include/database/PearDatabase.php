@@ -117,9 +117,9 @@ class PearDatabase{
 		require_once('include/logging.php');
 		$log1 = LoggerManager::getLogger('VT');
 		if(is_array($msg)) {
-		    $log1->info("PearDatabse ->".print_r($msg,true));
+		    error_log("PearDatabse ->".print_r($msg,true));
 		} else {
-		    $log1->info("PearDatabase ->".$msg);
+		    error_log("PearDatabase ->".$msg);
 		}
 		return $msg;
     }
