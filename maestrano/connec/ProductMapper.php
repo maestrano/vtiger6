@@ -67,20 +67,25 @@ class ProductMapper extends BaseMapper {
     if($this->is_set($product->column_fields['unit_price'])) { $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']); }
 
     ProductMapper::mapTaxToConnecResource($product, $product_hash);
+    ProductMapper::mapAccountToConnecResource($product, $product_hash);
 
     return $product_hash;
   }
 
   // Persist the vTiger Product
   protected function persistLocalModel($product, $product_hash) {
+    ProductMapper::mapConnecAccountToProduct($product_hash, $product);
+
     $product->save("Products", $product->id, false);
 
     ProductMapper::mapConnecTaxToProduct($product_hash, $product);
   }
 
   // Save sales tax against product
-  public static function mapConnecTaxToProduct($product_hash, $product) {
+  public static function mapConnecTaxToProduct($product_hash, &$product) {
     global $adb;
+
+    if(!array_key_exists('sale_tax_code_id', $product_hash)) { return null; }
 
     $sale_tax_code_id = $product_hash['sale_tax_code_id'];
     $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($sale_tax_code_id, 'TAXCODE');
@@ -98,6 +103,20 @@ class ProductMapper extends BaseMapper {
     }
   }
 
+  // Save product account
+  public static function mapConnecAccountToProduct($product_hash, &$product) {
+    global $adb;
+    if(!array_key_exists('sale_account_id', $product_hash)) { return null; }
+
+    $account_mno_id = $product_hash['sale_account_id'];
+    $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($account_mno_id, 'ACCOUNT');
+    if($mno_id_map) {
+      $account_id = $mno_id_map['app_entity_id'];
+      $account = AccountMapper::getAccountById($account_id);
+      $product->column_fields['glacct'] = $account['glacct'];
+    }
+  }
+
   // Add tax to product hash
   public static function mapTaxToConnecResource($product, &$product_hash) {
     global $adb;
@@ -110,6 +129,19 @@ class ProductMapper extends BaseMapper {
       // Map connec tax id
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($tax_id, 'TAXRECORD');
       if($mno_id_map) { $product_hash['sale_tax_code_id'] = $mno_id_map['mno_entity_guid']; }
+    }
+  }
+
+  // Add account to product hash
+  public static function mapAccountToConnecResource($product, &$product_hash) {
+    global $adb;
+
+    // Find account
+    $account = AccountMapper::getAccountByName($product->column_fields['glacct']);
+    if($account) {
+      // Map connec account id
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($account['glacctid'], 'GLACCOUNT');
+      if($mno_id_map) { $product_hash['sale_account_id'] = $mno_id_map['mno_entity_guid']; }
     }
   }
 }
