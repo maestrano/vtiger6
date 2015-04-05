@@ -117,6 +117,9 @@ class InvoiceMapper extends BaseMapper {
 
     $invoice_hash = array();
 
+    // Missing invoice lines are considered as deleted by Connec!
+    $invoice_hash['opts'] = array('sparse' => false);
+
     // Default invoice type to CUSTOMER on creation
     $invoice_hash['type'] = 'CUSTOMER';
 
