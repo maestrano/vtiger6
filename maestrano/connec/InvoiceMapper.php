@@ -51,8 +51,8 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice_hash['deposit'])) { $invoice->column_fields['received'] = $invoice_hash['deposit']; }
     if($this->is_set($invoice_hash['balance'])) { $invoice->column_fields['balance'] = $invoice_hash['balance']; }
 
-    if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = date("d-m-Y", strtotime($invoice_hash['transaction_date'])); }
-    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = date("d-m-Y", strtotime($invoice_hash['due_date'])); }
+    if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = date("Y-m-d", strtotime($invoice_hash['transaction_date'])); }
+    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = date("Y-m-d", strtotime($invoice_hash['due_date'])); }
 
     // Map status
     $status = $invoice_hash['status'];
@@ -151,11 +151,11 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice->column_fields['balance'])) { $invoice_hash['balance'] = $invoice->column_fields['balance']; }
 
     if($this->is_set($invoice->column_fields['invoicedate'])) {
-      $transaction_date = DateTime::createFromFormat('d-m-Y', $invoice->column_fields['invoicedate']);
+      $transaction_date = DateTime::createFromFormat('Y-m-d', $invoice->column_fields['invoicedate']);
       $invoice_hash['transaction_date'] = $transaction_date->format('c');
     }
     if($this->is_set($invoice->column_fields['duedate'])) {
-      $due_date = DateTime::createFromFormat('d-m-Y', $invoice->column_fields['duedate']);
+      $due_date = DateTime::createFromFormat('Y-m-d', $invoice->column_fields['duedate']);
       $invoice_hash['due_date'] = $due_date->format('c');
     }
 

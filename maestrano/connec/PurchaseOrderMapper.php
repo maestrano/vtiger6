@@ -51,8 +51,7 @@ class PurchaseOrderMapper extends BaseMapper {
     if($this->is_set($purchase_order_hash['deposit'])) { $purchase_order->column_fields['paid'] = $purchase_order_hash['deposit']; }
     if($this->is_set($purchase_order_hash['balance'])) { $purchase_order->column_fields['balance'] = $purchase_order_hash['balance']; }
 
-    if($this->is_set($purchase_order_hash['transaction_date'])) { $purchase_order->column_fields['invoicedate'] = $purchase_order_hash['transaction_date']; }
-    if($this->is_set($purchase_order_hash['due_date'])) { $purchase_order->column_fields['duedate'] = $purchase_order_hash['due_date']; }
+    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = date("Y-m-d", strtotime($invoice_hash['due_date'])); }
 
     // Map status
     $status = $purchase_order_hash['status'];
@@ -130,8 +129,10 @@ class PurchaseOrderMapper extends BaseMapper {
     if($this->is_set($purchase_order->column_fields['paid'])) { $purchase_order_hash['deposit'] = $purchase_order->column_fields['paid']; }
     if($this->is_set($purchase_order->column_fields['balance'])) { $purchase_order_hash['balance'] = $purchase_order->column_fields['balance']; }
 
-    if($this->is_set($purchase_order->column_fields['invoicedate'])) { $purchase_order_hash['transaction_date'] = $purchase_order->column_fields['invoicedate']; }
-    if($this->is_set($purchase_order->column_fields['due_date'])) { $purchase_order_hash['duedate'] = $purchase_order->column_fields['due_date']; }
+    if($this->is_set($invoice->column_fields['duedate'])) {
+      $due_date = DateTime::createFromFormat('Y-m-d', $invoice->column_fields['duedate']);
+      $invoice_hash['due_date'] = $due_date->format('c');
+    }
 
     // Map status
     $status = $purchase_order->column_fields['invoicestatus'];
