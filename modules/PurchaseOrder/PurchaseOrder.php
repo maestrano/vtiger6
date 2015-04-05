@@ -514,10 +514,10 @@ class PurchaseOrder extends CRMEntity {
   function save($module_name, $fileid='', $pushToConnec=true) {
     $result = parent::save($module_name, $fileid);
 
-    $mapper = 'PurchseOrderMapper';
+    $mapper = 'PurchaseOrderMapper';
     if(class_exists($mapper)) {
-      $purchseOrderMapper = new $mapper();
-      $purchseOrderMapper->processLocalUpdate($this, $pushToConnec, false);
+      $purchaseOrderMapper = new $mapper();
+      $purchaseOrderMapper->processLocalUpdate($this, $pushToConnec, false);
     }
 
     return $result;

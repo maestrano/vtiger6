@@ -46,9 +46,9 @@ class PurchaseOrderMapper extends BaseMapper {
     } else {
       $purchase_order->column_fields['subject'] = $purchase_order_hash['transaction_number'];
     }
-    if($this->is_set($purchase_order_hash['transaction_number'])) { $purchase_order->column_fields['customerno'] = $purchase_order_hash['transaction_number']; }
-    if($this->is_set($purchase_order_hash['public_note'])) { $purchase_order->column_fields['notes'] = $purchase_order_hash['public_note']; }
-    if($this->is_set($purchase_order_hash['deposit'])) { $purchase_order->column_fields['received'] = $purchase_order_hash['deposit']; }
+    if($this->is_set($purchase_order_hash['transaction_number'])) { $purchase_order->column_fields['requisition_no'] = $purchase_order_hash['transaction_number']; }
+    if($this->is_set($purchase_order_hash['public_note'])) { $purchase_order->column_fields['description'] = $purchase_order_hash['public_note']; }
+    if($this->is_set($purchase_order_hash['deposit'])) { $purchase_order->column_fields['paid'] = $purchase_order_hash['deposit']; }
     if($this->is_set($purchase_order_hash['balance'])) { $purchase_order->column_fields['balance'] = $purchase_order_hash['balance']; }
 
     if($this->is_set($purchase_order_hash['transaction_date'])) { $purchase_order->column_fields['invoicedate'] = $purchase_order_hash['transaction_date']; }
@@ -63,8 +63,8 @@ class PurchaseOrderMapper extends BaseMapper {
 
     // Map Organization
     if($this->is_set($purchase_order_hash['organization_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($purchase_order_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
-      if($mno_id_map) { $purchase_order->column_fields['account_id'] = $mno_id_map['app_entity_id']; }
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($purchase_order_hash['organization_id'], 'ORGANIZATION', 'VENDORS');
+      if($mno_id_map) { $purchase_order->column_fields['vendor_id'] = $mno_id_map['app_entity_id']; }
     }
 
     // Map Contact
@@ -125,9 +125,9 @@ class PurchaseOrderMapper extends BaseMapper {
 
     // Map attributes
     if($this->is_set($purchase_order->column_fields['subject'])) { $purchase_order_hash['title'] = $purchase_order->column_fields['subject']; }
-    if($this->is_set($purchase_order->column_fields['customerno'])) { $purchase_order_hash['transaction_number'] = $purchase_order->column_fields['customerno']; }
-    if($this->is_set($purchase_order->column_fields['notes'])) { $purchase_order_hash['public_note'] = $purchase_order->column_fields['notes']; }
-    if($this->is_set($purchase_order->column_fields['received'])) { $purchase_order_hash['deposit'] = $purchase_order->column_fields['received']; }
+    if($this->is_set($purchase_order->column_fields['requisition_no'])) { $purchase_order_hash['transaction_number'] = $purchase_order->column_fields['requisition_no']; }
+    if($this->is_set($purchase_order->column_fields['description'])) { $purchase_order_hash['public_note'] = $purchase_order->column_fields['description']; }
+    if($this->is_set($purchase_order->column_fields['paid'])) { $purchase_order_hash['deposit'] = $purchase_order->column_fields['paid']; }
     if($this->is_set($purchase_order->column_fields['balance'])) { $purchase_order_hash['balance'] = $purchase_order->column_fields['balance']; }
 
     if($this->is_set($purchase_order->column_fields['invoicedate'])) { $purchase_order_hash['transaction_date'] = $purchase_order->column_fields['invoicedate']; }
@@ -141,8 +141,8 @@ class PurchaseOrderMapper extends BaseMapper {
     else { $purchase_order_hash['status'] = 'DRAFT'; }
 
     // Map Organization
-    if($this->is_set($purchase_order->column_fields['account_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($purchase_order->column_fields['account_id'], 'ACCOUNTS');
+    if($this->is_set($purchase_order->column_fields['vendor_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($purchase_order->column_fields['vendor_id'], 'VENDORS');
       if($mno_id_map) { $purchase_order_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
     }
 
