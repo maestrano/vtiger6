@@ -50,4 +50,11 @@ class TaxMapper extends BaseMapper {
     $tax_id = $tax->save(false);
     $tax->set('id', $tax_id);
   }
+
+  public static function getTaxByName($taxname) {
+    global $adb;
+    $result = $adb->pquery('SELECT * FROM vtiger_inventorytaxinfo WHERE taxname=? LIMIT 1', array($taxname));
+    if($result) { return $result->fields; }
+    return null;
+  }
 }

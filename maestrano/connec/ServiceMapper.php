@@ -67,12 +67,15 @@ class ServiceMapper extends BaseMapper {
     if($this->is_set($service->column_fields['unit_price'])) { $service_hash['sale_price'] = array('net_amount' => $service->column_fields['unit_price']); }
 
     ProductMapper::mapTaxToConnecResource($service, $service_hash);
+    ProductMapper::mapAccountToConnecResource($service, $service_hash);
 
     return $service_hash;
   }
 
   // Persist the vTiger Service
   protected function persistLocalModel($service, $service_hash) {
+    ProductMapper::mapConnecAccountToProduct($service_hash, $service);
+    
     $service->save("Services", $service->id, false);
 
     ProductMapper::mapConnecTaxToProduct($service_hash, $service);

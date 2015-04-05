@@ -36,6 +36,11 @@ class InvoiceMapper extends BaseMapper {
   // Map the Connec resource attributes onto the vTiger Invoice
   protected function mapConnecResourceToModel($invoice_hash, $invoice) {
     // Map hash attributes to Invoice
+
+    // TODO Map/Create Currency
+    if(!$this->is_set($invoice->column_fields['currency_id'])) { $invoice->column_fields['currency_id'] = 1; }
+    if(!$this->is_set($invoice->column_fields['conversion_rate'])) { $invoice->column_fields['conversion_rate'] = 1; }
+
     if($this->is_set($invoice_hash['title'])) {
       $invoice->column_fields['subject'] = $invoice_hash['title'];
     } else {
@@ -43,21 +48,18 @@ class InvoiceMapper extends BaseMapper {
     }
     if($this->is_set($invoice_hash['transaction_number'])) { $invoice->column_fields['customerno'] = $invoice_hash['transaction_number']; }
     if($this->is_set($invoice_hash['public_note'])) { $invoice->column_fields['notes'] = $invoice_hash['public_note']; }
+    if($this->is_set($invoice_hash['deposit'])) { $invoice->column_fields['received'] = $invoice_hash['deposit']; }
+    if($this->is_set($invoice_hash['balance'])) { $invoice->column_fields['balance'] = $invoice_hash['balance']; }
 
     if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = $invoice_hash['transaction_date']; }
     if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = $invoice_hash['due_date']; }
 
     // Map status
     $status = $invoice_hash['status'];
-    if($status == 'SUBMITTED') {
-      $invoice->column_fields['invoicestatus'] = 'Sent';
-    } else if($status == 'AUTHORISED') {
-      $invoice->column_fields['invoicestatus'] = 'Approved';
-    } else if($status == 'PAID') {
-      $invoice->column_fields['invoicestatus'] = 'Paid';
-    } else {
-      $invoice->column_fields['invoicestatus'] = 'Created';
-    }
+    if($status == 'SUBMITTED') { $invoice->column_fields['invoicestatus'] = 'Sent'; }
+    else if($status == 'AUTHORISED') { $invoice->column_fields['invoicestatus'] = 'Approved'; }
+    else if($status == 'PAID') { $invoice->column_fields['invoicestatus'] = 'Paid'; }
+    else { $invoice->column_fields['invoicestatus'] = 'Created'; }
 
     // Map Organization
     if($this->is_set($invoice_hash['organization_id'])) {
@@ -82,13 +84,10 @@ class InvoiceMapper extends BaseMapper {
       $line_count = 0;
       foreach($invoice_hash['invoice_lines'] as $invoice_line) {
         $line_count++;
-        $mno_invoice_line_id = $invoice_hash['id'] . "#" . $invoice_line['id'];
-        $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($mno_invoice_line_id, 'INVOICE_LINE', 'INVOICE_LINE');
-        // TODO: Check lines has not been deleted
 
         // Map item
         if(!empty($invoice_line['item_id'])) {
-          $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($invoice_line['item_id'], 'PRODUCT', 'PRODUCTS');
+          $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($invoice_line['item_id'], 'PRODUCT');
           $_REQUEST['hdnProductId'.$line_count] = $mno_id_map['app_entity_id'];
         }
 
@@ -105,7 +104,8 @@ class InvoiceMapper extends BaseMapper {
           $_REQUEST['discount_percentage'.$line_count] = 0;
         }
 
-        // TODO Map Taxes
+        // Map Invoice Line Taxes
+        $this->mapInvoiceLineTaxes($invoice_line);
       }
       $_REQUEST['totalProductCount'] = $line_count;
     }
@@ -113,15 +113,88 @@ class InvoiceMapper extends BaseMapper {
 
   // Map the vTiger Invoice to a Connec resource hash
   protected function mapModelToConnecResource($invoice) {
+    global $adb;
+
     $invoice_hash = array();
 
     // Default invoice type to CUSTOMER on creation
-    if($this->is_new($invoice)) { $invoice_hash['type'] = 'CUSTOMER'; }
+    $invoice_hash['type'] = 'CUSTOMER';
 
     // Map attributes
     if($this->is_set($invoice->column_fields['subject'])) { $invoice_hash['title'] = $invoice->column_fields['subject']; }
     if($this->is_set($invoice->column_fields['customerno'])) { $invoice_hash['transaction_number'] = $invoice->column_fields['customerno']; }
     if($this->is_set($invoice->column_fields['notes'])) { $invoice_hash['public_note'] = $invoice->column_fields['notes']; }
+    if($this->is_set($invoice->column_fields['received'])) { $invoice_hash['deposit'] = $invoice->column_fields['received']; }
+    if($this->is_set($invoice->column_fields['balance'])) { $invoice_hash['balance'] = $invoice->column_fields['balance']; }
+
+    if($this->is_set($invoice->column_fields['invoicedate'])) { $invoice_hash['transaction_date'] = $invoice->column_fields['invoicedate']; }
+    if($this->is_set($invoice->column_fields['due_date'])) { $invoice_hash['duedate'] = $invoice->column_fields['due_date']; }
+
+    // Map status
+    $status = $invoice->column_fields['invoicestatus'];
+    if($status == 'Sent') { $invoice_hash['status'] = 'SUBMITTED'; }
+    else if($status == 'Approved') { $invoice_hash['status'] = 'AUTHORISED'; }
+    else if($status == 'Paid') { $invoice_hash['status'] = 'PAID'; }
+    else { $invoice_hash['status'] = 'DRAFT'; }
+
+    // Map Organization
+    if($this->is_set($invoice->column_fields['account_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($invoice->column_fields['account_id'], 'ACCOUNTS');
+      if($mno_id_map) { $invoice_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+    }
+
+    // Map Contact
+    if($this->is_set($invoice->column_fields['contact_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($invoice->column_fields['contact_id'], 'CONTACTS');
+      if($mno_id_map) { $invoice_hash['person_id'] = $mno_id_map['mno_entity_guid']; }
+    }
+
+    // Map invoice lines
+    $invoice_hash['invoice_lines'] = array();
+    $result = $adb->pquery("SELECT * FROM vtiger_inventoryproductrel WHERE id = ?", array($invoice->id));
+    while($invoice_line_detail = $adb->fetch_array($result)) {
+      $invoice_line = array();
+      $productid = intval($invoice_line_detail['productid']);
+      $line_number = intval($invoice_line_detail['sequence_no']);
+      $quantity = intval($invoice_line_detail['quantity']);
+      $listprice = floatval($invoice_line_detail['listprice']);
+      $discount_percent = floatval($invoice_line_detail['discount_percent']);
+      $discount_amount = floatval($invoice_line_detail['discount_amount']);
+      $comment = $invoice_line_detail['comment'];
+      $description = $invoice_line_detail['description'];
+
+      // vTiger recreates the invoice lines on every save, so local IDs are not mappable
+      // Use InvoiceID#LineNumber instead
+      $invoice_line_id = $invoice->id . "#" . $line_number;
+      $mno_invoice_line_id = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($invoice_line_id, "INVOICE_LINE");
+      if($mno_invoice_line_id) {
+        // Reuse Connec Invoice Line ID
+        $invoice_line_id_parts = explode("#", $mno_invoice_line_id['mno_entity_guid']);
+        $invoice_line['id'] = $invoice_line_id_parts[1];
+      }
+
+      $invoice_line['line_umber'] = $line_number;
+      $invoice_line['description'] = $comment;
+      $invoice_line['quantity'] = $quantity;
+      $invoice_line['reduction_percent'] = $discount_percent;
+      $invoice_line['unit_price'] = array('net_amount' => $listprice);
+
+      // Line applicable tax (limit to one)
+      $total_line_tax = 0;
+      foreach ($invoice_line_detail as $key => $value) {
+        if(preg_match('/^tax\d+/', $key) && !is_null($value) && $value > 0) {
+          $tax = TaxMapper::getTaxByName($key);
+          $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($tax['taxid'], 'TAXRECORD');
+          if($mno_id_map) { $invoice_line['tax_code_id'] = $mno_id_map['mno_entity_guid']; break; }
+        }
+      }
+
+      // Map item id
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($productid, 'PRODUCTS');
+      if($mno_id_map) { $invoice_line['item_id'] = $mno_id_map['mno_entity_guid']; }
+
+      $invoice_hash['invoice_lines'][] = $invoice_line;
+    }
 
     return $invoice_hash;
   }
@@ -129,5 +202,40 @@ class InvoiceMapper extends BaseMapper {
   // Persist the vTiger Invoice
   protected function persistLocalModel($invoice, $invoice_hash) {
     $invoice->save("Invoice", $invoice->id, false);
+
+    // Map invoice lines ids
+    foreach ($invoice_hash['invoice_lines'] as $invoice_line) {
+      $invoice_line_local_id = $invoice->id . "#" . $invoice_line['line_number'];
+      $invoice_line_mno_id = $invoice_hash['id'] . "#" . $invoice_line['id'];
+      $mno_invoice_line_id = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($invoice_line_local_id, "INVOICE_LINE");
+      if($mno_invoice_line_id) {
+        MnoIdMap::updateIdMapEntry($mno_invoice_line_id['mno_entity_guid'], $invoice_line_mno_id, "INVOICE_LINE");
+      } else {
+        MnoIdMap::addMnoIdMap($invoice_line_local_id, "INVOICE_LINE", $invoice_line_mno_id, "INVOICE_LINE");
+      }
+    }
+  }
+
+  protected function mapInvoiceLineTaxes($line_hash) {
+    global $adb;
+
+    // Set all taxes to 0 by default
+    $result = $adb->pquery("SELECT * FROM vtiger_inventorytaxinfo WHERE deleted = 0");
+    $numrow = $adb->num_rows($result);
+    for($k=0; $k < $numrow; $k++) {
+      $taxname = $adb->query_result($result, $k, 'taxname');
+      $request_tax_name = $taxname."_percentage".$line_hash['line_number'];
+      $_REQUEST[$request_tax_name] = 0;
+    }
+
+    // Apply tax for this invoice line
+    if($this->is_set($line_hash['tax_code_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($line_hash['tax_code_id'], 'TAXCODE');
+      $tax = Settings_Vtiger_TaxRecord_Model::getInstanceById($mno_id_map['app_entity_id'], Settings_Vtiger_TaxRecord_Model::PRODUCT_AND_SERVICE_TAX);
+      if(isset($tax)) {
+        $request_tax_name = $tax->get('taxname')."_percentage".$line_hash['line_number'];
+        $_REQUEST[$request_tax_name] = $tax->get('percentage');
+      }
+    }
   }
 }
