@@ -51,8 +51,8 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice_hash['deposit'])) { $invoice->column_fields['received'] = $invoice_hash['deposit']; }
     if($this->is_set($invoice_hash['balance'])) { $invoice->column_fields['balance'] = $invoice_hash['balance']; }
 
-    if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = $invoice_hash['transaction_date']; }
-    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = $invoice_hash['due_date']; }
+    if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = date("d-m-Y", strtotime($invoice_hash['transaction_date'])); }
+    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = date("d-m-Y", strtotime($invoice_hash['due_date'])); }
 
     // Map status
     $status = $invoice_hash['status'];
@@ -71,6 +71,26 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice_hash['person_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($invoice_hash['person_id'], 'PERSON', 'CONTACTS');
       if($mno_id_map) { $invoice->column_fields['contact_id'] = $mno_id_map['app_entity_id']; }
+    }
+
+    if($this->is_set($invoice_hash['billing_address'])) {
+      $billing_address = $invoice_hash['billing_address'];
+      if($billing_address['line1']) { $invoice->column_fields['bill_street'] = $billing_address['line1']; }
+      if($billing_address['line2']) { $invoice->column_fields['bill_pobox'] = $billing_address['line2']; }
+      if($billing_address['city']) { $invoice->column_fields['bill_city'] = $billing_address['city']; }
+      if($billing_address['region']) { $invoice->column_fields['bill_state'] = $billing_address['region']; }
+      if($billing_address['postal_code']) { $invoice->column_fields['bill_code'] = $billing_address['postal_code']; }
+      if($billing_address['country']) { $invoice->column_fields['bill_country'] = $billing_address['country']; }
+    }
+
+    if($this->is_set($invoice_hash['shipping_address'])) {
+      $shipping_address = $invoice_hash['shipping_address'];
+      if($shipping_address['line1']) { $invoice->column_fields['ship_street'] = $shipping_address['line1']; }
+      if($shipping_address['line2']) { $invoice->column_fields['ship_pobox'] = $shipping_address['line2']; }
+      if($shipping_address['city']) { $invoice->column_fields['ship_city'] = $shipping_address['city']; }
+      if($shipping_address['region']) { $invoice->column_fields['ship_state'] = $shipping_address['region']; }
+      if($shipping_address['postal_code']) { $invoice->column_fields['ship_code'] = $shipping_address['postal_code']; }
+      if($shipping_address['country']) { $invoice->column_fields['ship_country'] = $shipping_address['country']; }
     }
 
     // Map Invoice lines
@@ -130,8 +150,14 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice->column_fields['received'])) { $invoice_hash['deposit'] = $invoice->column_fields['received']; }
     if($this->is_set($invoice->column_fields['balance'])) { $invoice_hash['balance'] = $invoice->column_fields['balance']; }
 
-    if($this->is_set($invoice->column_fields['invoicedate'])) { $invoice_hash['transaction_date'] = $invoice->column_fields['invoicedate']; }
-    if($this->is_set($invoice->column_fields['due_date'])) { $invoice_hash['duedate'] = $invoice->column_fields['due_date']; }
+    if($this->is_set($invoice->column_fields['invoicedate'])) {
+      $transaction_date = DateTime::createFromFormat('d-m-Y', $invoice->column_fields['invoicedate']);
+      $invoice_hash['transaction_date'] = $transaction_date->format('c');
+    }
+    if($this->is_set($invoice->column_fields['duedate'])) {
+      $due_date = DateTime::createFromFormat('d-m-Y', $invoice->column_fields['duedate']);
+      $invoice_hash['due_date'] = $due_date->format('c');
+    }
 
     // Map status
     $status = $invoice->column_fields['invoicestatus'];
@@ -151,6 +177,25 @@ class InvoiceMapper extends BaseMapper {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($invoice->column_fields['contact_id'], 'CONTACTS');
       if($mno_id_map) { $invoice_hash['person_id'] = $mno_id_map['mno_entity_guid']; }
     }
+
+    // Map address
+    $invoice_hash['billing_address'] = array(
+      'line1' => $invoice->column_fields['bill_street'],
+      'line2' => $invoice->column_fields['bill_pobox'],
+      'city' => $invoice->column_fields['bill_city'],
+      'region' => $invoice->column_fields['bill_state'],
+      'postal_code' => $invoice->column_fields['bill_code'],
+      'country' => $invoice->column_fields['bill_country']
+    );
+
+    $invoice_hash['shipping_address'] = array(
+      'line1' => $invoice->column_fields['ship_street'],
+      'line2' => $invoice->column_fields['ship_pobox'],
+      'city' => $invoice->column_fields['ship_city'],
+      'region' => $invoice->column_fields['ship_state'],
+      'postal_code' => $invoice->column_fields['ship_code'],
+      'country' => $invoice->column_fields['ship_country']
+    );
 
     // Map invoice lines
     $invoice_hash['invoice_lines'] = array();
@@ -176,7 +221,7 @@ class InvoiceMapper extends BaseMapper {
         $invoice_line['id'] = $invoice_line_id_parts[1];
       }
 
-      $invoice_line['line_umber'] = $line_number;
+      $invoice_line['line_number'] = $line_number;
       $invoice_line['description'] = $comment;
       $invoice_line['quantity'] = $quantity;
       $invoice_line['reduction_percent'] = $discount_percent;

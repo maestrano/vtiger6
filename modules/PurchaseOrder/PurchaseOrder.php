@@ -510,6 +510,19 @@ class PurchaseOrder extends CRMEntity {
 		return $query;
 	}
 
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+
+    $mapper = 'PurchseOrderMapper';
+    if(class_exists($mapper)) {
+      $purchseOrderMapper = new $mapper();
+      $purchseOrderMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
+
 }
 
 ?>

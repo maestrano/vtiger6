@@ -45,7 +45,7 @@ class MnoIdMap {
 
   public static function updateIdMapEntry($current_mno_id, $new_mno_id, $mno_entity_name) {
     global $adb;
-    $query = "UPDATE mno_id_map SET mno_entity_guid = ".$new_mno_id." WHERE mno_entity_guid = ".$current_mno_id." AND mno_entity_name = '".strtoupper($mno_entity_name)."'";
+    $query = "UPDATE mno_id_map SET mno_entity_guid = '".$new_mno_id."' WHERE mno_entity_guid = '".$current_mno_id."' AND mno_entity_name = '".strtoupper($mno_entity_name)."'";
     $adb->pquery($query);
   }
 }
