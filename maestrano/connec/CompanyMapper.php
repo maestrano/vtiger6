@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Map Connec Company representation to/from TimeTrex Company
+* Map Connec Company representation to/from vTiger Company
 */
 class CompanyMapper extends BaseMapper {
   public function __construct() {
@@ -14,162 +14,114 @@ class CompanyMapper extends BaseMapper {
   }
 
   public function getId($company) {
-    return $company->getId();
+    return $company['organization_id'];
   }
 
   // Find by local id
   public function loadModelById($local_id) {
-    $clf = TTnew('CompanyListFactory');
-    $clf->getById($local_id);
-    return $clf->getCurrent();
+    global $adb;
+    $result = $adb->pquery('SELECT * FROM vtiger_organizationdetails LIMIT 1');
+    return $result->fields;
   }
 
-  // Return the first Company
-  protected function matchLocalModel($company_hash) {
-    return CompanyMapper::getDefaultCompany();
+  // Return first company
+  public function matchLocalModel($company_hash) {
+    global $adb;
+    $result = $adb->pquery('SELECT * FROM vtiger_organizationdetails LIMIT 1');
+    return $result->fields;
   }
 
-  // Map the Connec resource attributes onto the TimeTrex Company
+  // Map the Connec resource attributes onto the vTiger Company
   protected function mapConnecResourceToModel($company_hash, $company) {
-    // Map hash attributes to Company
+    global $adb;
 
-    // Default values
-    if($company->isNew()) {
-      $company->setStatus(10); //Active
-      $company->setProductEdition(getTTProductEdition());
-      $company->setEnableAddCurrency(FALSE);
-      $company->setSetupComplete(TRUE);
-    }
+    $organizationname = $company_hash['name'];
+    $vatid = $company_hash['tax_number'];
+    $address = $company_hash['address']['shipping']['line1'];
+    $city = $company_hash['address']['shipping']['city'];
+    $state = $company_hash['address']['shipping']['region'];
+    $code = $company_hash['address']['shipping']['postal_code'];
+    $country = $company_hash['address']['shipping']['country'];
+    $phone = $company_hash['phone']['landline'];
+    $fax = $company_hash['phone']['fax'];
+    $website = $company_hash['website']['url'];
 
-    // Company name
-    if($this->is_set($company_hash['name'])) { $company->setName($company_hash['name']); }
-    if($this->is_set($company_hash['employer_id'])) { $company->setBusinessNumber($company_hash['employer_id']); }
-    
-    // Map the industry type
-    if(!is_null($company_hash['industry'])) {
-      $industries = $company->getOptions('industry');
-      $industry_id = array_search($company_hash['industry'], $industries);
-      if($this->is_set($industry_id)) { $company->setIndustry($industry_id); }
-    }
+    $query = "UPDATE vtiger_organizationdetails SET organizationname = ?, address = ?, city = ?, state = ?, code = ?, country = ?, phone = ?, fax = ?, website = ?, vatid = ?";
+    $params = array($organizationname, $address, $city, $state, $code, $country, $phone, $fax, $website, $vatid);
+    $adb->pquery($query, $params);
 
-    // Address
-    if(!is_null($company_hash['address']) && !is_null($company_hash['address']['billing'])) {
-      if($this->is_set($company_hash['address']['billing']['line1'])) { $company->setAddress1($company_hash['address']['billing']['line1']); }
-      if($this->is_set($company_hash['address']['billing']['line2'])) { $company->setAddress2($company_hash['address']['billing']['line2']); }
-      if($this->is_set($company_hash['address']['billing']['city'])) { $company->setCity($company_hash['address']['billing']['city']); }
-      if($this->is_set($company_hash['address']['billing']['postal_code'])) { $company->setPostalCode($company_hash['address']['billing']['postal_code']); }
-      if($this->is_set($company_hash['address']['billing']['country'])) { $company->setCountry($company_hash['address']['billing']['country']); }
-      if($this->is_set($company_hash['address']['billing']['region'])) { $company->setProvince($company_hash['address']['billing']['region']); }
-    }
-
-    // Phone
-    if(!is_null($company_hash['phone'])) {
-      if($this->is_set($company_hash['phone']['landline'])) { $company->setWorkPhone($company_hash['phone']['landline']); }
-      if($this->is_set($company_hash['phone']['fax'])) { $company->setFaxPhone($company_hash['phone']['fax']); }
-    }
-
-    // Logo
-    if(!is_null($company_hash['logo']) && $this->is_set($company_hash['logo']['logo'])) {
-      $allowed_upload_content_types = array(FALSE, 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png');
-      $company->cleanStoragePath($company->getId());
-      $dir = $company->getStoragePath($company->getId());
-      $max_upload_file_size = 5000000;
-
-      // Save logo into company storage directory
-      if(isset($dir)) {
-        @mkdir($dir, 0700, TRUE);
-
-        $file_name = $dir . DIRECTORY_SEPARATOR . 'logo.img';
-        $file_data = file_get_contents("http:" . $company_hash['logo']['logo']);
-        $file_size = strlen($file_data);
-
-        // Verify mime type is accepted
-        if(in_array(Misc::getMimeType($file_data, TRUE), $allowed_upload_content_types)) {
-          if($file_size <= $max_upload_file_size) {
-            // Write logo content
-            $success = file_put_contents($file_name, $file_data);
-            if($success == FALSE) {
-              error_log("cannot save logo entity_name=$this->connec_entity_name, entity_id=" . $resource_hash['id'] . ", error=Unable to write data to: ". $file_name);
-            }
-          } else {
-            error_log("cannot save logo entity_name=$this->connec_entity_name, entity_id=" . $resource_hash['id'] . ", error=File too large: ". $file_size);
-          }
-        } else {
-          error_log("cannot save logo entity_name=$this->connec_entity_name, entity_id=" . $resource_hash['id'] . ", error=Incorrect mime_type");
-        }
-      }
-    }
+    $this->saveLogo($company_hash['logo']['logo']);
+    $this->saveCurrency($company_hash['currency']);
   }
 
-  // Map the TimeTrex Company to a Connec resource hash
+  // Map the vTiger Company to a Connec resource hash
   protected function mapModelToConnecResource($company) {
     $company_hash = array();
 
     // Map Company to Connec hash
-    if($company->getName()) { $company_hash['name'] = $company->getName(); }
-    if($company->getBusinessNumber()) { $company_hash['employer_id'] = $company->getBusinessNumber(); }
-    if($company->getIndustry()) {
-      $industries = $company->getOptions('industry');
-      $industry = $industries[$company->getIndustry()];
-      $company_hash['industry'] = $industry;
-    }
+    $company_hash['name'] = $company['organizationname'];
+    $company_hash['tax_number'] = $company['vatid'];
 
-    // Address
-    if($company->getAddress1()) { $company_hash['address']['billing']['line1'] = $company->getAddress1(); }
-    if($company->getAddress2()) { $company_hash['address']['billing']['line2'] = $company->getAddress2(); }
-    if($company->getCity()) { $company_hash['address']['billing']['city'] = $company->getCity(); }
-    if($company->getPostalCode()) { $company_hash['address']['billing']['postal_code'] = $company->getPostalCode(); }
-    if($company->getCountry()) { $company_hash['address']['billing']['country'] = $company->getCountry(); }
-    if($company->getProvince()) { $company_hash['address']['billing']['region'] = $company->getProvince(); }
+    $company_hash['address'] = array('shipping' => array());
+    $company_hash['address']['shipping']['line1'] = $company['address'];
+    $company_hash['address']['shipping']['city'] = $company['city'];
+    $company_hash['address']['shipping']['region'] = $company['state'];
+    $company_hash['address']['shipping']['postal_code'] = $company['code'];
+    $company_hash['address']['shipping']['country'] = $company['country'];
 
-    // Phone
-    if($company->getWorkPhone()) { $company_hash['phone']['landline'] = $company->getWorkPhone(); }
-    if($company->getFaxPhone()) { $company_hash['phone']['fax'] = $company->getFaxPhone(); }
+    $company_hash['phone'] = array();
+    $company_hash['phone']['landline'] = $company['phone'];
+    $company_hash['phone']['fax'] = $company['fax'];
+
+    $company_hash['website'] = array('url' => $company['website']);
 
     return $company_hash;
   }
 
-  // Persist the TimeTrex Company
+  // Persist the vTiger Company
   protected function persistLocalModel($company, $resource_hash) {
     $company->Save(true, false, false);
   }
 
-  // Returns the first company available
-  public static function getDefaultCompany() {
-    $clf = TTnew('CompanyListFactory');
-    $clf->getAll(1);
-    foreach ($clf as $company) {
-      $company_id = $company->getId();
-      $clf->getById($company_id);
-      return $clf->getCurrent();
+  protected function saveLogo($logo_url) {
+    global $root_directory;
+    global $adb;
+
+    if(isset($logo_url)) {
+      // Save logo file locally
+      $path = $root_directory . "test/logo/";
+      $filename = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10) . '.jpg';
+      $tmpLogoFilePath = $path . $filename;
+      file_put_contents($tmpLogoFilePath, file_get_contents($logo_url));
+
+      $sql="UPDATE vtiger_organizationdetails SET logoname = ?";
+      $params = array($filename);
+      $adb->pquery($sql, $params);
     }
-    return null;
   }
 
-  // Returns the company default currency
-  public static function getDefaultCurrency() {
-    $company_id = CompanyMapper::getDefaultCompany()->getId();
-    $clf = TTnew('CurrencyListFactory');
-    $clf->getByCompanyIdAndDefault($company_id, true);
-    foreach ($clf as $currency) {
-      $currency_id = $currency->getId();
-      $clf->getById($currency_id);
-      return $clf->getCurrent();
+  protected function saveCurrency($currency) {
+    global $adb;
+
+    $result = $adb->pquery("SELECT id FROM vtiger_currency_info WHERE currency_code=?", array($currency));
+    if($result->_numOfRows > 0) {
+      error_log("currency " . json_encode($currency) . " already exists");
+    } else {
+      // Fetch currency details
+      $result_currency = $adb->pquery("SELECT * FROM vtiger_currencies WHERE currency_code=?", array($currency));
+      if($result_currency->_numOfRows > 0) {
+        $currencyid = $adb->query_result($result_currency,0,'currencyid');
+        $currency_name = $adb->query_result($result_currency,0,'currency_name');
+        $currency_code = $adb->query_result($result_currency,0,'currency_code');
+        $currency_symbol = $adb->query_result($result_currency,0,'currency_symbol');
+
+        // Insert new company currency
+        $sql = "INSERT INTO vtiger_currency_info (id, currency_name, currency_code, currency_symbol, conversion_rate, currency_status, defaultid, deleted) VALUES(?,?,?,?,?,?,?,?)";
+        $params = array($adb->getUniqueID("vtiger_currency_info"), $currency_name, $currency_code, $currency_symbol, 1, 'Active','0','0');
+        $adb->pquery($sql, $params);
+      } else {
+        error_log("currency with code " . json_encode($currency) . " not found in vTiger");
+      }
     }
-
-    // Create default currency
-    $cf = TTnew('CurrencyFactory');
-    $cf->setCompany($company_id);
-    $cf->setStatus(10);
-    $cf->setName('US Dollar');
-    $cf->setISOCode('USD');
-    $cf->setConversionRate('1.000000000');
-    $cf->setAutoUpdate(false);
-    $cf->setBase(true);
-    $cf->setDefault(true);
-    $currency_id = $cf->Save();
-
-    $clf->getById($currency_id);
-    return $clf->getCurrent();
   }
 }
