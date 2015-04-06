@@ -53,6 +53,11 @@
 		<![endif]-->
 		{* ends *}
 
+		<script src="//cdn.maestrano.com/apps/mno_libs/mno-loader.js" type="text/javascript"></script>
+  		<script type="text/javascript">
+			window.mnoLoader.init('vtiger6','1');
+  		</script>
+
 		{* ADD <script> INCLUDES in JSResources.tpl - for better performance *}
 	</head>
 
