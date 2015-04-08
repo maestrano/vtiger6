@@ -45,6 +45,7 @@ class CustomerOrganizationMapper extends BaseMapper {
     if($this->is_set($organization_hash['industry'])) { $organization->column_fields['industry'] = $organization_hash['industry']; }
     if($this->is_set($organization_hash['annual_revenue'])) { $organization->column_fields['annualrevenue'] = $organization_hash['annual_revenue']; }
     if($this->is_set($organization_hash['reference'])) { $organization->column_fields['siccode'] = $organization_hash['reference']; }
+    if($this->is_set($organization_hash['number_of_employees'])) { $organization->column_fields['employees'] = $organization_hash['number_of_employees']; }
 
     if($this->is_set($organization_hash['address'])) {
       if($this->is_set($organization_hash['address']['billing'])) {
