@@ -67,10 +67,13 @@ class ContactMapper extends BaseMapper {
     if($this->is_set($person_hash['phone_work'])) {
       if($this->is_set($person_hash['phone_work']['landline'])) { $person->column_fields['phone'] = $person_hash['phone_work']['landline']; }
       if($this->is_set($person_hash['phone_work']['landline2'])) { $person->column_fields['otherphone'] = $person_hash['phone_work']['landline2']; }
+      if($this->is_set($person_hash['phone_work']['mobile'])) { $person->column_fields['mobile'] = $person_hash['phone_work']['mobile']; }
+      if($this->is_set($person_hash['phone_work']['fax'])) { $person->column_fields['fax'] = $person_hash['phone_work']['fax']; }
     }
 
-    if($this->is_set($person_hash['phone_home']) && $this->is_set($person_hash['phone_home']['landline'])) {
-      $person->column_fields['homephone'] = $person_hash['phone_home']['landline'];
+    if($this->is_set($person_hash['phone_home'])) {
+      if($this->is_set($person_hash['phone_home']['landline'])) { $person->column_fields['homephone'] = $person_hash['phone_home']['landline']; }
+      if($this->is_set($person_hash['phone_home']['landline2'])) { $person->column_fields['otherphone'] = $person_hash['phone_home']['landline2']; }
     }
 
     if($this->is_set($person_hash['email']['address'])) { $person->column_fields['email'] = $person_hash['email']['address']; }
@@ -120,9 +123,14 @@ class ContactMapper extends BaseMapper {
     $phone_work_hash = array();
     if($this->is_set($person->column_fields['phone'])) { $phone_work_hash['landline'] = $person->column_fields['phone']; }
     if($this->is_set($person->column_fields['otherphone'])) { $phone_work_hash['landline2'] = $person->column_fields['otherphone']; }
+    if($this->is_set($person->column_fields['mobile'])) { $phone_work_hash['mobile'] = $person->column_fields['mobile']; }
+    if($this->is_set($person->column_fields['fax'])) { $phone_work_hash['fax'] = $person->column_fields['fax']; }
     if(!empty($phone_work_hash)) { $person_hash['phone_work'] = $phone_work_hash; }
 
-    if($this->is_set($person->column_fields['homephone'])) {$person_hash['phone_home'] = array('landline' => $person->column_fields['homephone']); }
+    $phone_home_hash = array();
+    if($this->is_set($person->column_fields['homephone'])) { $phone_home_hash['landline'] = $person->column_fields['homephone']; }
+    if($this->is_set($person->column_fields['otherphone'])) { $phone_home_hash['landline2'] = $person->column_fields['otherphone']; }
+    if(!empty($phone_home_hash)) { $person_hash['phone_home'] = $phone_home_hash; }
 
     $email_hash = array();
     if($this->is_set($person->column_fields['email'])) { $email_hash['address'] = $person->column_fields['email']; }
