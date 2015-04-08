@@ -1,0 +1,8 @@
+cache
+test
+logs
+user_privileges
+tabdata.php
+parent_tabdata.php
+config.inc.php
+include/database/PearDatabase.php
