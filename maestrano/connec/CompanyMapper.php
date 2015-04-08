@@ -78,9 +78,8 @@ class CompanyMapper extends BaseMapper {
     return $company_hash;
   }
 
-  // Persist the vTiger Company
+  // Do not do anything
   protected function persistLocalModel($company, $resource_hash) {
-    $company->Save(true, false, false);
   }
 
   protected function saveLogo($logo_url) {
