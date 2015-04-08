@@ -87,6 +87,9 @@ class CompanyMapper extends BaseMapper {
     global $adb;
 
     if(isset($logo_url)) {
+      // Add https protocol if missing if URL
+      if(strcmp(substr($logo_url, 0, 4), "http") != 0) { $logo_url = 'https:' . $logo_url; }
+
       // Save logo file locally
       $path = $root_directory . "test/logo/";
       $filename = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10) . '.jpg';
