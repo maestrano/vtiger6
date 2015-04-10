@@ -47,6 +47,13 @@ class ProductMapper extends BaseMapper {
     if($this->is_set($product_hash['sale_price']) && $this->is_set($product_hash['sale_price']['net_amount'])) {
       $product->column_fields['unit_price'] = $product_hash['sale_price']['net_amount'];
     }
+
+    // Track product inventory from another application
+error_log("INVENTORIED ITEM: " . json_encode($product_hash['is_inventoried']));
+    if($this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
+      $product->column_fields['qtyinstock'] = $product_hash['quantity_on_hand'];
+      $product->column_fields['qtyindemand'] = $product_hash['quantity_committed'];
+    }
   }
 
   // Map the vTiger Product to a Connec resource hash
@@ -65,6 +72,18 @@ class ProductMapper extends BaseMapper {
     if($this->is_set($product->column_fields['usageunit'])) { $product_hash['unit_type'] = $product->column_fields['usageunit']; }
 
     if($this->is_set($product->column_fields['unit_price'])) { $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']); }
+
+    // Inventory tracking
+    $qtyinstock = $product->column_fields['qtyinstock'];
+    $qtyindemand = $product->column_fields['qtyindemand'];
+    $unit_price = $product->column_fields['unit_price'];
+    if($this->is_set($qtyinstock) && $this->is_set($qtyindemand)) {
+      $product_hash['quantity_on_hand'] = $qtyinstock;
+      $product_hash['quantity_committed'] = $qtyindemand;
+      $product_hash['quantity_available'] = $qtyinstock - $qtyindemand;
+      $product_hash['average_cost'] = $qtyinstock * $unit_price;
+      $product_hash['current_value'] = $unit_price;
+    }
 
     ProductMapper::mapTaxToConnecResource($product, $product_hash);
     ProductMapper::mapAccountToConnecResource($product, $product_hash);
