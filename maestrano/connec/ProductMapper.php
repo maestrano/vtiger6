@@ -49,7 +49,6 @@ class ProductMapper extends BaseMapper {
     }
 
     // Track product inventory from another application
-error_log("INVENTORIED ITEM: " . json_encode($product_hash['is_inventoried']));
     if($this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
       $product->column_fields['qtyinstock'] = $product_hash['quantity_on_hand'];
       $product->column_fields['qtyindemand'] = $product_hash['quantity_committed'];
