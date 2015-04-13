@@ -1135,3 +1135,12 @@ FROM vtiger_role vr, vtiger_othercountry vbc, (
 
 UPDATE `vtiger_users` SET `currency_decimal_separator` = '.' WHERE `vtiger_users`.`currency_decimal_separator` = '';
 UPDATE `vtiger_users` SET `currency_grouping_separator` = ',' WHERE `vtiger_users`.`currency_grouping_separator` = '';
+
+-- Delete duplicates in vtiger_field table after migration
+DELETE f1
+FROM vtiger_field f1, vtiger_field f2
+WHERE f1.fieldid > f2.fieldid
+AND f1.tabid = f2.tabid
+AND f1.columnname = f2.columnname
+AND f1.tablename = f2.tablename
+AND f1.fieldname = f2.fieldname;
