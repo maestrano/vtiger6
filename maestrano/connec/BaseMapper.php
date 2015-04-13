@@ -31,11 +31,6 @@ abstract class BaseMapper {
     return ($entity->column_fields['createdtime'] == $entity->column_fields['modifiedtime']);
   }
 
-  public function date_format() {
-    error_log('BLAH !!');
-    // return getPHPDateFormat();
-  }
-
   // Overwrite me!
   // Return the Model local id
   abstract protected function getId($model);

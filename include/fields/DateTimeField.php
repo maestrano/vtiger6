@@ -286,7 +286,6 @@ class DateTimeField {
 	}
 
 	static function getPHPDateFormat( $user = null) {
-error_log("IN getPHPDateFormat");
 		global $current_user;
 		if(empty($user)) {
 			$user = $current_user;

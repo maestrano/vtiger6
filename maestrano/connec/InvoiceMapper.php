@@ -36,9 +36,9 @@ class InvoiceMapper extends BaseMapper {
   // Map the Connec resource attributes onto the vTiger Invoice
   protected function mapConnecResourceToModel($invoice_hash, $invoice) {
     // Map hash attributes to Invoice
-error_log("MAP CONNECRESOURCE BACK");
-    $date_format = $this->date_format();
-error_log("DATE FORMAT: " . json_encode($date_format));
+
+    $date_format = DateTimeField::getPHPDateFormat();
+
     // TODO Map/Create Currency
     if(!$this->is_set($invoice->column_fields['currency_id'])) { $invoice->column_fields['currency_id'] = 1; }
     if(!$this->is_set($invoice->column_fields['conversion_rate'])) { $invoice->column_fields['conversion_rate'] = 1; }
@@ -139,6 +139,8 @@ error_log("DATE FORMAT: " . json_encode($date_format));
 
     $invoice_hash = array();
 
+    $date_format = DateTimeField::getPHPDateFormat();
+
     // Missing invoice lines are considered as deleted by Connec!
     $invoice_hash['opts'] = array('sparse' => false);
 
@@ -153,13 +155,11 @@ error_log("DATE FORMAT: " . json_encode($date_format));
     if($this->is_set($invoice->column_fields['balance'])) { $invoice_hash['balance'] = $invoice->column_fields['balance']; }
 
     if($this->is_set($invoice->column_fields['invoicedate'])) {
-error_log('PARSE ' . json_encode($invoice->column_fields['invoicedate']));
-      $transaction_date = DateTime::createFromFormat('d-m-Y', $invoice->column_fields['invoicedate']);
-error_log('PARSED ' . json_encode($transaction_date));
+      $transaction_date = DateTime::createFromFormat($date_format, $invoice->column_fields['invoicedate']);
       $invoice_hash['transaction_date'] = $transaction_date->format('c');
     }
     if($this->is_set($invoice->column_fields['duedate'])) {
-      $due_date = DateTime::createFromFormat('d-m-Y', $invoice->column_fields['duedate']);
+      $due_date = DateTime::createFromFormat($date_format, $invoice->column_fields['duedate']);
       $invoice_hash['due_date'] = $due_date->format('c');
     }
 
