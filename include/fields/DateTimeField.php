@@ -185,12 +185,12 @@ class DateTimeField {
 		return DateTimeField::convertTimeZone($value, self::getDBTimeZone(), $timeZone);
 	}
 
-	/**
+	*
 	 *
 	 * @global Users $current_user
 	 * @param type $value
 	 * @param Users $user
-	 */
+	 
 	public static function convertToDBTimeZone( $value, $user = null ) {
 		global $current_user, $default_timezone;
 		if(empty($user)) {
@@ -286,6 +286,7 @@ class DateTimeField {
 	}
 
 	static function getPHPDateFormat( $user = null) {
+error_log("IN getPHPDateFormat");
 		global $current_user;
 		if(empty($user)) {
 			$user = $current_user;
