@@ -62,5 +62,3 @@ try {
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));
 }
-
-?>

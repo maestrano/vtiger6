@@ -82,7 +82,7 @@ class CompanyMapper extends BaseMapper {
   protected function persistLocalModel($company, $resource_hash) {
   }
 
-  protected function saveLogo($logo_url) {
+  public function saveLogo($logo_url) {
     global $root_directory;
     global $adb;
 
@@ -102,7 +102,7 @@ class CompanyMapper extends BaseMapper {
     }
   }
 
-  protected function saveCurrency($currency) {
+  public function saveCurrency($currency) {
     global $adb;
 
     $result = $adb->pquery("SELECT id FROM vtiger_currency_info WHERE currency_code=?", array($currency));
