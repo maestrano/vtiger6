@@ -94,5 +94,11 @@ class SupplierOrganizationMapper extends BaseMapper {
   // Persist the vTiger Organization
   protected function persistLocalModel($organization, $resource_hash) {
     $organization->save("Vendors", $organization->id, false);
+
+    // Force Organization code on creation
+    if($this->is_new($organization) && $this->is_set($resource_hash['code'])) {
+      global $adb;
+      $adb->pquery("UPDATE vtiger_vendor SET vendor_no = ? WHERE vendorid = ?", array($resource_hash['code'], $organization->id));
+    }
   }
 }

@@ -85,6 +85,10 @@ class PurchaseOrderMapper extends BaseMapper {
         if(!empty($purchase_order_line['item_id'])) {
           $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($purchase_order_line['item_id'], 'PRODUCT');
           $_REQUEST['hdnProductId'.$line_count] = $mno_id_map['app_entity_id'];
+        } else {
+          // Set default service
+          $service = $this->serviceMapper->defaultService();
+          $_REQUEST['hdnProductId'.$line_count] = $service['serviceid'];
         }
 
         // Map attributes

@@ -100,6 +100,12 @@ class ProductMapper extends BaseMapper {
 
     $product->save("Products", $product->id, false);
 
+    // Force product code on creation
+    if($this->is_new($product) && $this->is_set($product_hash['code'])) {
+      global $adb;
+      $adb->pquery("UPDATE vtiger_products SET product_no = ? WHERE productid = ?", array($product_hash['code'], $product->id));
+    }
+
     ProductMapper::mapConnecTaxToProduct($product_hash, $product);
   }
 

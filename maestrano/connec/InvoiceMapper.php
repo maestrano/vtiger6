@@ -4,6 +4,8 @@
 * Map Connec Invoice representation to/from vTiger Invoice
 */
 class InvoiceMapper extends BaseMapper {
+  protected $serviceMapper = null;
+
   public function __construct() {
     parent::__construct();
 
@@ -11,6 +13,8 @@ class InvoiceMapper extends BaseMapper {
     $this->local_entity_name = 'Invoice';
     $this->connec_resource_name = 'invoices';
     $this->connec_resource_endpoint = 'invoices';
+
+    $this->serviceMapper = new ServiceMapper();
   }
 
   // Return the Invoice local id
@@ -107,6 +111,10 @@ class InvoiceMapper extends BaseMapper {
         if(!empty($invoice_line['item_id'])) {
           $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($invoice_line['item_id'], 'PRODUCT');
           $_REQUEST['hdnProductId'.$line_count] = $mno_id_map['app_entity_id'];
+        } else {
+          // Set default service
+          $service = $this->serviceMapper->defaultService();
+          $_REQUEST['hdnProductId'.$line_count] = $service['serviceid'];
         }
 
         // Map attributes
