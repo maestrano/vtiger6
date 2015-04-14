@@ -136,6 +136,12 @@ class CustomerOrganizationMapper extends BaseMapper {
   // Persist the vTiger Organization
   protected function persistLocalModel($organization, $resource_hash) {
     $organization->save("Accounts", $organization->id, false);
+
+    // Force Organization code on creation
+    if($this->is_new($organization) && $this->is_set($resource_hash['code'])) {
+      global $adb;
+      $adb->pquery("UPDATE vtiger_account SET account_no = ? WHERE accountid = ?", array($resource_hash['code'], $organization->id));
+    }
   }
 
   // Find an Account entity by name

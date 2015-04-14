@@ -1,6 +1,8 @@
 <?php
 
 require_once '../init.php';
+error_log("INIT !!");
+require_once 'maestrano/init/init_script.php';
 
 // Set default user for entities creation
 global $current_user;
@@ -46,5 +48,3 @@ if (file_exists($filepath)) {
 if ($status) {
   file_put_contents($filepath, $current_timestamp);
 }
-
-?>

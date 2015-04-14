@@ -149,5 +149,11 @@ class ContactMapper extends BaseMapper {
   // Persist the vTiger Person
   protected function persistLocalModel($person, $resource_hash) {
     $person->save("Contacts", $person->id, false);
+
+    // Force Organization code on creation
+    if($this->is_new($person) && $this->is_set($resource_hash['code'])) {
+      global $adb;
+      $adb->pquery("UPDATE vtiger_contactdetails SET contact_no = ? WHERE contactid = ?", array($resource_hash['code'], $person->id));
+    }
   }
 }

@@ -151,7 +151,6 @@ class MnoSsoUser extends Maestrano_Sso_User {
     $fields["address_country"] = "";
     $fields["accesskey"] = "";
     $fields["time_zone"] = "UTC";
-    $fields["currency_id"] = "1";
     $fields["currency_grouping_pattern"] = "123,456,789";
     $fields["currency_decimal_separator"] = ".";
     $fields["currency_grouping_separator"] = ",";

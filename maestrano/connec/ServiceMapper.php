@@ -75,9 +75,33 @@ class ServiceMapper extends BaseMapper {
   // Persist the vTiger Service
   protected function persistLocalModel($service, $service_hash) {
     ProductMapper::mapConnecAccountToProduct($service_hash, $service);
-    
+
     $service->save("Services", $service->id, false);
 
+    // Force service code on creation
+    if($this->is_new($service) && $this->is_set($service_hash['code'])) {
+      global $adb;
+      $adb->pquery("UPDATE vtiger_service SET service_no = ? WHERE serviceid = ?", array($service_hash['code'], $service->id));
+    }
+
     ProductMapper::mapConnecTaxToProduct($service_hash, $service);
+  }
+
+  // Find or create a default service
+  // This is used by Invoices lines not referring to any Item or Service
+  public function defaultService() {
+    global $adb;
+    $default_service_no = 'CONNEC_DEFAULT';
+
+    $result = $adb->pquery("SELECT * FROM vtiger_service WHERE service_no=?", array($default_service_no));
+    if($result->_numOfRows > 0) {
+      return $result->fields;
+    } else {
+      $service_hash = array('code' => $default_service_no, 'name' => 'Comment', 'description' => 'Default invoice line entry', 'type' => 'SERVICE');
+      $this->saveConnecResource($service_hash);
+
+      $result = $adb->pquery("SELECT * FROM vtiger_service WHERE service_no=?", array($default_service_no));
+      return $result->fields;
+    }
   }
 }
