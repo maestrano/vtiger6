@@ -4,6 +4,8 @@
 * Map Connec Product representation to/from vTiger Product
 */
 class ProductMapper extends BaseMapper {
+  protected $companyMapper = null;
+
   public function __construct() {
     parent::__construct();
 
@@ -11,6 +13,8 @@ class ProductMapper extends BaseMapper {
     $this->local_entity_name = 'Products';
     $this->connec_resource_name = 'items';
     $this->connec_resource_endpoint = 'items';
+
+    $this->companyMapper = new CompanyMapper();
   }
 
   // Return the Product local id
@@ -44,8 +48,8 @@ class ProductMapper extends BaseMapper {
     if($this->is_set($product_hash['unit'])) { $product->column_fields['qty_per_unit'] = $product_hash['unit']; }
     if($this->is_set($product_hash['unit_type'])) { $product->column_fields['usageunit'] = $product_hash['unit_type']; }
 
-    if($this->is_set($product_hash['sale_price']) && $this->is_set($product_hash['sale_price']['net_amount'])) {
-      $product->column_fields['unit_price'] = $product_hash['sale_price']['net_amount'];
+    if($this->is_set($product_hash['sale_price'])) {
+      if($this->is_set($product_hash['sale_price']['net_amount'])) { $product->column_fields['unit_price'] = $product_hash['sale_price']['net_amount']; }
     }
 
     // Track product inventory from another application
