@@ -5,7 +5,10 @@ require_once '../init.php';
 // Set default user for entities creation
 global $current_user;
 if(is_null($current_user)) { $current_user = (object) array(); }
-if(!isset($current_user->id)) { $current_user->id = "1"; }
+if(!isset($current_user->id)) {
+  $current_user->id = '1';
+  $current_user->date_format = 'Y-m-d';
+}
 
 try {
   if(!Maestrano::param('connec.enabled')) { return false; }
@@ -59,5 +62,3 @@ try {
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));
 }
-
-?>

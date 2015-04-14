@@ -19,8 +19,11 @@ abstract class BaseMapper {
   protected $connec_resource_name = 'models';
   protected $connec_resource_endpoint = 'models';
 
+  protected $_date_format = null;
+
   public function __construct() {
     $this->_connec_client = new Maestrano_Connec_Client();
+    $this->_date_format = DateTimeField::getPHPDateFormat();
   }
 
   protected function is_set($variable) {
@@ -29,6 +32,15 @@ abstract class BaseMapper {
 
   protected function is_new($entity) {
     return ($entity->column_fields['createdtime'] == $entity->column_fields['modifiedtime']);
+  }
+
+  protected function format_date_to_php($connec_date) {
+    return date($this->_date_format, strtotime($connec_date));
+  }
+
+  protected function format_date_to_connec($php_date) {
+    $date = DateTime::createFromFormat($this->_date_format, $php_date);
+    return $date->format('c');
   }
 
   // Overwrite me!

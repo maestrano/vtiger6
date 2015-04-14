@@ -51,7 +51,7 @@ class CompanyMapper extends BaseMapper {
     $adb->pquery($query, $params);
 
     $this->saveLogo($company_hash['logo']['logo']);
-    $this->saveCurrency($company_hash['currency']);
+    $this->findOrCreateCurrency($company_hash['currency'], -1);
   }
 
   // Map the vTiger Company to a Connec resource hash
@@ -82,7 +82,7 @@ class CompanyMapper extends BaseMapper {
   protected function persistLocalModel($company, $resource_hash) {
   }
 
-  protected function saveLogo($logo_url) {
+  public function saveLogo($logo_url) {
     global $root_directory;
     global $adb;
 
@@ -102,14 +102,14 @@ class CompanyMapper extends BaseMapper {
     }
   }
 
-  protected function saveCurrency($currency) {
+  public function findOrCreateCurrency($currency, $default=0) {
     global $adb;
 
     $result = $adb->pquery("SELECT id FROM vtiger_currency_info WHERE currency_code=?", array($currency));
     if($result->_numOfRows > 0) {
-      error_log("currency " . json_encode($currency) . " already exists");
+      return $result->fields;
     } else {
-      // Fetch currency details
+      // Fetch supported currencies
       $result_currency = $adb->pquery("SELECT * FROM vtiger_currencies WHERE currency_code=?", array($currency));
       if($result_currency->_numOfRows > 0) {
         $currencyid = $adb->query_result($result_currency,0,'currencyid');
@@ -119,10 +119,15 @@ class CompanyMapper extends BaseMapper {
 
         // Insert new company currency
         $sql = "INSERT INTO vtiger_currency_info (id, currency_name, currency_code, currency_symbol, conversion_rate, currency_status, defaultid, deleted) VALUES(?,?,?,?,?,?,?,?)";
-        $params = array($adb->getUniqueID("vtiger_currency_info"), $currency_name, $currency_code, $currency_symbol, 1, 'Active','0','0');
+        $params = array($adb->getUniqueID("vtiger_currency_info"), $currency_name, $currency_code, $currency_symbol, 1, 'Active',$default,'0');
         $adb->pquery($sql, $params);
+
+        // Return currency
+        $result = $adb->pquery("SELECT id FROM vtiger_currency_info WHERE currency_code=?", array($currency));
+        return $result->fields;
       } else {
-        error_log("currency with code " . json_encode($currency) . " not found in vTiger");
+        error_log("currency with code " . json_encode($currency) . " not supported by vTiger");
+        return null;
       }
     }
   }

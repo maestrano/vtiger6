@@ -35,8 +35,6 @@ class PurchaseOrderMapper extends BaseMapper {
 
   // Map the Connec resource attributes onto the vTiger PurchaseOrder
   protected function mapConnecResourceToModel($purchase_order_hash, $purchase_order) {
-    // Map hash attributes to PurchaseOrder
-
     // TODO Map/Create Currency
     if(!$this->is_set($purchase_order->column_fields['currency_id'])) { $purchase_order->column_fields['currency_id'] = 1; }
     if(!$this->is_set($purchase_order->column_fields['conversion_rate'])) { $purchase_order->column_fields['conversion_rate'] = 1; }
@@ -50,8 +48,7 @@ class PurchaseOrderMapper extends BaseMapper {
     if($this->is_set($purchase_order_hash['public_note'])) { $purchase_order->column_fields['description'] = $purchase_order_hash['public_note']; }
     if($this->is_set($purchase_order_hash['deposit'])) { $purchase_order->column_fields['paid'] = $purchase_order_hash['deposit']; }
     if($this->is_set($purchase_order_hash['balance'])) { $purchase_order->column_fields['balance'] = $purchase_order_hash['balance']; }
-
-    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = date("Y-m-d", strtotime($invoice_hash['due_date'])); }
+    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = $this->format_date_to_php($invoice_hash['due_date']); }
 
     // Map status
     $status = $purchase_order_hash['status'];
@@ -88,6 +85,10 @@ class PurchaseOrderMapper extends BaseMapper {
         if(!empty($purchase_order_line['item_id'])) {
           $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($purchase_order_line['item_id'], 'PRODUCT');
           $_REQUEST['hdnProductId'.$line_count] = $mno_id_map['app_entity_id'];
+        } else {
+          // Set default service
+          $service = $this->serviceMapper->defaultService();
+          $_REQUEST['hdnProductId'.$line_count] = $service['serviceid'];
         }
 
         // Map attributes
@@ -128,11 +129,7 @@ class PurchaseOrderMapper extends BaseMapper {
     if($this->is_set($purchase_order->column_fields['description'])) { $purchase_order_hash['public_note'] = $purchase_order->column_fields['description']; }
     if($this->is_set($purchase_order->column_fields['paid'])) { $purchase_order_hash['deposit'] = $purchase_order->column_fields['paid']; }
     if($this->is_set($purchase_order->column_fields['balance'])) { $purchase_order_hash['balance'] = $purchase_order->column_fields['balance']; }
-
-    if($this->is_set($invoice->column_fields['duedate'])) {
-      $due_date = DateTime::createFromFormat('Y-m-d', $invoice->column_fields['duedate']);
-      $invoice_hash['due_date'] = $due_date->format('c');
-    }
+    if($this->is_set($invoice->column_fields['duedate'])) { $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']); }
 
     // Map status
     $status = $purchase_order->column_fields['invoicestatus'];

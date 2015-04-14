@@ -4,6 +4,8 @@
 * Map Connec Invoice representation to/from vTiger Invoice
 */
 class InvoiceMapper extends BaseMapper {
+  protected $serviceMapper = null;
+
   public function __construct() {
     parent::__construct();
 
@@ -11,6 +13,8 @@ class InvoiceMapper extends BaseMapper {
     $this->local_entity_name = 'Invoice';
     $this->connec_resource_name = 'invoices';
     $this->connec_resource_endpoint = 'invoices';
+
+    $this->serviceMapper = new ServiceMapper();
   }
 
   // Return the Invoice local id
@@ -35,8 +39,6 @@ class InvoiceMapper extends BaseMapper {
 
   // Map the Connec resource attributes onto the vTiger Invoice
   protected function mapConnecResourceToModel($invoice_hash, $invoice) {
-    // Map hash attributes to Invoice
-
     // TODO Map/Create Currency
     if(!$this->is_set($invoice->column_fields['currency_id'])) { $invoice->column_fields['currency_id'] = 1; }
     if(!$this->is_set($invoice->column_fields['conversion_rate'])) { $invoice->column_fields['conversion_rate'] = 1; }
@@ -51,8 +53,8 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice_hash['deposit'])) { $invoice->column_fields['received'] = $invoice_hash['deposit']; }
     if($this->is_set($invoice_hash['balance'])) { $invoice->column_fields['balance'] = $invoice_hash['balance']; }
 
-    if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = date("Y-m-d", strtotime($invoice_hash['transaction_date'])); }
-    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = date("Y-m-d", strtotime($invoice_hash['due_date'])); }
+    if($this->is_set($invoice_hash['transaction_date'])) { $invoice->column_fields['invoicedate'] = $this->format_date_to_php($invoice_hash['transaction_date']); }
+    if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = $this->format_date_to_php($invoice_hash['due_date']); }
 
     // Map status
     $status = $invoice_hash['status'];
@@ -109,6 +111,10 @@ class InvoiceMapper extends BaseMapper {
         if(!empty($invoice_line['item_id'])) {
           $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($invoice_line['item_id'], 'PRODUCT');
           $_REQUEST['hdnProductId'.$line_count] = $mno_id_map['app_entity_id'];
+        } else {
+          // Set default service
+          $service = $this->serviceMapper->defaultService();
+          $_REQUEST['hdnProductId'.$line_count] = $service['serviceid'];
         }
 
         // Map attributes
@@ -149,15 +155,8 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice->column_fields['notes'])) { $invoice_hash['public_note'] = $invoice->column_fields['notes']; }
     if($this->is_set($invoice->column_fields['received'])) { $invoice_hash['deposit'] = $invoice->column_fields['received']; }
     if($this->is_set($invoice->column_fields['balance'])) { $invoice_hash['balance'] = $invoice->column_fields['balance']; }
-
-    if($this->is_set($invoice->column_fields['invoicedate'])) {
-      $transaction_date = DateTime::createFromFormat('Y-m-d', $invoice->column_fields['invoicedate']);
-      $invoice_hash['transaction_date'] = $transaction_date->format('c');
-    }
-    if($this->is_set($invoice->column_fields['duedate'])) {
-      $due_date = DateTime::createFromFormat('Y-m-d', $invoice->column_fields['duedate']);
-      $invoice_hash['due_date'] = $due_date->format('c');
-    }
+    if($this->is_set($invoice->column_fields['invoicedate'])) { $invoice_hash['transaction_date'] = $this->format_date_to_connec($invoice->column_fields['invoicedate']); }
+    if($this->is_set($invoice->column_fields['duedate'])) { $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']); }
 
     // Map status
     $status = $invoice->column_fields['invoicestatus'];
@@ -201,6 +200,7 @@ class InvoiceMapper extends BaseMapper {
     $invoice_hash['invoice_lines'] = array();
     $result = $adb->pquery("SELECT * FROM vtiger_inventoryproductrel WHERE id = ?", array($invoice->id));
     while($invoice_line_detail = $adb->fetch_array($result)) {
+
       $invoice_line = array();
       $productid = intval($invoice_line_detail['productid']);
       $line_number = intval($invoice_line_detail['sequence_no']);

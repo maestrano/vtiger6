@@ -1,11 +1,16 @@
 <?php
 
 require_once '../init.php';
+error_log("INIT !!");
+require_once 'maestrano/init/init_script.php';
 
 // Set default user for entities creation
 global $current_user;
 if(is_null($current_user)) { $current_user = (object) array(); }
-if(!isset($current_user->id)) { $current_user->id = "1"; }
+if(!isset($current_user->id)) {
+  $current_user->id = '1';
+  $current_user->date_format = 'Y-m-d';
+}
 
 if(!Maestrano::param('connec.enabled')) { return false; }
 
@@ -43,5 +48,3 @@ if (file_exists($filepath)) {
 if ($status) {
   file_put_contents($filepath, $current_timestamp);
 }
-
-?>
