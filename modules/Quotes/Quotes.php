@@ -536,6 +536,19 @@ class Quotes extends CRMEntity {
 		return $query;
 	}
 
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+
+    $mapper = 'QuoteMapper';
+    if(class_exists($mapper)) {
+      $quoteMapper = new $mapper();
+      $quoteMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
+
 }
 
 ?>
