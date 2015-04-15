@@ -6,6 +6,9 @@
 class InvoiceMapper extends BaseMapper {
   protected $serviceMapper = null;
 
+  private $invoice_status_mapping = null;
+  private $invoice_status_mapping_reverse = null;
+
   public function __construct() {
     parent::__construct();
 
@@ -15,6 +18,9 @@ class InvoiceMapper extends BaseMapper {
     $this->connec_resource_endpoint = 'invoices';
 
     $this->serviceMapper = new ServiceMapper();
+
+    $this->invoice_status_mapping = array('DRAFT' => 'Created', 'SUBMITTED' => 'Sent', 'AUTHORISED' => 'Approved', 'PAID' => 'Paid');
+    $this->invoice_status_mapping_reverse = array('Created' => 'DRAFT', 'Sent' => 'SUBMITTED', 'Approved' => 'AUTHORISED', 'Paid' => 'PAID');
   }
 
   // Return the Invoice local id
@@ -57,11 +63,7 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = $this->format_date_to_php($invoice_hash['due_date']); }
 
     // Map status
-    $status = $invoice_hash['status'];
-    if($status == 'SUBMITTED') { $invoice->column_fields['invoicestatus'] = 'Sent'; }
-    else if($status == 'AUTHORISED') { $invoice->column_fields['invoicestatus'] = 'Approved'; }
-    else if($status == 'PAID') { $invoice->column_fields['invoicestatus'] = 'Paid'; }
-    else { $invoice->column_fields['invoicestatus'] = 'Created'; }
+    $invoice->column_fields['invoicestatus'] = $this->invoice_status_mapping[$invoice_hash['status']];
 
     // Map Organization
     if($this->is_set($invoice_hash['organization_id'])) {
@@ -98,13 +100,13 @@ class InvoiceMapper extends BaseMapper {
     // Map Invoice lines
     // The class include/utils/InventoryUtils.php expects to find a $_REQUEST object with the invoice lines populated
     $_REQUEST = array();
-    if(!empty($invoice_hash['invoice_lines'])) {
+    if(!empty($invoice_hash['lines'])) {
       $_REQUEST['subtotal'] = $invoice_hash['amount']['total_amount'];
       $_REQUEST['total'] = $invoice_hash['amount']['total_amount'];
       $_REQUEST['taxtype'] = 'individual';
 
       $line_count = 0;
-      foreach($invoice_hash['invoice_lines'] as $invoice_line) {
+      foreach($invoice_hash['lines'] as $invoice_line) {
         $line_count++;
 
         // Map item
@@ -159,11 +161,7 @@ class InvoiceMapper extends BaseMapper {
     if($this->is_set($invoice->column_fields['duedate'])) { $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']); }
 
     // Map status
-    $status = $invoice->column_fields['invoicestatus'];
-    if($status == 'Sent') { $invoice_hash['status'] = 'SUBMITTED'; }
-    else if($status == 'Approved') { $invoice_hash['status'] = 'AUTHORISED'; }
-    else if($status == 'Paid') { $invoice_hash['status'] = 'PAID'; }
-    else { $invoice_hash['status'] = 'DRAFT'; }
+    $invoice_hash['status'] = $this->invoice_status_mapping_reverse[$invoice->column_fields['invoicestatus']];
 
     // Map Organization
     if($this->is_set($invoice->column_fields['account_id'])) {
@@ -197,7 +195,7 @@ class InvoiceMapper extends BaseMapper {
     );
 
     // Map invoice lines
-    $invoice_hash['invoice_lines'] = array();
+    $invoice_hash['lines'] = array();
     $result = $adb->pquery("SELECT * FROM vtiger_inventoryproductrel WHERE id = ?", array($invoice->id));
     while($invoice_line_detail = $adb->fetch_array($result)) {
 
@@ -241,7 +239,7 @@ class InvoiceMapper extends BaseMapper {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($productid, 'PRODUCTS');
       if($mno_id_map) { $invoice_line['item_id'] = $mno_id_map['mno_entity_guid']; }
 
-      $invoice_hash['invoice_lines'][] = $invoice_line;
+      $invoice_hash['lines'][] = $invoice_line;
     }
 
     return $invoice_hash;
@@ -252,7 +250,7 @@ class InvoiceMapper extends BaseMapper {
     $invoice->save("Invoice", $invoice->id, false);
 
     // Map invoice lines ids
-    foreach ($invoice_hash['invoice_lines'] as $invoice_line) {
+    foreach ($invoice_hash['lines'] as $invoice_line) {
       $invoice_line_local_id = $invoice->id . "#" . $invoice_line['line_number'];
       $invoice_line_mno_id = $invoice_hash['id'] . "#" . $invoice_line['id'];
       $mno_invoice_line_id = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($invoice_line_local_id, "INVOICE_LINE");

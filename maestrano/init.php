@@ -31,6 +31,7 @@ require_once 'modules/Invoice/Invoice.php';
 require_once 'modules/Quotes/Quotes.php';
 require_once 'modules/PurchaseOrder/PurchaseOrder.php';
 require_once 'modules/SalesOrder/SalesOrder.php';
+require_once 'modules/Quotes/Quotes.php';
 require_once 'include/fields/DateTimeField.php';
 
 // Include Maestrano required libraries

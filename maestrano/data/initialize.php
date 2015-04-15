@@ -1,7 +1,6 @@
 <?php
 
 require_once '../init.php';
-error_log("INIT !!");
 require_once 'maestrano/init/init_script.php';
 
 // Set default user for entities creation
@@ -25,7 +24,7 @@ if (file_exists($filepath)) {
 
   // Fetch updates
   $client = new Maestrano_Connec_Client();
-  $msg = $client->get("updates/$timestamp?\$filter[entity]=Company,TaxCode,Account,Organization,Person,Item,Invoice");
+  $msg = $client->get("updates/$timestamp?\$filter[entity]=Company,TaxCode,Account,Organization,Person,Item,Invoice,Quote,PurchaseOrder");
   $code = $msg['code'];
   $body = $msg['body'];
 

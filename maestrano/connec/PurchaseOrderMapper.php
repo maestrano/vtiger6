@@ -4,6 +4,11 @@
 * Map Connec Supplier Invoice representation to/from vTiger PurchaseOrder
 */
 class PurchaseOrderMapper extends BaseMapper {
+  protected $serviceMapper = null;
+
+  private $po_status_mapping = null;
+  private $po_status_mapping_reverse = null;
+
   public function __construct() {
     parent::__construct();
 
@@ -11,6 +16,11 @@ class PurchaseOrderMapper extends BaseMapper {
     $this->local_entity_name = 'PurchaseOrder';
     $this->connec_resource_name = 'invoices';
     $this->connec_resource_endpoint = 'invoices';
+
+    $this->serviceMapper = new ServiceMapper();
+
+    $this->po_status_mapping = array('DRAFT' => 'Created', 'AUTHORISED' => 'Approved', 'DELIVERED' => 'Delivered', 'CANCELLED' => 'Cancelled', 'RECEIVED' => 'Received Shipment');
+    $this->po_status_mapping_reverse = array('Created' => 'DRAFT', 'Approved' => 'AUTHORISED', 'Delivered' => 'DELIVERED', 'Cancelled' => 'CANCELLED', 'Received Shipment' => 'RECEIVED');
   }
 
   // Return the PurchaseOrder local id
@@ -51,11 +61,7 @@ class PurchaseOrderMapper extends BaseMapper {
     if($this->is_set($invoice_hash['due_date'])) { $invoice->column_fields['duedate'] = $this->format_date_to_php($invoice_hash['due_date']); }
 
     // Map status
-    $status = $purchase_order_hash['status'];
-    if($status == 'SUBMITTED') { $purchase_order->column_fields['invoicestatus'] = 'Sent'; }
-    else if($status == 'AUTHORISED') { $purchase_order->column_fields['invoicestatus'] = 'Approved'; }
-    else if($status == 'PAID') { $purchase_order->column_fields['invoicestatus'] = 'Paid'; }
-    else { $purchase_order->column_fields['invoicestatus'] = 'Created'; }
+    $purchase_order->column_fields['postatus'] = $this->po_status_mapping[$purchase_order_hash['status']];
 
     // Map Organization
     if($this->is_set($purchase_order_hash['organization_id'])) {
@@ -72,13 +78,13 @@ class PurchaseOrderMapper extends BaseMapper {
     // Map PurchaseOrder lines
     // The class include/utils/InventoryUtils.php expects to find a $_REQUEST object with the invoice lines populated
     $_REQUEST = array();
-    if(!empty($purchase_order_hash['invoice_lines'])) {
+    if(!empty($purchase_order_hash['lines'])) {
       $_REQUEST['subtotal'] = $purchase_order_hash['amount']['total_amount'];
       $_REQUEST['total'] = $purchase_order_hash['amount']['total_amount'];
       $_REQUEST['taxtype'] = 'individual';
 
       $line_count = 0;
-      foreach($purchase_order_hash['invoice_lines'] as $purchase_order_line) {
+      foreach($purchase_order_hash['lines'] as $purchase_order_line) {
         $line_count++;
 
         // Map item
@@ -132,11 +138,7 @@ class PurchaseOrderMapper extends BaseMapper {
     if($this->is_set($invoice->column_fields['duedate'])) { $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']); }
 
     // Map status
-    $status = $purchase_order->column_fields['invoicestatus'];
-    if($status == 'Sent') { $purchase_order_hash['status'] = 'SUBMITTED'; }
-    else if($status == 'Approved') { $purchase_order_hash['status'] = 'AUTHORISED'; }
-    else if($status == 'Paid') { $purchase_order_hash['status'] = 'PAID'; }
-    else { $purchase_order_hash['status'] = 'DRAFT'; }
+    $purchase_order_hash['status'] = $this->po_status_mapping_reverse[$purchase_order->column_fields['postatus']];
 
     // Map Organization
     if($this->is_set($purchase_order->column_fields['vendor_id'])) {
@@ -151,7 +153,7 @@ class PurchaseOrderMapper extends BaseMapper {
     }
 
     // Map invoice lines
-    $purchase_order_hash['invoice_lines'] = array();
+    $purchase_order_hash['lines'] = array();
     $result = $adb->pquery("SELECT * FROM vtiger_inventoryproductrel WHERE id = ?", array($purchase_order->id));
     while($purchase_order_line_detail = $adb->fetch_array($result)) {
       $purchase_order_line = array();
@@ -194,7 +196,7 @@ class PurchaseOrderMapper extends BaseMapper {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($productid, 'PRODUCTS');
       if($mno_id_map) { $purchase_order_line['item_id'] = $mno_id_map['mno_entity_guid']; }
 
-      $purchase_order_hash['invoice_lines'][] = $purchase_order_line;
+      $purchase_order_hash['lines'][] = $purchase_order_line;
     }
 
     return $purchase_order_hash;
@@ -205,7 +207,7 @@ class PurchaseOrderMapper extends BaseMapper {
     $purchase_order->save("PurchaseOrder", $purchase_order->id, false);
 
     // Map invoice lines ids
-    foreach ($purchase_order_hash['invoice_lines'] as $purchase_order_line) {
+    foreach ($purchase_order_hash['lines'] as $purchase_order_line) {
       $purchase_order_line_local_id = $purchase_order->id . "#" . $purchase_order_line['line_number'];
       $purchase_order_line_mno_id = $purchase_order_hash['id'] . "#" . $purchase_order_line['id'];
       $mno_invoice_line_id = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($purchase_order_line_local_id, "INVOICE_LINE");
