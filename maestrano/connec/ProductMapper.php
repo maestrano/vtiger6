@@ -106,28 +106,28 @@ class ProductMapper extends BaseMapper {
       $adb->pquery("UPDATE vtiger_products SET product_no = ? WHERE productid = ?", array($product_hash['code'], $product->id));
     }
 
-    ProductMapper::mapConnecTaxToProduct($product_hash, $product);
+    // Add tax to product
+    ProductMapper::mapConnecTaxToProduct($product_hash['sale_tax_code_id'], $product->id);
   }
 
   // Save sales tax against product
-  public static function mapConnecTaxToProduct($product_hash, &$product) {
+  public static function mapConnecTaxToProduct($sale_tax_code_id, $product_id) {
     global $adb;
 
-    if(!array_key_exists('sale_tax_code_id', $product_hash)) { return null; }
+    if(is_null($sale_tax_code_id)) { return null; }
 
-    $sale_tax_code_id = $product_hash['sale_tax_code_id'];
     $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($sale_tax_code_id, 'TAXCODE');
     if($mno_id_map) {
       $tax_id = $mno_id_map['app_entity_id'];
       $tax = Settings_Vtiger_TaxRecord_Model::getInstanceById($tax_id, Settings_Vtiger_TaxRecord_Model::PRODUCT_AND_SERVICE_TAX);
-      
+
       // Delete existing Tax
       $query = "DELETE FROM vtiger_producttaxrel WHERE productid=? AND taxid=?";
-      $adb->pquery($query, array($product->id, $tax_id));
+      $adb->pquery($query, array($product_id, $tax_id));
 
       // Insert Tax for this product
       $query = "INSERT INTO vtiger_producttaxrel VALUES(?,?,?)";
-      $adb->pquery($query, array($product->id, $tax_id, $tax->getTax()));
+      $adb->pquery($query, array($product_id, $tax_id, $tax->getTax()));
     }
   }
 

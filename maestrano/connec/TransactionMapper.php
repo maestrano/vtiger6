@@ -92,11 +92,18 @@ class TransactionMapper extends BaseMapper {
         // Map item
         if(!empty($transaction_line['item_id'])) {
           $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($transaction_line['item_id'], 'PRODUCT');
-          $_REQUEST['hdnProductId'.$line_count] = $mno_id_map['app_entity_id'];
+          $product_id = $mno_id_map['app_entity_id'];
+          $_REQUEST['hdnProductId'.$line_count] = $product_id;
+
+          // Add tax to item
+          ProductMapper::mapConnecTaxToProduct($transaction_line['tax_code_id'], $product_id);
         } else {
           // Set default service
           $service = $this->serviceMapper->defaultService();
           $_REQUEST['hdnProductId'.$line_count] = $service['serviceid'];
+
+          // Add tax to item
+          ProductMapper::mapConnecTaxToProduct($transaction_line['tax_code_id'], $service['serviceid']);
         }
 
         // Map attributes
@@ -188,6 +195,7 @@ class TransactionMapper extends BaseMapper {
         $transaction_line['id'] = $transaction_line_id_parts[1];
       }
 
+      $transaction_line['status'] = 'ACTIVE';
       $transaction_line['line_number'] = $line_number;
       $transaction_line['description'] = $comment;
       $transaction_line['quantity'] = $quantity;
