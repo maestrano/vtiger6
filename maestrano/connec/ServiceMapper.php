@@ -84,7 +84,8 @@ class ServiceMapper extends BaseMapper {
       $adb->pquery("UPDATE vtiger_service SET service_no = ? WHERE serviceid = ?", array($service_hash['code'], $service->id));
     }
 
-    ProductMapper::mapConnecTaxToProduct($service_hash, $service);
+    // Add tax to product
+    ProductMapper::mapConnecTaxToProduct($service_hash['sale_tax_code_id'], $service->id);
   }
 
   // Find or create a default service
