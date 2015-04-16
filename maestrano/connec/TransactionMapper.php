@@ -79,12 +79,19 @@ class TransactionMapper extends BaseMapper {
 
     // Map Transaction lines
     // The class include/utils/InventoryUtils.php expects to find a $_REQUEST object with the transaction lines populated
-    $_REQUEST = array();
+    if(is_null($_REQUEST)) { $_REQUEST = array(); }
+    
     if(!empty($transaction_hash['lines'])) {
       $_REQUEST['subtotal'] = $transaction_hash['amount']['total_amount'];
       $_REQUEST['total'] = $transaction_hash['amount']['total_amount'];
-      $_REQUEST['taxtype'] = 'individual';
-
+      
+      // Force tax type to individual only for new Transactions
+      if(!$_REQUEST['taxtype']) {
+        $_REQUEST['taxtype'] = 'individual';
+      } else {
+        $_REQUEST['taxtype'] = $_REQUEST['taxtype'];
+      }
+      
       $line_count = 0;
       foreach($transaction_hash['lines'] as $transaction_line) {
         $line_count++;
@@ -174,7 +181,6 @@ class TransactionMapper extends BaseMapper {
     $transaction_hash['lines'] = array();
     $result = $adb->pquery("SELECT * FROM vtiger_inventoryproductrel WHERE id = ?", array($transaction->id));
     while($transaction_line_detail = $adb->fetch_array($result)) {
-
       $transaction_line = array();
       $productid = intval($transaction_line_detail['productid']);
       $line_number = intval($transaction_line_detail['sequence_no']);
@@ -203,12 +209,31 @@ class TransactionMapper extends BaseMapper {
       $transaction_line['unit_price'] = array('net_amount' => $listprice);
 
       // Line applicable tax (limit to one)
-      $total_line_tax = 0;
-      foreach ($transaction_line_detail as $key => $value) {
-        if(preg_match('/^tax\d+/', $key) && !is_null($value) && $value > 0) {
-          $tax = TaxMapper::getTaxByName($key);
-          $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($tax['taxid'], 'TAXRECORD');
-          if($mno_id_map) { $transaction_line['tax_code_id'] = $mno_id_map['mno_entity_guid']; break; }
+      if($_REQUEST['taxtype'] = 'individual') {
+        foreach ($transaction_line_detail as $key => $value) {
+          if(preg_match('/^tax\d+/', $key) && !is_null($value) && $value > 0) {
+            $tax = TaxMapper::getTaxByName($key);
+            $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($tax['taxid'], 'TAXRECORD');
+            if($mno_id_map) {
+              $transaction_line['tax_code_id'] = $mno_id_map['mno_entity_guid'];
+              $individual_tax = true;
+              break;
+            }
+          }
+        }
+      }
+
+      if($_REQUEST['taxtype'] = 'group') {
+        foreach ($transaction_line_detail as $key => $value) {
+          if(preg_match('/^tax\d+/', $key) && !is_null($value) && $value > 0) {
+            $tax = TaxMapper::getTaxByName($key);
+            $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($tax['taxid'], 'TAXRECORD');
+            if($mno_id_map) {
+              $transaction_line['tax_code_id'] = $mno_id_map['mno_entity_guid'];
+              $individual_tax = true;
+              break;
+            }
+          }
         }
       }
 
