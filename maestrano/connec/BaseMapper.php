@@ -167,7 +167,7 @@ abstract class BaseMapper {
   // Map a Connec Resource to an vTiger Model
   public function findOrCreateIdMap($resource_hash, $model) {
     $local_id = $this->getId($model);
-    error_log("findOrCreateIdMap entity=$this->connec_entity_name, local_id=$local_id, entity_id= " .$resource_hash['id']);
+    error_log("findOrCreateIdMap entity=$this->connec_entity_name, local_id=$local_id, entity_id=" .$resource_hash['id']);
     
     if($local_id == 0 || is_null($resource_hash['id'])) { return null; }
 

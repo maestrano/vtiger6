@@ -73,15 +73,13 @@ class SupplierOrganizationMapper extends BaseMapper {
     if($this->is_set($organization->column_fields['category'])) { $organization_hash['industry'] = $organization->column_fields['category']; }
 
     $address = array();
-    $shipping_address = array();
-    if($this->is_set($organization->column_fields['street'])) { $shipping_address['line1'] = $organization->column_fields['street']; }
-    if($this->is_set($organization->column_fields['pobox'])) { $shipping_address['line2'] = $organization->column_fields['pobox']; }
-    if($this->is_set($organization->column_fields['city'])) { $shipping_address['city'] = $organization->column_fields['city']; }
-    if($this->is_set($organization->column_fields['state'])) { $shipping_address['region'] = $organization->column_fields['state']; }
-    if($this->is_set($organization->column_fields['postalcode'])) { $shipping_address['postal_code'] = $organization->column_fields['postalcode']; }
-    if($this->is_set($organization->column_fields['country'])) { $shipping_address['country'] = $organization->column_fields['country']; }
-    if(!empty($shipping_address)) { $address['shipping'] = $shipping_address; }
-    if(!empty($address)) { $organization_hash['address'] = $address; }
+    if($this->is_set($organization->column_fields['street'])) { $address['line1'] = $organization->column_fields['street']; }
+    if($this->is_set($organization->column_fields['pobox'])) { $address['line2'] = $organization->column_fields['pobox']; }
+    if($this->is_set($organization->column_fields['city'])) { $address['city'] = $organization->column_fields['city']; }
+    if($this->is_set($organization->column_fields['state'])) { $address['region'] = $organization->column_fields['state']; }
+    if($this->is_set($organization->column_fields['postalcode'])) { $address['postal_code'] = $organization->column_fields['postalcode']; }
+    if($this->is_set($organization->column_fields['country'])) { $address['country'] = $organization->column_fields['country']; }
+    if(!empty($address)) { $organization_hash['address'] = array('shipping' => $address, 'billing' => $address); }
 
     
     if($this->is_set($organization->column_fields['phone'])) { $organization_hash['phone'] = array('landline' => $organization->column_fields['phone']); }
