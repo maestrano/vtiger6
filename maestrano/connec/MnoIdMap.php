@@ -12,7 +12,6 @@ class MnoIdMap {
     global $adb;
 
     $query = '';
-    
     if(is_null($local_entity_name)) {
       $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."'";
     } else {
@@ -20,14 +19,14 @@ class MnoIdMap {
     }
     
     $result = $adb->pquery($query);
-    if($result) { return $result->fields; }
+    if($adb->num_rows($result) > 0) { return $result->fields; }
     return null;
   }
 
   public static function findMnoIdMapByLocalIdAndEntityName($local_id, $local_entity_name) {
     global $adb;
     $result = $adb->pquery("SELECT * from mno_id_map WHERE app_entity_id = '".$local_id."' AND app_entity_name = '".strtoupper($local_entity_name)."'");
-    if($result) { return $result->fields; }
+    if($adb->num_rows($result) > 0) { return $result->fields; }
     return null;
   }
 
@@ -46,6 +45,6 @@ class MnoIdMap {
   public static function updateIdMapEntry($current_mno_id, $new_mno_id, $mno_entity_name) {
     global $adb;
     $query = "UPDATE mno_id_map SET mno_entity_guid = '".$new_mno_id."' WHERE mno_entity_guid = '".$current_mno_id."' AND mno_entity_name = '".strtoupper($mno_entity_name)."'";
-    $adb->pquery($query);
+    return $adb->pquery($query);
   }
 }
