@@ -49,6 +49,9 @@ class TransactionMapper extends BaseMapper {
     if($this->is_set($transaction_hash['organization_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($transaction_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
       if($mno_id_map) { $transaction->column_fields['account_id'] = $mno_id_map['app_entity_id']; }
+
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($transaction_hash['organization_id'], 'ORGANIZATION', 'VENDORS');
+      if($mno_id_map) { $transaction->column_fields['vendor_id'] = $mno_id_map['app_entity_id']; }
     }
 
     // Map Contact
@@ -149,6 +152,12 @@ class TransactionMapper extends BaseMapper {
     // Map Organization
     if($this->is_set($transaction->column_fields['account_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['account_id'], 'ACCOUNTS');
+      if($mno_id_map) { $transaction_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+    }
+
+    // Map Vendor
+    if($this->is_set($transaction->column_fields['vendor_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['vendor_id'], 'VENDORS');
       if($mno_id_map) { $transaction_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
     }
 
