@@ -62,6 +62,10 @@ try {
       $quoteMapper = new QuoteMapper();
       $quoteMapper->fetchConnecResource($entity_id);
       break;
+    case "PURCHASEORDERS":
+      $purchaseOrderMapper = new PurchaseOrderMapper();
+      $purchaseOrderMapper->fetchConnecResource($entity_id);
+      break;
   }
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));

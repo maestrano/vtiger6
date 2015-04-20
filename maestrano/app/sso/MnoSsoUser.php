@@ -229,7 +229,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
      if($this->local_id) {
        // Update record
        $query = "UPDATE vtiger_users SET email1=?, first_name=?, last_name=? where id=?";
-       $upd = $this->connection->pquery($query, array($this->email, $this->name, $this->surname, $this->local_id));
+       $upd = $this->connection->pquery($query, array($this->getEmail(), $this->getFirstName(), $this->getLastName(), $this->local_id));
        return $upd;
      }
 

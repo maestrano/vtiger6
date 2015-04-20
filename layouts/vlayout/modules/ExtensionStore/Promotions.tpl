@@ -9,7 +9,7 @@
 *
 ********************************************************************************/
 -->*}
-{strip}
+<!-- {strip}
     <div class="banner-container">
         <div class="row-fluid"></div>
         <div class="banner">
@@ -29,4 +29,4 @@
             </ul>
         </div>
     </div>
-{/strip}
+{/strip} -->
