@@ -89,12 +89,8 @@ class TransactionMapper extends BaseMapper {
       $_REQUEST['total'] = $transaction_hash['amount']['total_amount'];
       
       // Force tax type to individual only for new Transactions
-      if(!$_REQUEST['taxtype']) {
-        $_REQUEST['taxtype'] = 'individual';
-      } else {
-        $_REQUEST['taxtype'] = $_REQUEST['taxtype'];
-      }
-      
+      if(!$this->is_set($_REQUEST['taxtype'])) { $_REQUEST['taxtype'] = 'individual'; }
+
       $line_count = 0;
       foreach($transaction_hash['lines'] as $transaction_line) {
         $line_count++;
@@ -218,7 +214,7 @@ class TransactionMapper extends BaseMapper {
       $transaction_line['unit_price'] = array('net_amount' => $listprice);
 
       // Line applicable tax (limit to one)
-      if($_REQUEST['taxtype'] = 'individual') {
+      if($_REQUEST['taxtype'] == 'individual') {
         foreach ($transaction_line_detail as $key => $value) {
           if(preg_match('/^tax\d+/', $key) && !is_null($value) && $value > 0) {
             $tax = TaxMapper::getTaxByName($key);
@@ -232,7 +228,7 @@ class TransactionMapper extends BaseMapper {
         }
       }
 
-      if($_REQUEST['taxtype'] = 'group') {
+      if($_REQUEST['taxtype'] == 'group') {
         foreach ($transaction_line_detail as $key => $value) {
           if(preg_match('/^tax\d+/', $key) && !is_null($value) && $value > 0) {
             $tax = TaxMapper::getTaxByName($key);
