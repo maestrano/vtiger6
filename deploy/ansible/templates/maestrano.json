@@ -1,5 +1,5 @@
 {
-    "environment": "{{ environment }}",
+    "environment": "{{ maestrano_environment }}",
     "app": {
         "host": "http://{{ server_hostname }}"
     },
