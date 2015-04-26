@@ -1,12 +1,7 @@
-FROM ubuntu:14.04
+FROM bchauvet:nex-prototyping
 MAINTAINER Maestrano <it@maestrano.com>
 
-# Install Ansible
 RUN apt-get update
-RUN apt-get install -y software-properties-common python-software-properties
-RUN apt-add-repository -y ppa:ansible/ansible
-RUN apt-get update
-RUN apt-get install -y ansible
 
 # Add playbooks
 ADD ansible/playbooks/ /etc/ansible/playbooks/
@@ -18,13 +13,13 @@ ADD ansible/inventory /etc/ansible/hosts
 WORKDIR /etc/ansible
 
 # Run Ansible playbooks
-RUN ansible-playbook /etc/ansible/playbooks/mysql.yml -c local
-RUN ansible-playbook /etc/ansible/playbooks/apache.yml -c local
+# RUN ansible-playbook /etc/ansible/playbooks/mysql.yml -c local
+# RUN ansible-playbook /etc/ansible/playbooks/apache.yml -c local
 RUN ansible-playbook /etc/ansible/playbooks/vtiger6.yml -c local
 
 # Start services
-CMD service mysql start && tail -F /var/log/mysql/error.log
-CMD service apache2 start && tail -F /var/log/apache2/error.log
+# CMD service mysql start && tail -F /var/log/mysql/error.log
+# CMD service apache2 start && tail -F /var/log/apache2/error.log
 
 # Expose port 22 and 80
-EXPOSE 22 80
+# EXPOSE 22 80
