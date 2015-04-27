@@ -44,7 +44,7 @@
 
   - name: vTiger | Configure Apache virtual host
     template: 
-      src: ../templates/etc-apache2-confd-vtiger6-conf
+      src: ../templates/etc-apache22-confd-vtiger6-conf
       dest: /etc/apache2/sites-available/vtigercrm.conf
       owner: root
       mode: 755

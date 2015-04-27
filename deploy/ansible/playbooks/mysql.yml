@@ -8,7 +8,7 @@
     apt: "name={{ item }} state=present"
     with_items:
       - mysql-server-5.5
-      - mysql-client-core-5.5
+      - mysql-client-5.5
       - libmysqlclient-dev
       - python-mysqldb
 
@@ -30,7 +30,11 @@
     service: 
       name: mysql 
       state: started
-      enabled: true
+
+  - name: MySQL | Auto start the MySQL service
+    service: 
+      name: mysql 
+      enabled: yes
 
   - name: MySQL | Update mysql root password for all root accounts
     mysql_user: 

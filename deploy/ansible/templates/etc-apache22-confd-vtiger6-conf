@@ -1,0 +1,17 @@
+ServerName {{ server_hostname }}
+
+<VirtualHost *:80>
+  DocumentRoot {{ vtiger_root_path }}
+  <Directory {{ vtiger_root_path }}>
+    DirectoryIndex index.php index.html
+    Options Indexes FollowSymLinks Includes ExecCGI MultiViews
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+  
+  ErrorLog /var/log/apache2/vtigercrm_error.log
+  LogLevel warn
+  CustomLog /var/log/apache2/vtigercrm_access.log combined
+  ServerSignature Off
+</VirtualHost>

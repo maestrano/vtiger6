@@ -29,7 +29,7 @@
       - dir
 
   - name: Apache | Remove default site
-    file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+    file: path=/etc/apache2/sites-enabled/000-default* state=absent
 
   - name: Apache | Configuration file /etc/php5/apache2/php.ini
     template: 
@@ -42,4 +42,8 @@
     service: 
       name: apache2 
       state: started
-      enabled: true
+
+  - name: Apache | Auto start the Apache service
+    service: 
+      name: apache2 
+      enabled: yes

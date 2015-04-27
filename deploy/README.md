@@ -17,5 +17,8 @@ And then access the container with http://[IP_ADDRESS] to check vTiger is runnin
 `sudo docker ps`
 
 ## Stop and remove all containers
-`sudo docker stop $(docker ps -a -q)`
-`sudo docker rm $(docker ps -a -q)`
+sudo docker stop $(docker ps -a -q)
+sudo docker rm $(docker ps -a -q)
+
+## Remove untagged images
+docker images -q --filter "dangling=true" | xargs docker rmi
