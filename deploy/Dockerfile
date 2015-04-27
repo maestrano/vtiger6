@@ -7,7 +7,7 @@ RUN apt-get -y update &&  \
     apt-get -y --no-install-recommends install python-yaml \
                python-jinja2 python-httplib2 python-keyczar \
                python-paramiko python-setuptools \
-               python-pkg-resources git python-pip \
+               python-pkg-resources git python-pip &&  \
     mkdir -p /etc/ansible/ &&  \
     pip install ansible
 
@@ -31,3 +31,9 @@ RUN apt-get purge --auto-remove -y python2.6 python2.6-minimal &&  \
 
 # Expose port 22 and 80
 EXPOSE 22 80
+
+# Startup script
+RUN echo "#!/bin/bash\n/etc/init.d/mysql start\n/etc/init.d/apache2 start\n/bin/bash" > /root/init.sh && \
+    chmod 755 /root/init.sh
+
+ENTRYPOINT ["/root/init.sh"]

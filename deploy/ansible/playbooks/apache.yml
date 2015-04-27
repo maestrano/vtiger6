@@ -29,7 +29,7 @@
       - dir
 
   - name: Apache | Remove default site
-    file: path=/etc/apache2/sites-enabled/000-default* state=absent
+    file: path=/etc/apache2/sites-enabled/000-default state=absent
 
   - name: Apache | Configuration file /etc/php5/apache2/php.ini
     template: 

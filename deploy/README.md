@@ -4,7 +4,7 @@
 `sudo docker build -t "vtiger-6.2.0" .`
 
 ## Start Docker container
-`sudo docker run -t -i --name=vtiger6_container vtiger-6.2.0 /bin/bash`
+`sudo docker run -t -i --name=vtiger6_container --add-host='application.maestrano.io:172.17.42.1' vtiger-6.2.0 /root/init.sh`
 
 ## Retrieve container details (IP address...)
 `sudo docker inspect vtiger6_container`
