@@ -11,8 +11,8 @@ class TransactionMapper extends BaseMapper {
 
     $this->connec_entity_name = 'Transaction';
     $this->local_entity_name = 'Transaction';
-    $this->connec_resource_name = 'Transactions';
-    $this->connec_resource_endpoint = 'Transactions';
+    $this->connec_resource_name = 'transactions';
+    $this->connec_resource_endpoint = 'transactions';
 
     $this->serviceMapper = new ServiceMapper();
   }
