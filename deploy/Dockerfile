@@ -4,7 +4,7 @@ MAINTAINER Maestrano <it@maestrano.com>
 # Install Ansible
 RUN apt-get -y update &&  \
     apt-get -y upgrade &&  \
-    apt-get -y --no-install-recommends install python-yaml \
+    apt-get -q -y --no-install-recommends install python-yaml \
                python-jinja2 python-httplib2 python-keyczar \
                python-paramiko python-setuptools \
                python-pkg-resources git python-pip &&  \
@@ -26,8 +26,8 @@ RUN ansible-playbook /etc/ansible/playbooks/mysql.yml -c local &&  \
     ansible-playbook /etc/ansible/playbooks/install_vtiger6.yml -c local
 
 # Clean up
-RUN apt-get purge --auto-remove -y python2.6 python2.6-minimal &&  \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get clean purge --auto-remove -y python2.6 python2.6-minimal &&  \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Expose port 22 and 80
 EXPOSE 22 80
