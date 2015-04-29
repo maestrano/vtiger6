@@ -1,16 +1,8 @@
-# Settings that are applied to the templates. This file should be copied to
-# the base folder of the play and renamed settings.yml, then modified to suit
-# your needs.
-
 ---
-maestrano_environment: local
-server_hostname: vtiger6.app.dev.maestrano.io
-api_key: 94cd736d57484d5e42ed1a194de0af7508b1163a35909ab7fe3b713a90816661
-api_secret: baa59b5b-cb6b-4e4b-8682-b3966877840e
 
 # php.ini
 php_max_execution_time: '90'
-php_memory_limit: '256M'
+php_memory_limit: '648M'
 php_display_errors: 'On'
 php_display_startup_errors: 'On'
 php_html_errors: 'On'
@@ -18,7 +10,9 @@ php_post_max_size: '8M'
 php_upload_max_filesize: '8M'
 
 # my.cnf
-mysql_max_allowed_packet: '128M'
+innodb_additional_mem_pool_size: '16M'
+innodb_buffer_pool_size: '64M'
+mysql_max_allowed_packet: '16M'
 mysql_character_set_server: 'utf8'
 mysql_collation_server: 'utf8_general_ci'
 innodb_file_per_table: 'innodb_file_per_table'
@@ -26,18 +20,16 @@ innodb_file_per_table: 'innodb_file_per_table'
 # mysql
 mysql_root_password: 'password'
 
-# apache
-apache_server_admin: 'webmaster@example.com'
-apache_server_alias: '*.*.example.com'
-
-# vsftpd
-vsftpd_anonymous_enable: 'NO'
-vsftpd_local_enable: 'YES'
-vsftpd_write_enable: 'YES'
-vsftpd_local_umask: '002'
-
-# vTiger
+# vTiger installation
 vtiger_db_user: vtiger6
 vtiger_db_password: vtiger6
 vtiger_db_name: vtiger6
 vtiger_root_path: /var/lib/vtigercrm/webapp
+
+# vTiger default configuration
+sso_enabled: "false"
+connec_enabled: "false"
+maestrano_environment: "production"
+server_hostname: "server_hostname"
+api_key: "api_key"
+api_secret: "api_secret"

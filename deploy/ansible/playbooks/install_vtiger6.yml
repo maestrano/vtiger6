@@ -99,4 +99,4 @@
       chdir: "{{ vtiger_root_path }}"
 
   - name: vTiger | Set file permissions
-    file: "path={{ vtiger_root_path }} mode=755 state=directory recurse=yes"
+    file: "path={{ vtiger_root_path }} mode=755 owner=www-data group=www-data state=directory recurse=yes"

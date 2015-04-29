@@ -9,14 +9,14 @@
         "group_id": "{{ server_hostname }}"
     },
     "sso": {
-        "enabled": true,
+        "enabled": {{ sso_enabled }},
         "slo_enabled": true,
         "init_path": "/maestrano/auth/saml/init.php",
         "consume_path": "/maestrano/auth/saml/consume.php",
         "creation_mode": "virtual"
     },
     "connec": {
-      "enabled": true
+      "enabled": {{ connec_enabled }}
     },
     "webhook": {
         "account": {
