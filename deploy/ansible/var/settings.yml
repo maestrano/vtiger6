@@ -2,7 +2,7 @@
 
 # php.ini
 php_max_execution_time: '90'
-php_memory_limit: '648M'
+php_memory_limit: '64M'
 php_display_errors: 'On'
 php_display_startup_errors: 'On'
 php_html_errors: 'On'
@@ -24,7 +24,7 @@ mysql_root_password: 'password'
 vtiger_db_user: vtiger6
 vtiger_db_password: vtiger6
 vtiger_db_name: vtiger6
-vtiger_root_path: /var/lib/vtigercrm/webapp
+vtiger_root_path: /var/lib/vtigercrm/webapp/
 
 # vTiger default configuration
 sso_enabled: "false"

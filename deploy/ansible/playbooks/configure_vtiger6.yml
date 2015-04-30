@@ -34,4 +34,4 @@
       dest: "{{ vtiger_root_path }}/maestrano.json"
       owner: www-data
       group: www-data
-      mode: 755
+      mode: 777
