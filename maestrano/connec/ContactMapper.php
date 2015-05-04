@@ -41,6 +41,7 @@ class ContactMapper extends BaseMapper {
     if($this->is_set($person_hash['first_name'])) { $person->column_fields['firstname'] = $person_hash['first_name']; }
     if($this->is_set($person_hash['last_name'])) { $person->column_fields['lastname'] = $person_hash['last_name']; }
     if($this->is_set($person_hash['description'])) { $person->column_fields['description'] = $person_hash['description']; }
+    if($this->is_set($person_hash['job_title'])) { $person->column_fields['title'] = $person_hash['job_title']; }
 
     if($this->is_set($person_hash['address_work'])) {
       if($this->is_set($person_hash['address_work']['billing'])) {
@@ -99,6 +100,7 @@ class ContactMapper extends BaseMapper {
     if($this->is_set($person->column_fields['firstname'])) { $person_hash['first_name'] = $person->column_fields['firstname']; }
     if($this->is_set($person->column_fields['lastname'])) { $person_hash['last_name'] = $person->column_fields['lastname']; }
     if($this->is_set($person->column_fields['description'])) { $person_hash['description'] = $person->column_fields['description']; }
+    if($this->is_set($person->column_fields['title'])) { $person_hash['job_title'] = $person->column_fields['title']; }
     
     $address = array();
     $billing_address = array();

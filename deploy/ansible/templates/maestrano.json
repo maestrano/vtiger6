@@ -1,0 +1,54 @@
+{
+    "environment": "{{ maestrano_environment }}",
+    "app": {
+        "host": "http://{{ server_hostname }}"
+    },
+    "api": {
+        "id": "{{ api_key }}",
+        "key": "{{ api_secret }}",
+        "group_id": "{{ server_hostname }}"
+    },
+    "sso": {
+        "enabled": {{ sso_enabled }},
+        "slo_enabled": true,
+        "init_path": "/maestrano/auth/saml/init.php",
+        "consume_path": "/maestrano/auth/saml/consume.php",
+        "creation_mode": "virtual"
+    },
+    "connec": {
+      "enabled": {{ connec_enabled }}
+    },
+    "webhook": {
+        "account": {
+            "groupsPath": "/maestrano/account/groups/:id",
+            "groupUsersPath": "/maestrano/account/groups/:group_id/users/:id"
+        },
+        "connec": {
+            "initialization_path": "/maestrano/data/initialize.php",
+            "notifications_path": "/maestrano/data/subscribe.php",
+            "subscriptions": {
+                "accounts": true,
+                "company": true,
+                "events": false,
+                "event_orders": false,
+                "invoices": true,
+                "items": true,
+                "journals": false,
+                "organizations": true,
+                "payments": false,
+                "pay_items": false,
+                "pay_schedules": false,
+                "pay_stubs": false,
+                "pay_runs": false,
+                "people": true,
+                "projects": false,
+                "tax_codes": true,
+                "tax_rates": false,
+                "time_activities": false,
+                "time_sheets": false,
+                "venues": false,
+                "work_locations": false
+            }
+        }
+    }
+}
