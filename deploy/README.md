@@ -4,9 +4,11 @@
 `sudo docker build -t "maestrano:vtiger-6.2.0" .`
 
 ## Start Docker container
-`sudo docker run -t -i --add-host application.maestrano.io:172.17.42.1 --name=vtiger6_container maestrano:vtiger-6.2.0`
+`sudo docker run -t -i --name=vtiger6_container maestrano:vtiger-6.2.0`
 
---add-host application.maestrano.io:172.17.42.1
+You can add extra hosts entry to your cotnainers with the option `--add-host hostname:IP`:
+
+`sudo docker run -t -i --add-host application.maestrano.io:172.17.42.1 --name=vtiger6_container maestrano:vtiger-6.2.0`
 
 ## Retrieve container details (IP address...)
 `sudo docker inspect vtiger6_container`
