@@ -1,12 +1,12 @@
 {
-    "environment": "local",
+    "environment": "production",
     "app": {
-        "host": "http://vtiger6.app.dev.maestrano.io"
+        "host": "host"
     },
     "api": {
-        "id": "94cd736d57484d5e42ed1a194de0af7508b1163a35909ab7fe3b713a90816661",
-        "key": "baa59b5b-cb6b-4e4b-8682-b3966877840e",
-        "group_id": "vtiger6.app.dev.maestrano.io"
+        "id": "api_key",
+        "key": "api_secret",
+        "group_id": "group_id"
     },
     "sso": {
         "enabled": true,
