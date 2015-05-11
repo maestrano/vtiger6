@@ -189,7 +189,7 @@ class TransactionMapper extends BaseMapper {
       $transaction_line = array();
       $productid = intval($transaction_line_detail['productid']);
       $line_number = intval($transaction_line_detail['sequence_no']);
-      $quantity = intval($transaction_line_detail['quantity']);
+      $quantity = floatval($transaction_line_detail['quantity']);
       $listprice = floatval($transaction_line_detail['listprice']);
       $discount_percent = floatval($transaction_line_detail['discount_percent']);
       $discount_amount = floatval($transaction_line_detail['discount_amount']);
