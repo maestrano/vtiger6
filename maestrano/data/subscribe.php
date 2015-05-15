@@ -66,6 +66,14 @@ try {
       $purchaseOrderMapper = new PurchaseOrderMapper();
       $purchaseOrderMapper->fetchConnecResource($entity_id);
       break;
+    case "EVENTS":
+      $eventMapper = new EventMapper();
+      $eventMapper->fetchConnecResource($entity_id);
+      break;
+    case "EVENT_ORDERS":
+      $eventOrderMapper = new EventOrderMapper();
+      $eventOrderMapper->fetchConnecResource($entity_id);
+      break;
   }
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));

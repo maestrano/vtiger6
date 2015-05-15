@@ -1,7 +1,7 @@
 ---
 
 # php.ini
-php_max_execution_time: '90'
+php_max_execution_time: '180'
 php_memory_limit: '64M'
 php_display_errors: 'On'
 php_display_startup_errors: 'On'

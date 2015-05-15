@@ -8,3 +8,4 @@ config.inc.php
 include/database/PearDatabase.php
 maestrano/var/*
 maestrano.json
+migrate.php

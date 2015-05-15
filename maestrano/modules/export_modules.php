@@ -7,6 +7,6 @@
   require_once('include/utils/utils.php');
   $package = new Vtiger_Package();
   $package->export(Vtiger_Module::getInstance('EventManagement'),'',"EventManagement.zip",false);
-  $package->export(Vtiger_Module::getInstance('Tickets'),'',"Tickets.zip",false);
+  $package->export(Vtiger_Module::getInstance('EventTicket'),'',"EventTicket.zip",false);
 
 ?>

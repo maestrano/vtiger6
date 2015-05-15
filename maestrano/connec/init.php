@@ -18,3 +18,4 @@ require_once 'maestrano/connec/PurchaseOrderMapper.php';
 require_once 'maestrano/connec/QuoteMapper.php';
 require_once 'maestrano/connec/EventMapper.php';
 require_once 'maestrano/connec/TicketMapper.php';
+require_once 'maestrano/connec/EventOrderMapper.php';
