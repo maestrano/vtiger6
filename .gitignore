@@ -9,3 +9,9 @@ include/database/PearDatabase.php
 maestrano/var/*
 maestrano.json
 migrate.php
+languages/en_us/EventManagement.php
+languages/en_us/EventTicket.php
+languages/fr_fr/EventManagement.php
+languages/fr_fr/EventTicket.php
+modules/EventManagement/
+modules/EventTicket/
