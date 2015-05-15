@@ -28,6 +28,14 @@ class ContactMapper extends BaseMapper {
     return $person;
   }
 
+  // Return any existing Contact with same first name, last name and email
+  public function matchLocalModel($person_hash) {
+    global $adb;
+    $result = $adb->pquery('SELECT contactid FROM vtiger_contactdetails WHERE firstname = ? AND lastname = ? AND email = ? LIMIT 1', array($person_hash['first_name'], $person_hash['last_name'], $person_hash['email']['address']));
+    if($result->fields) { return $this->loadModelById($result->fields['contactid']); }
+    return null;
+  }
+
   protected function validate($resource_hash) {
     // Process only Customers
     return $resource_hash['is_customer'];

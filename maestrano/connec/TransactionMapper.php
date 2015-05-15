@@ -257,6 +257,7 @@ class TransactionMapper extends BaseMapper {
     $transaction->save($this->local_entity_name, $transaction->id, false);
 
     // Map transaction lines ids
+    $line_number = 1;
     foreach ($transaction_hash['lines'] as $transaction_line) {
       $transaction_line_local_id = $transaction->id . "#" . $transaction_line['line_number'];
       $transaction_line_mno_id = $transaction_hash['id'] . "#" . $transaction_line['id'];
@@ -266,6 +267,13 @@ class TransactionMapper extends BaseMapper {
       } else {
         MnoIdMap::addMnoIdMap($transaction_line_local_id, "TRANSACTION_LINE", $transaction_line_mno_id, "TRANSACTION_LINE");
       }
+      $line_number++;
+    }
+
+    // Delete non-existing transaction lines ID Maps
+    while(MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->id . "#" . $line_number, "TRANSACTION_LINE")) {
+      MnoIdMap::hardDeleteMnoIdMap($transaction->id . "#" . $line_number, "TRANSACTION_LINE");
+      $line_number++;
     }
   }
 
