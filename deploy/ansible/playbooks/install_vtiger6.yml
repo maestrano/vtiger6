@@ -83,7 +83,7 @@
 
   - name: vTiger | Configuration file maestrano.json
     template: 
-      src: ../templates/maestrano.json
+      src: ../templates/vtiger-maestrano.json
       dest: "{{ vtiger_root_path }}/maestrano.json"
       owner: root
       mode: 755
