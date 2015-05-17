@@ -54,7 +54,6 @@ class EventMapper extends BaseMapper {
     if($this->is_set($event->column_fields['event_number'])) { $event_hash['code'] = $event->column_fields['event_number']; }
     if($this->is_set($event->column_fields['event_name'])) { $event_hash['name'] = $event->column_fields['event_name']; }
     if($this->is_set($event->column_fields['description'])) { $event_hash['description'] = $event->column_fields['description']; }
-    if($this->is_set($event->column_fields['event_status'])) { $event_hash['status'] = $event->column_fields['event_status']; }
     if($this->is_set($event->column_fields['url'])) { $event_hash['url'] = $event->column_fields['url']; }
     if($this->is_set($event->column_fields['start_date'])) { $event_hash['start_date'] = $this->format_date_to_connec($event->column_fields['start_date']); }
     if($this->is_set($event->column_fields['end_date'])) { $event_hash['end_date'] = $this->format_date_to_connec($event->column_fields['end_date']); }
