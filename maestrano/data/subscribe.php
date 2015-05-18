@@ -55,8 +55,6 @@ try {
     case "INVOICES":
       $invoiceMapper = new InvoiceMapper();
       $invoiceMapper->fetchConnecResource($entity_id);
-      $purchaseOrderMapper = new PurchaseOrderMapper();
-      $purchaseOrderMapper->fetchConnecResource($entity_id);
       break;
     case "QUOTES":
       $quoteMapper = new QuoteMapper();
@@ -70,7 +68,7 @@ try {
       $eventMapper = new EventMapper();
       $eventMapper->fetchConnecResource($entity_id);
       break;
-    case "EVENT_ORDERS":
+    case "EVENTORDERS":
       $eventOrderMapper = new EventOrderMapper();
       $eventOrderMapper->fetchConnecResource($entity_id);
       break;
