@@ -105,9 +105,9 @@ class Settings_Picklist_Field_Model extends Vtiger_Field_Model {
             return $EditablePicklistValues;
         }
         $db = PearDatabase::getInstance();
-		$primaryKey = Vtiger_Util_Helper::getPickListId($fieldName);
-		
-        $query="SELECT $primaryKey ,$fieldName FROM vtiger_$fieldName WHERE presence=1 AND $fieldName <> '--None--'";
+		    $primaryKey = Vtiger_Util_Helper::getPickListId($fieldName);
+        
+        $query="SELECT $primaryKey, $fieldName FROM vtiger_$fieldName WHERE presence=1 AND $fieldName <> '--None--'";
         $values = array();
         $result = $db->pquery($query, array());
         $num_rows = $db->num_rows($result);
@@ -131,14 +131,15 @@ class Settings_Picklist_Field_Model extends Vtiger_Field_Model {
             return $NonEditablePicklistValues;
         }
         $db = PearDatabase::getInstance();
+        $primaryKey = Vtiger_Util_Helper::getPickListId($fieldName);
 
-        $query = "select $fieldName from vtiger_$fieldName where presence=0";
+        $query = "select $primaryKey, $fieldName from vtiger_$fieldName where presence=0";
         $values = array();
         $result = $db->pquery($query, array());
         $num_rows = $db->num_rows($result);
         for($i=0; $i<$num_rows; $i++) {
 			//Need to decode the picklist values twice which are saved from old ui
-            $values[] = decode_html(decode_html($db->query_result($result,$i,$fieldName)));
+            $values[$db->query_result($result,$i,$primaryKey)] = decode_html(decode_html($db->query_result($result,$i,$fieldName)));
         }
         $cache->set('NonEditablePicklistValues', $fieldName, $values);
         return $values;
