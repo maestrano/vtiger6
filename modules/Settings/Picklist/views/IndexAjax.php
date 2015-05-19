@@ -66,7 +66,7 @@ class Settings_Picklist_IndexAjax_View extends Settings_Vtiger_IndexAjax_View {
 
 		// merge the non-editable picklist value also with editable values, so that deleted value can be replaced with either of them.
                 if(!empty($selectedFieldNonEditablePickListValues)){
-                    $selectedFieldEditablePickListValues = array_merge($selectedFieldEditablePickListValues, $selectedFieldNonEditablePickListValues);
+                    $selectedFieldEditablePickListValues = $selectedFieldEditablePickListValues + $selectedFieldNonEditablePickListValues;
                 }
 
         $qualifiedName = $request->getModule(false);
