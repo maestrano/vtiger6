@@ -13,9 +13,9 @@ class MnoIdMap {
 
     $query = '';
     if(is_null($local_entity_name)) {
-      $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."'";
+      $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."' ORDER BY deleted_flag";
     } else {
-      $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."' AND app_entity_name = '".strtoupper($local_entity_name)."'";
+      $query = "SELECT * from mno_id_map WHERE mno_entity_guid = '$mno_id' AND mno_entity_name = '".strtoupper($mno_entity_name)."' AND app_entity_name = '".strtoupper($local_entity_name)."' ORDER BY deleted_flag";
     }
     
     $result = $adb->pquery($query);
@@ -25,7 +25,7 @@ class MnoIdMap {
 
   public static function findMnoIdMapByLocalIdAndEntityName($local_id, $local_entity_name) {
     global $adb;
-    $result = $adb->pquery("SELECT * from mno_id_map WHERE app_entity_id = '".$local_id."' AND app_entity_name = '".strtoupper($local_entity_name)."'");
+    $result = $adb->pquery("SELECT * from mno_id_map WHERE app_entity_id = '".$local_id."' AND app_entity_name = '".strtoupper($local_entity_name)."' ORDER BY deleted_flag");
     if($adb->num_rows($result) > 0) { return $result->fields; }
     return null;
   }
