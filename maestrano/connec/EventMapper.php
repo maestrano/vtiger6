@@ -22,7 +22,7 @@ class EventMapper extends BaseMapper {
   }
 
   // Return a local Event by id
-  protected function loadModelById($local_id) {
+  public function loadModelById($local_id) {
     $event = CRMEntity::getInstance("EventManagement");
     $event->retrieve_entity_info($local_id, "EventManagement");
     vtlib_setup_modulevars("EventManagement", $event);
