@@ -317,7 +317,7 @@ jQuery.Class("Vtiger_AdvanceFilter_Js",{
 
 		if(fieldSpecificUi.is('input.select2')){
 			var tagElements = fieldSpecificUi.data('tags');
-			var params = {tags : tagElements,tokenSeparators: [","]}
+			var params = {tags : tagElements,tokenSeparators: [',']}
 			app.showSelect2ElementView(fieldSpecificUi,params)
 		} else if(fieldSpecificUi.is('select')){
 			if(fieldSpecificUi.hasClass('chzn-select')) {

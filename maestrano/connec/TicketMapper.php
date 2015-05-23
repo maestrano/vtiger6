@@ -23,7 +23,7 @@ class TicketMapper extends BaseMapper {
   }
 
   // Return a local Ticket by id
-  protected function loadModelById($local_id) {
+  public function loadModelById($local_id) {
     $ticket = CRMEntity::getInstance("EventTicket");
     $ticket->retrieve_entity_info($local_id, "EventTicket");
     vtlib_setup_modulevars("EventTicket", $ticket);

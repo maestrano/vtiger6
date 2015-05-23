@@ -34,8 +34,8 @@ require_once 'modules/SalesOrder/SalesOrder.php';
 require_once 'modules/Quotes/Quotes.php';
 require_once 'include/fields/DateTimeField.php';
 
-require_once 'modules/EventManagement/EventManagement.php';
-require_once 'modules/EventTicket/EventTicket.php';
+if(file_exists('modules/EventManagement/EventManagement.php')) { require_once 'modules/EventManagement/EventManagement.php'; }
+if(file_exists('modules/EventTicket/EventTicket.php')) { require_once 'modules/EventTicket/EventTicket.php'; }
 
 // Include Maestrano required libraries
 require_once 'vendor/maestrano/maestrano-php/lib/Maestrano.php';
