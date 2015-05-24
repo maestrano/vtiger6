@@ -105,7 +105,6 @@ max_binlog_size     = 100M
 # ssl-cert=/etc/mysql/server-cert.pem
 # ssl-key=/etc/mysql/server-key.pem
 
-{{ innodb_file_per_table }}
 character_set_server = {{ mysql_character_set_server }}
 collation_server = {{ mysql_collation_server }}
 
@@ -113,7 +112,7 @@ lower_case_table_names = 1
 innodb_additional_mem_pool_size = {{ innodb_additional_mem_pool_size }}
 innodb_buffer_pool_size = {{ innodb_buffer_pool_size }}
 innodb = ON
-innodb_file_per_table
+{{ innodb_file_per_table }}
 
 [mysqldump]
 quick
