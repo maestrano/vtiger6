@@ -22,7 +22,7 @@ RUN apt-get -y update &&  \
     ansible-playbook /etc/ansible/playbooks/mysql.yml -c local &&  \
     ansible-playbook /etc/ansible/playbooks/apache.yml -c local &&  \
     ansible-playbook /etc/ansible/playbooks/install_vtiger6.yml -c local &&  \
-    apt-get clean purge --auto-remove -y python2.6 python2.6-minimal &&  \
+    apt-get clean purge --autoremove -y python2.6 python2.6-minimal &&  \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Expose port 22 and 80
