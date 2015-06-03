@@ -52,9 +52,9 @@ class ProductMapper extends BaseMapper {
       if($this->is_set($product_hash['sale_price']['net_amount'])) { $product->column_fields['unit_price'] = $product_hash['sale_price']['net_amount']; }
     }
 
-    // Track product inventory from another application
-    if($this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
-      $product->column_fields['qtyinstock'] = $product_hash['quantity_on_hand'];
+    // Set product stock level on Product creation when specified
+    if($this->is_new($product) && $this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
+      $product->column_fields['qtyinstock'] = is_null($product_hash['initial_quantity']) ? $product_hash['quantity_on_hand'] : $product_hash['initial_quantity'];
       $product->column_fields['qtyindemand'] = $product_hash['quantity_committed'];
     }
   }
