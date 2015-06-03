@@ -31,8 +31,9 @@ ansible-playbook /etc/ansible/playbooks/configure_vtiger6.yml -c local --extra-v
 
 ## TODO
 Map container mysql data and vtiger directory as volumes and do backups:
--v /path/in/host:/var/lib/mysql -v /path/in/host:/var/lib/vtiger/webapp
-
+sudo docker run -t -i --name=vtiger6_container maestrano:vtiger-6.2.0 \
+  --add-host application.maestrano.io:172.17.42.1 --add-host connec.maestrano.io:172.17.42.1 \
+  -v /tmp/docker/mysql:/var/lib/mysql -v /tmp/docker/webapp:/var/lib/vtiger/webapp
 
 # Docker cheat-sheet
 

@@ -31,7 +31,7 @@ abstract class BaseMapper {
   }
 
   protected function is_new($entity) {
-    return ($entity->column_fields['createdtime'] == $entity->column_fields['modifiedtime']);
+    return ($entity->mode != 'edit');
   }
 
   protected function format_date_to_php($connec_date) {
