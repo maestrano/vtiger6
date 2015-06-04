@@ -16,3 +16,5 @@ RUN apt-get -y update &&  \
     ansible-playbook /etc/ansible/playbooks/install_vtiger6.yml -c local &&  \
     apt-get clean purge -y python2.6 python2.6-minimal &&  \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+VOLUME ["/etc/mysql", "/var/lib/mysql", "/etc/apache2", "/etc/php5", "/var/lib/vtigercrm"]
