@@ -57,14 +57,14 @@ class ServiceMapper extends BaseMapper {
     if($this->is_new($service)) { $service_hash['type'] = 'SERVICE'; }
 
     // Map attributes
-    if($this->is_set($service->column_fields['service_no'])) { $service_hash['code'] = $service->column_fields['service_no']; }
-    if($this->is_set($service->column_fields['servicename'])) { $service_hash['name'] = $service->column_fields['servicename']; }
-    if($this->is_set($service->column_fields['description'])) { $service_hash['description'] = $service->column_fields['description']; }
-    if($this->is_set($service->column_fields['servicecode'])) { $service_hash['reference'] = $service->column_fields['servicecode']; }
-    if($this->is_set($service->column_fields['qty_per_unit'])) { $service_hash['unit'] = $service->column_fields['qty_per_unit']; }
-    if($this->is_set($service->column_fields['service_usageunit'])) { $service_hash['unit_type'] = $service->column_fields['service_usageunit']; }
+    $service_hash['code'] = $service->column_fields['service_no'];
+    $service_hash['name'] = $service->column_fields['servicename'];
+    $service_hash['description'] = $service->column_fields['description'];
+    $service_hash['reference'] = $service->column_fields['servicecode'];
+    $service_hash['unit'] = $service->column_fields['qty_per_unit'];
+    $service_hash['unit_type'] = $service->column_fields['service_usageunit'];
 
-    if($this->is_set($service->column_fields['unit_price'])) { $service_hash['sale_price'] = array('net_amount' => $service->column_fields['unit_price']); }
+    $service_hash['sale_price'] = array('net_amount' => $service->column_fields['unit_price']);
 
     ProductMapper::mapTaxToConnecResource($service, $service_hash);
     ProductMapper::mapAccountToConnecResource($service, $service_hash);

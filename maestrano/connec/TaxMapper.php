@@ -39,9 +39,9 @@ class TaxMapper extends BaseMapper {
   // Map the vTiger Tax to a Connec resource hash
   protected function mapModelToConnecResource($tax) {
     $tax_hash = array();
-    if($this->is_set($tax->get('taxname'))) { $tax_hash['code'] = $tax->get('taxname'); }
-    if($this->is_set($tax->get('taxlabel'))) { $tax_hash['name'] = $tax->get('taxlabel'); }
-    if($this->is_set($tax->get('percentage'))) { $tax_hash['sale_tax_rate'] = $tax->get('percentage'); }
+    $tax_hash['code'] = $tax->get('taxname');
+    $tax_hash['name'] = $tax->get('taxlabel');
+    $tax_hash['sale_tax_rate'] = $tax->get('percentage');
     return $tax_hash;
   }
 
