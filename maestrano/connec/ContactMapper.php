@@ -103,48 +103,48 @@ class ContactMapper extends BaseMapper {
     $person_hash['is_customer'] = true;
 
     // Map attributes
-    if($this->is_set($person->column_fields['contact_no'])) { $person_hash['code'] = $person->column_fields['contact_no']; }
-    if($this->is_set($person->column_fields['salutation'])) { $person_hash['title'] = $person->column_fields['salutation']; }
-    if($this->is_set($person->column_fields['firstname'])) { $person_hash['first_name'] = $person->column_fields['firstname']; }
-    if($this->is_set($person->column_fields['lastname'])) { $person_hash['last_name'] = $person->column_fields['lastname']; }
-    if($this->is_set($person->column_fields['description'])) { $person_hash['description'] = $person->column_fields['description']; }
-    if($this->is_set($person->column_fields['title'])) { $person_hash['job_title'] = $person->column_fields['title']; }
+    $person_hash['code'] = $person->column_fields['contact_no'];
+    $person_hash['title'] = $person->column_fields['salutation'];
+    $person_hash['first_name'] = $person->column_fields['firstname'];
+    $person_hash['last_name'] = $person->column_fields['lastname'];
+    $person_hash['description'] = $person->column_fields['description'];
+    $person_hash['job_title'] = $person->column_fields['title'];
     
     $address = array();
     $billing_address = array();
-    if($this->is_set($person->column_fields['otherstreet'])) { $billing_address['line1'] = $person->column_fields['otherstreet']; }
-    if($this->is_set($person->column_fields['otherpobox'])) { $billing_address['line2'] = $person->column_fields['otherpobox']; }
-    if($this->is_set($person->column_fields['othercity'])) { $billing_address['city'] = $person->column_fields['othercity']; }
-    if($this->is_set($person->column_fields['otherstate'])) { $billing_address['region'] = $person->column_fields['otherstate']; }
-    if($this->is_set($person->column_fields['otherzip'])) { $billing_address['postal_code'] = $person->column_fields['otherzip']; }
-    if($this->is_set($person->column_fields['othercountry'])) { $billing_address['country'] = $person->column_fields['othercountry']; }
+    $billing_address['line1'] = $person->column_fields['otherstreet'];
+    $billing_address['line2'] = $person->column_fields['otherpobox'];
+    $billing_address['city'] = $person->column_fields['othercity'];
+    $billing_address['region'] = $person->column_fields['otherstate'];
+    $billing_address['postal_code'] = $person->column_fields['otherzip'];
+    $billing_address['country'] = $person->column_fields['othercountry'];
     if(!empty($billing_address)) { $address['billing'] = $billing_address; }
 
     $shipping_address = array();
-    if($this->is_set($person->column_fields['mailingstreet'])) { $shipping_address['line1'] = $person->column_fields['mailingstreet']; }
-    if($this->is_set($person->column_fields['mailingpobox'])) { $shipping_address['line2'] = $person->column_fields['mailingpobox']; }
-    if($this->is_set($person->column_fields['mailingcity'])) { $shipping_address['city'] = $person->column_fields['mailingcity']; }
-    if($this->is_set($person->column_fields['mailingstate'])) { $shipping_address['region'] = $person->column_fields['mailingstate']; }
-    if($this->is_set($person->column_fields['mailingzip'])) { $shipping_address['postal_code'] = $person->column_fields['mailingzip']; }
-    if($this->is_set($person->column_fields['mailingcountry'])) { $shipping_address['country'] = $person->column_fields['mailingcountry']; }
+    $shipping_address['line1'] = $person->column_fields['mailingstreet'];
+    $shipping_address['line2'] = $person->column_fields['mailingpobox'];
+    $shipping_address['city'] = $person->column_fields['mailingcity'];
+    $shipping_address['region'] = $person->column_fields['mailingstate'];
+    $shipping_address['postal_code'] = $person->column_fields['mailingzip'];
+    $shipping_address['country'] = $person->column_fields['mailingcountry'];
     if(!empty($shipping_address)) { $address['shipping'] = $shipping_address; }
     if(!empty($address)) { $person_hash['address_work'] = $address; }
 
     $phone_work_hash = array();
-    if($this->is_set($person->column_fields['phone'])) { $phone_work_hash['landline'] = $person->column_fields['phone']; }
-    if($this->is_set($person->column_fields['otherphone'])) { $phone_work_hash['landline2'] = $person->column_fields['otherphone']; }
-    if($this->is_set($person->column_fields['mobile'])) { $phone_work_hash['mobile'] = $person->column_fields['mobile']; }
-    if($this->is_set($person->column_fields['fax'])) { $phone_work_hash['fax'] = $person->column_fields['fax']; }
+    $phone_work_hash['landline'] = $person->column_fields['phone'];
+    $phone_work_hash['landline2'] = $person->column_fields['otherphone'];
+    $phone_work_hash['mobile'] = $person->column_fields['mobile'];
+    $phone_work_hash['fax'] = $person->column_fields['fax'];
     if(!empty($phone_work_hash)) { $person_hash['phone_work'] = $phone_work_hash; }
 
     $phone_home_hash = array();
-    if($this->is_set($person->column_fields['homephone'])) { $phone_home_hash['landline'] = $person->column_fields['homephone']; }
-    if($this->is_set($person->column_fields['otherphone'])) { $phone_home_hash['landline2'] = $person->column_fields['otherphone']; }
+    $phone_home_hash['landline'] = $person->column_fields['homephone'];
+    $phone_home_hash['landline2'] = $person->column_fields['otherphone'];
     if(!empty($phone_home_hash)) { $person_hash['phone_home'] = $phone_home_hash; }
 
     $email_hash = array();
-    if($this->is_set($person->column_fields['email'])) { $email_hash['address'] = $person->column_fields['email']; }
-    if($this->is_set($person->column_fields['secondaryemail'])) { $email_hash['address2'] = $person->column_fields['secondaryemail']; }
+    $email_hash['address'] = $person->column_fields['email'];
+    $email_hash['address2'] = $person->column_fields['secondaryemail'];
     if(!empty($email_hash)) { $person_hash['email'] = $email_hash; }
 
     // Map Organization

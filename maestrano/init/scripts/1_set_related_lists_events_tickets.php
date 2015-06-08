@@ -20,5 +20,5 @@ function createRelateList($tabname, $targetModule, $relationLabel) {
   $targetModuleInstance = Vtiger_Module::getInstance($targetModule);
   $relationLabel = $relationLabel;
   $moduleInstance->unsetRelatedList($targetModuleInstance);
-  $moduleInstance->setRelatedList($targetModuleInstance, $relationLabel, Array('SELECT'));
+  $moduleInstance->setRelatedList($targetModuleInstance, $relationLabel, Array('SELECT', 'ADD'));
 }
