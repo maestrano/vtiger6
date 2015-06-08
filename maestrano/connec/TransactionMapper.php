@@ -142,25 +142,31 @@ class TransactionMapper extends BaseMapper {
     $transaction_hash['opts'] = array('sparse' => false);
 
     // Map attributes
-    if($this->is_set($transaction->column_fields['subject'])) { $transaction_hash['title'] = $transaction->column_fields['subject']; }
-    if($this->is_set($transaction->column_fields['notes'])) { $transaction_hash['public_note'] = $transaction->column_fields['notes']; }
+    $transaction_hash['title'] = $transaction->column_fields['subject'];
+    $transaction_hash['public_note'] = $transaction->column_fields['notes'];
 
     // Map Organization
     if($this->is_set($transaction->column_fields['account_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['account_id'], 'ACCOUNTS');
       if($mno_id_map) { $transaction_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+    } else {
+      $transaction_hash['organization_id'] = '';
     }
 
     // Map Vendor
     if($this->is_set($transaction->column_fields['vendor_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['vendor_id'], 'VENDORS');
       if($mno_id_map) { $transaction_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+    } else {
+      $transaction_hash['organization_id'] = '';
     }
 
     // Map Contact
     if($this->is_set($transaction->column_fields['contact_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['contact_id'], 'CONTACTS');
       if($mno_id_map) { $transaction_hash['person_id'] = $mno_id_map['mno_entity_guid']; }
+    } else {
+      $transaction_hash['person_id'] = '';
     }
 
     // Map address

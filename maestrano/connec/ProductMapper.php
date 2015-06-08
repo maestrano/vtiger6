@@ -67,14 +67,13 @@ class ProductMapper extends BaseMapper {
     if($this->is_new($product)) { $product_hash['type'] = 'PURCHASED'; }
 
     // Map attributes
-    if($this->is_set($product->column_fields['product_no'])) { $product_hash['code'] = $product->column_fields['product_no']; }
-    if($this->is_set($product->column_fields['productname'])) { $product_hash['name'] = $product->column_fields['productname']; }
-    if($this->is_set($product->column_fields['description'])) { $product_hash['description'] = $product->column_fields['description']; }
-    if($this->is_set($product->column_fields['productcode'])) { $product_hash['reference'] = $product->column_fields['productcode']; }
-    if($this->is_set($product->column_fields['qty_per_unit'])) { $product_hash['unit'] = $product->column_fields['qty_per_unit']; }
-    if($this->is_set($product->column_fields['usageunit'])) { $product_hash['unit_type'] = $product->column_fields['usageunit']; }
-
-    if($this->is_set($product->column_fields['unit_price'])) { $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']); }
+    $product_hash['code'] = $product->column_fields['product_no'];
+    $product_hash['name'] = $product->column_fields['productname'];
+    $product_hash['description'] = $product->column_fields['description'];
+    $product_hash['reference'] = $product->column_fields['productcode'];
+    $product_hash['unit'] = $product->column_fields['qty_per_unit'];
+    $product_hash['unit_type'] = $product->column_fields['usageunit'];
+    $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']);
 
     // Inventory tracking
     $qtyinstock = $product->column_fields['qtyinstock'];
