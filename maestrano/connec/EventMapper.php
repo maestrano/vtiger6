@@ -51,16 +51,15 @@ class EventMapper extends BaseMapper {
     $event_hash = array();
 
     // Map attributes
-    if($this->is_set($event->column_fields['event_number'])) { $event_hash['code'] = $event->column_fields['event_number']; }
-    if($this->is_set($event->column_fields['event_name'])) { $event_hash['name'] = $event->column_fields['event_name']; }
-    if($this->is_set($event->column_fields['description'])) { $event_hash['description'] = $event->column_fields['description']; }
-    if($this->is_set($event->column_fields['url'])) { $event_hash['url'] = $event->column_fields['url']; }
-    if($this->is_set($event->column_fields['start_date'])) { $event_hash['start_date'] = $this->format_date_to_connec($event->column_fields['start_date']); }
-    if($this->is_set($event->column_fields['end_date'])) { $event_hash['end_date'] = $this->format_date_to_connec($event->column_fields['end_date']); }
-    if($this->is_set($event->column_fields['capacity'])) { $event_hash['capacity'] = $event->column_fields['capacity']; }
-    if($this->is_set($event->column_fields['currency'])) { $event_hash['currency'] = $event->column_fields['currency']; }
-
-    if($this->is_set($event->column_fields['event_status'])) { $event_hash['status'] = $this->event_status_mapping_reverse[$event->column_fields['event_status']]; }
+    $event_hash['code'] = $event->column_fields['event_number'];
+    $event_hash['name'] = $event->column_fields['event_name'];
+    $event_hash['description'] = $event->column_fields['description'];
+    $event_hash['url'] = $event->column_fields['url'];
+    $event_hash['start_date'] = $this->format_date_to_connec($event->column_fields['start_date']);
+    $event_hash['end_date'] = $this->format_date_to_connec($event->column_fields['end_date']);
+    $event_hash['capacity'] = $event->column_fields['capacity'];
+    $event_hash['currency'] = $event->column_fields['currency'];
+    $event_hash['status'] = $this->event_status_mapping_reverse[$event->column_fields['event_status']];
 
     return $event_hash;
   }

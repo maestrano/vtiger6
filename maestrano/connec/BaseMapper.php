@@ -39,6 +39,7 @@ abstract class BaseMapper {
   }
 
   protected function format_date_to_connec($php_date) {
+    if(!$this->is_set($php_date)) { return ''; }
     $date = DateTime::createFromFormat($this->_date_format, $php_date);
     if(!$date) { $date = DateTime::createFromFormat('Y-m-d', $php_date); }
     return $date->format('c');

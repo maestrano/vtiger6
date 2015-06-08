@@ -38,11 +38,11 @@ class PurchaseOrderMapper extends TransactionMapper {
     $purchase_order_hash = parent::mapModelToConnecResource($purchase_order);
 
     // Map attributes
-    if($this->is_set($purchase_order->column_fields['requisition_no'])) { $purchase_order_hash['transaction_number'] = $purchase_order->column_fields['requisition_no']; }
-    if($this->is_set($purchase_order->column_fields['description'])) { $purchase_order_hash['public_note'] = $purchase_order->column_fields['description']; }
-    if($this->is_set($purchase_order->column_fields['paid'])) { $purchase_order_hash['deposit'] = $purchase_order->column_fields['paid']; }
-    if($this->is_set($purchase_order->column_fields['balance'])) { $purchase_order_hash['balance'] = $purchase_order->column_fields['balance']; }
-    if($this->is_set($invoice->column_fields['duedate'])) { $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']); }
+    $purchase_order_hash['transaction_number'] = $purchase_order->column_fields['requisition_no'];
+    $purchase_order_hash['public_note'] = $purchase_order->column_fields['description'];
+    $purchase_order_hash['deposit'] = $purchase_order->column_fields['paid'];
+    $purchase_order_hash['balance'] = $purchase_order->column_fields['balance'];
+    $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']);
 
     // Map status
     $purchase_order_hash['status'] = $this->po_status_mapping_reverse[$purchase_order->column_fields['postatus']];
