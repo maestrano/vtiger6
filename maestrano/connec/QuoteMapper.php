@@ -35,7 +35,7 @@ class QuoteMapper extends TransactionMapper {
     $quote_hash = parent::mapModelToConnecResource($quote);
 
     // Map attributes
-    if($this->is_set($quote->column_fields['validtill'])) { $quote_hash['due_date'] = $this->format_date_to_connec($quote->column_fields['validtill']); }
+    $quote_hash['due_date'] = $this->format_date_to_connec($quote->column_fields['validtill']);
 
     // Map status: Created, Delivered, Reviewed, Accepted, Rejected
     $quote_hash['status'] = $this->quote_status_mapping_reverse[$quote->column_fields['quotestage']];
