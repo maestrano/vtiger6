@@ -54,7 +54,7 @@ class Maestrano_Sso_User
   {
       // Get assertion attributes
       $att = $saml_response->getAttributes();
-
+      
       // Group related information
       $this->groupUid  = $att['group_uid'];
       $this->groupRole = $att['group_role'];
