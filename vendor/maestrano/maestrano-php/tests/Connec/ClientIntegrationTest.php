@@ -23,18 +23,19 @@ class Maestrano_Connec_ClientIntegrationTest extends PHPUnit_Framework_TestCase
     $this->subject = new Maestrano_Connec_Client();
   }
 
-  public function testGetReport() {
-    $params = Array(
-      'from' => '2015-01-01',
-      'to' => '2015-06-30',
-      'period' => 'MONTHLY'
-    );
-    $resp = $this->subject->getReport("/items_summary", $params);
-    $parsed = json_decode($resp['body'], true);
+  // Report API not available on the Sandbox application yet
+  // public function testGetReport() {
+  //   $params = Array(
+  //     'from' => '2015-01-01',
+  //     'to' => '2015-06-30',
+  //     'period' => 'MONTHLY'
+  //   );
+  //   $resp = $this->subject->getReport("/items_summary", $params);
+  //   $parsed = json_decode($resp['body'], true);
 
-    $this->assertEquals('200', $resp['code']);
-    $this->assertNotNull($parsed['items_summary']);
-  }
+  //   $this->assertEquals('200', $resp['code']);
+  //   $this->assertNotNull($parsed['items_summary']);
+  // }
   
   public function testRetrieveCollection() {
     $resp = $this->subject->get("/organizations");
