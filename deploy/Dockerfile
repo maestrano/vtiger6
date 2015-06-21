@@ -17,4 +17,5 @@ RUN apt-get -y update &&  \
     apt-get clean purge -y python2.6 python2.6-minimal &&  \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Map MySQL and Apache volumes
 VOLUME ["/etc/mysql", "/var/lib/mysql", "/etc/apache2", "/etc/php5", "/var/lib/vtigercrm"]
