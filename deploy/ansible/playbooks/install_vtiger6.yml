@@ -88,6 +88,13 @@
       owner: root
       mode: 755
 
+  - name: vTiger | Configuration script
+    template: 
+      src: ../templates/configure-container.sh
+      dest: "/root/configure.sh"
+      owner: root
+      mode: 755
+
   - name: vTiger | Setup Application
     shell: "php {{ vtiger_root_path }}/app_setup.php"
     args:
