@@ -4,6 +4,8 @@
 * Map Connec Customer Person representation to/from vTiger Contact
 */
 class ContactMapper extends BaseMapper {
+  protected $customer_organization_mapper = null;
+
   public function __construct() {
     parent::__construct();
 
@@ -11,6 +13,8 @@ class ContactMapper extends BaseMapper {
     $this->local_entity_name = 'Contacts';
     $this->connec_resource_name = 'people';
     $this->connec_resource_endpoint = 'people';
+
+    $this->customer_organization_mapper = new CustomerOrganizationMapper();
   }
 
   // Return the Person local id
@@ -149,8 +153,8 @@ class ContactMapper extends BaseMapper {
 
     // Map Organization
     if($this->is_set($person->column_fields['account_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($person->column_fields['account_id'], 'ACCOUNTS');
-      if($mno_id_map) { $person_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+      $organization_id = $this->customer_organization_mapper->findConnecIdByLocalId($person->column_fields['account_id']);
+      if($organization_id) { $person_hash['organization_id'] = $organization_id; }
     }
 
     return $person_hash;
