@@ -36,14 +36,18 @@ if (file_exists($filepath)) {
 
     // Dynamically find mappers and map entities
     foreach(BaseMapper::getMappers() as $mapperClass) {
-      $mapper = new $mapperClass();
-      $mapper->persistAll($result[$mapper->getConnecResourceName()]);
+      if (class_exists($mapperClass)) {
+        $test_class = new ReflectionClass($mapperClass);
+        if($test_class->isAbstract()) { continue; }
+
+        $mapper = new $mapperClass();
+        $mapper->persistAll($result[$mapper->getConnecResourceName()]);
+      }
     }
+
+    $status = true;
   }
-
-  $status = true;
 }
 
-if ($status) {
-  file_put_contents($filepath, $current_timestamp);
-}
+// Set update timestamp
+if ($status) { file_put_contents($filepath, $current_timestamp); }
