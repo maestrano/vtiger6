@@ -50,7 +50,7 @@ class Vtiger_WebUI extends Vtiger_EntryPoint {
 		$moduleModel = Vtiger_Module_Model::getInstance($moduleName);
 
 		if (empty($moduleModel)) {
-			throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND') . " for module: " . json_encode($request->getModule()) . ", handler: " . json_encode($handler));
+			throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND'));
 		}
 
 		$userPrivilegesModel = Users_Privileges_Model::getCurrentUserPrivilegesModel();
@@ -200,7 +200,7 @@ class Vtiger_WebUI extends Vtiger_EntryPoint {
 				$response = $handler->process($request);
 				$this->triggerPostProcess($handler, $request);
 			} else {
-				throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND') . " handler: " . json_encode($handler) . ", module: " . json_encode($module));
+				throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND'));
 			}
 		} catch(Exception $e) {
 			if ($view) {

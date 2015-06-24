@@ -160,7 +160,7 @@ class Vtiger_Loader {
 		if(file_exists($fallBackComponentFilePath)) {
 			return $fallBackComponentClassName;
 		}
-		throw new AppException('Handler not found, componentType: $componentType, componentName: $componentName');
+		throw new AppException('Handler not found.');
 	}
 
 	/**
