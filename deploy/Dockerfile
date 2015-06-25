@@ -1,5 +1,4 @@
-#FROM bchauvet/docker-lamp:latest
-FROM maestrano:lamp
+FROM bchauvet/docker-lamp:latest
 MAINTAINER Maestrano <it@maestrano.com>
 
 RUN apt-get -y update && apt-get -y upgrade 
