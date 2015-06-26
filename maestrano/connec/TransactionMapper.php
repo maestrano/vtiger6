@@ -4,7 +4,11 @@
 * Base mapper for transactions (quote, transaction, sales order, purchase order)
 */
 class TransactionMapper extends BaseMapper {
-  protected $serviceMapper = null;
+  protected $service_mapper = null;
+  protected $product_mapper = null;
+  protected $contact_mapper = null;
+  protected $customer_organization_mapper = null;
+  protected $supplier_organization_mapper = null;
 
   public function __construct() {
     parent::__construct();
@@ -14,7 +18,11 @@ class TransactionMapper extends BaseMapper {
     $this->connec_resource_name = 'transactions';
     $this->connec_resource_endpoint = 'transactions';
 
-    $this->serviceMapper = new ServiceMapper();
+    $this->service_mapper = new ServiceMapper();
+    $this->product_mapper = new ProductMapper();
+    $this->contact_mapper = new ContactMapper();
+    $this->customer_organization_mapper = new CustomerOrganizationMapper();
+    $this->supplier_organization_mapper = new SupplierOrganizationMapper();
   }
 
   // Return the Transaction local id
@@ -105,7 +113,7 @@ class TransactionMapper extends BaseMapper {
           ProductMapper::mapConnecTaxToProduct($transaction_line['tax_code_id'], $product_id);
         } else {
           // Set default service
-          $service = $this->serviceMapper->defaultService();
+          $service = $this->service_mapper->defaultService();
           $_REQUEST['hdnProductId'.$line_count] = $service['serviceid'];
 
           // Add tax to item
@@ -147,24 +155,24 @@ class TransactionMapper extends BaseMapper {
 
     // Map Organization
     if($this->is_set($transaction->column_fields['account_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['account_id'], 'ACCOUNTS');
-      if($mno_id_map) { $transaction_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+      $organization_id = $this->customer_organization_mapper->findConnecIdByLocalId($transaction->column_fields['account_id']);
+      if($organization_id) { $transaction_hash['organization_id'] = $organization_id; }
     } else {
       $transaction_hash['organization_id'] = '';
     }
 
     // Map Vendor
     if($this->is_set($transaction->column_fields['vendor_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['vendor_id'], 'VENDORS');
-      if($mno_id_map) { $transaction_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
+      $organization_id = $this->supplier_organization_mapper->findConnecIdByLocalId($transaction->column_fields['vendor_id']);
+      if($organization_id) { $transaction_hash['organization_id'] = $organization_id; }
     } else {
       $transaction_hash['organization_id'] = '';
     }
 
     // Map Contact
     if($this->is_set($transaction->column_fields['contact_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->column_fields['contact_id'], 'CONTACTS');
-      if($mno_id_map) { $transaction_hash['person_id'] = $mno_id_map['mno_entity_guid']; }
+      $person_id = $this->contact_mapper->findConnecIdByLocalId($transaction->column_fields['contact_id']);
+      if($person_id) { $transaction_hash['person_id'] = $person_id; }
     } else {
       $transaction_hash['person_id'] = '';
     }
@@ -249,8 +257,8 @@ class TransactionMapper extends BaseMapper {
       }
 
       // Map item id
-      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($productid, 'PRODUCTS');
-      if($mno_id_map) { $transaction_line['item_id'] = $mno_id_map['mno_entity_guid']; }
+      $item_id = $this->product_mapper->findConnecIdByLocalId($productid);
+      if($item_id) { $transaction_line['item_id'] = $item_id; }
 
       $transaction_hash['lines'][] = $transaction_line;
     }

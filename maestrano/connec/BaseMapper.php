@@ -97,6 +97,26 @@ abstract class BaseMapper {
     }
   }
 
+  // Map a local Model to Connec! ID. If the Model is not locally mapped, it is pushed to Connec!
+  public function findConnecIdByLocalId($local_id) {
+    error_log("load Connec! ID by local id entity_name=$this->local_entity_name, local_id=$local_id");
+
+    // Find the local mapping
+    $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
+    if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
+
+    // Mapping is missing, push the Entity to Connec!
+    $model = $this->loadModelById($local_id);
+    $this->pushToConnec($model);
+
+    // Try to fetch the local mapping again
+    $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
+    if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
+
+    error_log("cannot push Entity to Connec! entity_name=$this->local_entity_name, local_id=$local_id");
+    return null;
+  }
+
   // Fetch and persist a Connec! resounce by id
   public function fetchConnecResource($entity_id) {
     error_log("fetch connec resource entity_name=$this->connec_entity_name, entity_id=$entity_id");
