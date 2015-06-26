@@ -6,32 +6,26 @@
 ## Start Docker container
 `sudo docker run -t -i --name=vtiger6_container maestrano:vtiger-6.2.0`
 
-You can add extra hosts entry to your cotnainers with the option `--add-host hostname:IP`:
-
-`sudo docker run -t -i --add-host application.maestrano.io:172.17.42.1 --add-host connec.maestrano.io:172.17.42.1 --name=vtiger6_container maestrano:vtiger-6.2.0`
-
 ## Retrieve container details (IP address...)
 `sudo docker inspect vtiger6_container`
 
 And then access the container with http://[IP_ADDRESS] to check vTiger is running
 
-## Apply the maestrano patch (SSO and Connec! data sharing)
-ansible-playbook /etc/ansible/playbooks/configure_vtiger6.yml -c local --extra-vars='{"sso_enabled": "true", "connec_enabled": "true", "maestrano_environment": "local", "server_hostname": "vtiger6.app.dev.maestrano.io", "api_key": "94cd736d57484d5e42ed1a194de0af7508b1163a35909ab7fe3b713a90816661", "api_secret": "baa59b5b-cb6b-4e4b-8682-b3966877840e"}'
+## Activate Maestrano customisation on start (SSO and Connec! data sharing)
+This is achieved by specifying environment variables
 
-### Maestrano configuration variables:
- - sso_enabled
- - connec_enabled
- - maestrano_environment (production, uat, local)
- - server_hostname (cube uid)
- - api_key
- - api_secret
- - innodb_additional_mem_pool_size (4M, 8M, 16M) based on container allocate PU
- - innodb_buffer_pool_size (64M, 128M, 256M) based on container allocate PU
- - php_memory_limit (64M, 128M, 256M) based on container allocate PU
-
-## TODO
-Map container mysql data and vtiger directory as volumes and do backups:
-sudo docker run -t -i --name=vtiger6_container maestrano:vtiger-6.2.0 --add-host application.maestrano.io:172.17.42.1 --add-host connec.maestrano.io:172.17.42.1
+```bash
+docker run -it \
+  -e "MNO_SSO_ENABLED=true" \
+  -e "MNO_CONNEC_ENABLED=true" \
+  -e "MNO_MAESTRANO_ENVIRONMENT=local" \
+  -e "MNO_SERVER_HOSTNAME=vtiger6.app.dev.maestrano.io" \
+  -e "MNO_API_KEY=a518c836057355ef5e5020b5db3b5d18b1f778bd80acb0dc3c6a086645f4aa71" \
+  -e "MNO_API_SECRET=c1fb4e69-bb67-48b4-a1a6-c23734b348cc" \
+  --add-host application.maestrano.io:172.17.42.1 \
+  --add-host connec.maestrano.io:172.17.42.1 \
+  --name=mcube-aaa bchauvet/vtiger6
+ ```
 
 # Docker cheat-sheet
 
