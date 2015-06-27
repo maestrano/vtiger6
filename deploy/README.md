@@ -1,7 +1,7 @@
 # Build vTiger6 application container
 
 ## Build Docker container with default vTiger6 installation
-`sudo docker build -t "maestrano:vtiger-6.2.0" .`
+`sudo docker build -t .`
 
 ## Start Docker container
 `sudo docker run -t -i --name=vtiger6_container maestrano:vtiger-6.2.0`
