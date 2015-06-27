@@ -1,4 +1,4 @@
-FROM bchauvet/docker-lamp:latest
+FROM maestrano/docker-lamp:latest
 MAINTAINER Maestrano <it@maestrano.com>
 
 RUN apt-get -y update && apt-get -y upgrade 
@@ -7,7 +7,7 @@ RUN apt-get -y update && apt-get -y upgrade
 ADD ansible /etc/ansible
 WORKDIR /etc/ansible
 
-# Install vTiger6
+# Install Vtiger
 RUN ansible-playbook -i hosts site.yml
 
 # Map MySQL and Apache volumes
