@@ -18,5 +18,5 @@ docker run -it \
   -e "MNO_API_SECRET=c1fb4e69-bb67-48b4-a1a6-c23734b348cc" \
   --add-host application.maestrano.io:172.17.42.1 \
   --add-host connec.maestrano.io:172.17.42.1 \
-  --name=my-vtiger maestrano/vtiger6:latest
+  maestrano/vtiger6:latest
  ```

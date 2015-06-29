@@ -26,6 +26,7 @@ ssmtp_auth_user: the_mandrill_account_username
 ssmtp_auth_pass: the_mandrill_api_key
 
 # vTiger installation
+vtiger_version: mno-master
 vtiger_db_user: vtiger6
 vtiger_db_password: vtiger6
 vtiger_db_name: vtiger6
