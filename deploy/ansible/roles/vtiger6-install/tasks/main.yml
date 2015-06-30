@@ -104,8 +104,8 @@
   file: "path={{ vtiger_root_path }} mode=755 owner=www-data group=www-data state=directory recurse=yes"
 
 - name: vTiger | Import Connec! data
-  shell: "php maestrano/data/initialize.php"
+  shell: "php initialize.php"
   args:
-    chdir: "{{ vtiger_root_path }}"
+    chdir: "{{ vtiger_root_path }}/maestrano/data"
   tags:
     - configuration
