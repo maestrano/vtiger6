@@ -205,18 +205,12 @@ abstract class BaseMapper {
   // Process a Model update event
   // $pushToConnec: option to notify Connec! of the model update
   // $delete:       option to soft delete the local entity mapping amd ignore further Connec! updates
-  public function processLocalUpdate($model, $pushToConnec=true, $delete=false) {
+  public function processLocalUpdate($model, $pushToConnec=true, $delete=false, $saveResult=false) {
     $pushToConnec = $pushToConnec && Maestrano::param('connec.enabled');
 
     error_log("process local update entity=$this->connec_entity_name, local_id=" . $this->getId($model) . ", pushToConnec=$pushToConnec, delete=$delete");
-    
-    if($pushToConnec) {
-      $this->pushToConnec($model);
-    }
-
-    if($delete) {
-      $this->flagAsDeleted($model);
-    }
+    if($pushToConnec) { $this->pushToConnec($model, $saveResult); }
+    if($delete) { $this->flagAsDeleted($model); }
   }
 
   // Find an vTiger entity matching the Connec resource or initialize a new one
@@ -257,7 +251,8 @@ abstract class BaseMapper {
   }
 
   // Transform an vTiger Model into a Connec Resource and push it to Connec
-  protected function pushToConnec($model) {
+  // If the $saveResult parameter is set to true, the Connec! result is persisted
+  protected function pushToConnec($model, $saveResult=false) {
     error_log("push entity to connec entity=$this->connec_entity_name, local_id=" . $this->getId($model));
 
     // Transform the Model into a Connec hash
@@ -288,9 +283,13 @@ abstract class BaseMapper {
       return false;
     } else {
       error_log("Processing Connec! response code=$code, body=$body");
-      $result = json_decode($response['body'], true);
-      error_log("processing entity_name=$this->local_entity_name entity=". json_encode($result));
-      return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
+      if($saveResult) {
+        $result = json_decode($response['body'], true);
+        error_log("processing entity_name=$this->local_entity_name entity=". json_encode($result));
+        return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
+      } else{
+        return $model;
+      }
     }
   }
 
