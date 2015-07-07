@@ -28,14 +28,6 @@ class CustomerOrganizationMapper extends BaseMapper {
     return $organization;
   }
 
-  // Return any existing Organization with same name
-  public function matchLocalModel($organization_hash) {
-    global $adb;
-    $result = $adb->pquery('SELECT accountid FROM vtiger_account WHERE accountname = ? LIMIT 1', array($organization_hash['name']));
-    if($result->fields) { return $this->loadModelById($result->fields['accountid']); }
-    return null;
-  }
-
   protected function validate($resource_hash) {
     // Process only Customers
     return $resource_hash['is_customer'];

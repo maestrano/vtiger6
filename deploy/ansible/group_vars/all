@@ -21,10 +21,7 @@ mysql_root_password: 'password'
 
 # ssmtp
 notification_mail: admin@maestrano.com
-ssmtp_mailhub: smtp.mandrillapp.com:587
-ssmtp_hostname: fqdn_of_your_mail_server
-ssmtp_auth_user: the_mandrill_account_username
-ssmtp_auth_pass: the_mandrill_api_key
+ssmtp_mailhub: rack-gateway
 
 # vTiger installation
 vtiger_version: mno-master

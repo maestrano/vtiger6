@@ -32,26 +32,9 @@
 
     // Find or create the User
     $sso_user->findOrCreate();
-
-    $_SESSION["loggedIn"] = true;
-    $_SESSION["firstName"] = $user->getFirstName();
-    $_SESSION["lastName"] = $user->getLastName();
     
-    // Important - toId() and toEmail() have different behaviour compared to
-    // getId() and getEmail(). In you maestrano configuration file, if your sso > creation_mode 
-    // is set to 'real' then toId() and toEmail() return the actual id and email of the user which
-    // are only unique across users.
-    // If you chose 'virtual' then toId() and toEmail() will return a virtual (or composite) attribute
-    // which is truly unique across users and groups
-    $_SESSION["id"] = $user->toId();
-    $_SESSION["email"] = $user->toEmail();
-    
-    // Store group details
-    $_SESSION["groupName"] = $group->getName();
-    $_SESSION["groupId"] = $group->getId();
-    
-    // Once the user is created/identified, we store the maestrano
-    // session. This session will be used for single logout
+    // Once the user is created/identified, we store the maestrano session.
+    // This session will be used for single logout
     $mnoSession = new Maestrano_Sso_Session($_SESSION, $user);
     $mnoSession->save();
     
