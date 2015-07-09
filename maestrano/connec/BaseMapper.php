@@ -101,6 +101,8 @@ abstract class BaseMapper {
   public function findConnecIdByLocalId($local_id) {
     error_log("load Connec! ID by local id entity_name=$this->local_entity_name, local_id=$local_id");
 
+    if($local_id == 0) { return null; }
+
     // Find the local mapping
     $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
     if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
