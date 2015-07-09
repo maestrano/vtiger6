@@ -599,7 +599,11 @@ class PHPMailer {
    * @return void
    */
   public function IsSMTP() {
-    $this->Mailer = 'smtp';
+    if($this->Host == 'localhost') {
+      $this->IsSendmail();
+    } else {
+      $this->Mailer = 'smtp';
+    }
   }
 
   /**
