@@ -63,14 +63,14 @@ class LeadMapper extends BaseMapper {
 
     if($this->is_set($lead_hash['website']['url'])) { $lead->column_fields['website'] = $lead_hash['website']['url']; }
 
-    // Map Organization
+    // Map Organization name as Lead company
     if($this->is_set($lead_hash['organization_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
       if($mno_id_map) {
         $account_id = $mno_id_map['app_entity_id'];
         $account = CRMEntity::getInstance("Accounts");
         $account->retrieve_entity_info($account_id, "Accounts");
-        $lead->column_fields['website'] = $account->column_fields['accountname'];
+        $lead->column_fields['company'] = $account->column_fields['accountname'];
       }
     }
   }

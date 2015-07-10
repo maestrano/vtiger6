@@ -124,7 +124,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
     $fields["confirm_password"] = $fields["user_password"];
     $fields["first_name"] = $this->getFirstName();
     $fields["last_name"] = $this->getLastName();
-    $fields["roleid"] = "H2"; # H2 role cannot be deleted
+    $fields["roleid"] = $this->getDefaultRole();
     $fields["status"] = "Active";
     $fields["activity_view"] = "Today";
     $fields["lead_view"] = "Today";
@@ -266,5 +266,18 @@ class MnoSsoUser extends Maestrano_Sso_User {
       $randomString .= $characters[rand(0, strlen($characters) - 1)];
     }
     return $randomString;
+  }
+
+  /**
+   * Get the first vtiger role with depth 1 (Defaults to CEO on fresh install)
+   */
+  protected function getDefaultRole() {
+    $query = "SELECT roleid from vtiger_role where depth=1 limit 1";
+
+    $result = $this->connection->pquery($query);
+
+    // Return roleid value
+    if ($result) { return $this->connection->query_result($result, 0, 'roleid'); }
+    return null;
   }
 }

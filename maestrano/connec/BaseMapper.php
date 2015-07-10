@@ -97,6 +97,28 @@ abstract class BaseMapper {
     }
   }
 
+  // Map a local Model to Connec! ID. If the Model is not locally mapped, it is pushed to Connec!
+  public function findConnecIdByLocalId($local_id) {
+    error_log("load Connec! ID by local id entity_name=$this->local_entity_name, local_id=$local_id");
+
+    if($local_id == 0) { return null; }
+
+    // Find the local mapping
+    $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
+    if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
+
+    // Mapping is missing, push the Entity to Connec!
+    $model = $this->loadModelById($local_id);
+    $this->pushToConnec($model);
+
+    // Try to fetch the local mapping again
+    $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
+    if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
+
+    error_log("cannot push Entity to Connec! entity_name=$this->local_entity_name, local_id=$local_id");
+    return null;
+  }
+
   // Fetch and persist a Connec! resounce by id
   public function fetchConnecResource($entity_id) {
     error_log("fetch connec resource entity_name=$this->connec_entity_name, entity_id=$entity_id");
@@ -185,18 +207,12 @@ abstract class BaseMapper {
   // Process a Model update event
   // $pushToConnec: option to notify Connec! of the model update
   // $delete:       option to soft delete the local entity mapping amd ignore further Connec! updates
-  public function processLocalUpdate($model, $pushToConnec=true, $delete=false) {
+  public function processLocalUpdate($model, $pushToConnec=true, $delete=false, $saveResult=false) {
     $pushToConnec = $pushToConnec && Maestrano::param('connec.enabled');
 
     error_log("process local update entity=$this->connec_entity_name, local_id=" . $this->getId($model) . ", pushToConnec=$pushToConnec, delete=$delete");
-    
-    if($pushToConnec) {
-      $this->pushToConnec($model);
-    }
-
-    if($delete) {
-      $this->flagAsDeleted($model);
-    }
+    if($pushToConnec) { $this->pushToConnec($model, $saveResult); }
+    if($delete) { $this->flagAsDeleted($model); }
   }
 
   // Find an vTiger entity matching the Connec resource or initialize a new one
@@ -237,7 +253,8 @@ abstract class BaseMapper {
   }
 
   // Transform an vTiger Model into a Connec Resource and push it to Connec
-  protected function pushToConnec($model) {
+  // If the $saveResult parameter is set to true, the Connec! result is persisted
+  protected function pushToConnec($model, $saveResult=false) {
     error_log("push entity to connec entity=$this->connec_entity_name, local_id=" . $this->getId($model));
 
     // Transform the Model into a Connec hash
@@ -268,9 +285,16 @@ abstract class BaseMapper {
       return false;
     } else {
       error_log("Processing Connec! response code=$code, body=$body");
-      $result = json_decode($response['body'], true);
-      error_log("processing entity_name=$this->local_entity_name entity=". json_encode($result));
-      return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
+      $result = json_decode($body, true);
+      if($saveResult) {
+        // Save the complete response
+        error_log("processing entity_name=$this->local_entity_name entity=". json_encode($result));
+        return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
+      } else {
+        // Map the Connec! ID with the local one
+        $this->findOrCreateIdMap($result[$this->connec_resource_name], $model);
+        return $model;
+      }
     }
   }
 

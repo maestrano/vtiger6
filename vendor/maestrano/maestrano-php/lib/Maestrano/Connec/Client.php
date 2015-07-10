@@ -198,7 +198,7 @@ class Maestrano_Connec_Client
     $opts[CURLOPT_URL] = $absUrl;
     $opts[CURLOPT_RETURNTRANSFER] = true;
     $opts[CURLOPT_CONNECTTIMEOUT] = 30;
-    $opts[CURLOPT_TIMEOUT] = 80;
+    $opts[CURLOPT_TIMEOUT] = 600;
     $opts[CURLOPT_HTTPHEADER] = $headers;
     if (!Maestrano::param('verify_ssl_certs'))
       $opts[CURLOPT_SSL_VERIFYPEER] = false;

@@ -1,21 +1,14 @@
-FROM bchauvet/docker-lamp:latest
+FROM maestrano/docker-lamp:latest
 MAINTAINER Maestrano <it@maestrano.com>
 
-# Add ansible configuration
-ADD ansible/playbooks/ /etc/ansible/playbooks/
-ADD ansible/templates/ /etc/ansible/templates/
-ADD ansible/var/ /etc/ansible/var/
-ADD ansible/var/settings.yml /etc/ansible/var/settings.yml
-ADD ansible/hosts /etc/ansible/hosts
+RUN apt-get -y update && apt-get -y upgrade 
 
+# Add ansible configuration
+ADD ansible /etc/ansible
 WORKDIR /etc/ansible
 
-# Install Ansible
-RUN apt-get -y update &&  \
-    apt-get -y upgrade &&  \
-    ansible-playbook /etc/ansible/playbooks/install_vtiger6.yml -c local &&  \
-    apt-get clean purge -y python2.6 python2.6-minimal &&  \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Install Vtiger
+RUN ansible-playbook -i hosts site.yml
 
 # Map MySQL and Apache volumes
-VOLUME ["/etc/mysql", "/var/lib/mysql", "/etc/apache2", "/etc/php5", "/var/lib/vtigercrm"]
+VOLUME ["/etc/mysql", "/var/lib/mysql", "/etc/apache2", "/etc/php5", "/var/lib/vtigercrm", "/var/log/apache2", "/var/log/mysql"]
