@@ -24,7 +24,7 @@ notification_mail: admin@maestrano.com
 ssmtp_mailhub: rack-gateway
 
 # vTiger installation
-vtiger_version: mno-master
+application_version: mno-master
 vtiger_db_user: vtiger6
 vtiger_db_password: vtiger6
 vtiger_db_name: vtiger6
