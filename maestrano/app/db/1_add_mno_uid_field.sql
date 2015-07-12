@@ -14,6 +14,10 @@ CREATE UNIQUE INDEX mno_id_map_unique_key ON `mno_id_map` (`mno_entity_guid`, `m
 CREATE INDEX mno_id_map_mno_key ON `mno_id_map` (`mno_entity_guid`, `mno_entity_name`);
 CREATE INDEX mno_id_map_app_key ON `mno_id_map` (`app_entity_id`, `app_entity_name`);
 
+/* DEFAULT SMTP SERVER */
+SELECT @next_id:=COUNT(*)+1 FROM `vtiger_systems`;
+INSERT INTO  `vtiger_systems` (`id`,`server`,`server_port`,`server_type`,`smtp_auth`,`server_path`) VALUES (@next_id,'localhost',0,'email',0,NULL);
+
 /* ORGANIZATION BILLING COUNTRY */
 
 UPDATE  `vtiger_field` SET  `uitype` =  '15' WHERE  `vtiger_field`.`fieldid` =32;
@@ -567,7 +571,7 @@ UPDATE `vtiger_ship_country` SET `picklist_valueid`=`picklist_valueid`-287+(SELE
     FROM vtiger_picklistvalues_seq);
 
 UPDATE `vtiger_picklistvalues_seq` SET `id`=`id`+242;
-    
+
 INSERT INTO `vtiger_role2picklist`(`roleid`, `picklistvalueid`, `picklistid`, `sortid`)
 SELECT vr.roleid, vbc.picklist_valueid, picklist_seq.id AS picklistid, vbc.sortorderid
 FROM vtiger_role vr, vtiger_ship_country vbc, (
