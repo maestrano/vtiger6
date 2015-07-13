@@ -16,6 +16,8 @@
   service: 
     name: mysql 
     state: started
+  tags:
+    - configuration
 
 - name: vTiger | Create vTiger database
   mysql_db:
