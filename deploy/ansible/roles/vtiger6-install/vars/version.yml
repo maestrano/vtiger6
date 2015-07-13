@@ -1,4 +1,4 @@
 # Application Git version to be installed
 # - Production: mno-master
 # - UAT:        mno-develop
-application_version: mno-master
+application_version: mno-develop
