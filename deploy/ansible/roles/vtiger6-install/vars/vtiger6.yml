@@ -1,0 +1,13 @@
+# vTiger installation
+vtiger_db_user: vtiger6
+vtiger_db_password: vtiger6
+vtiger_db_name: vtiger6
+vtiger_root_path: /var/lib/vtigercrm/webapp/
+
+# vTiger default configuration
+sso_enabled: "false"
+connec_enabled: "false"
+maestrano_environment: "production"
+server_hostname: "server_hostname"
+api_key: "api_key"
+api_secret: "api_secret"

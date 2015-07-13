@@ -1,3 +1,11 @@
+# Include vtiger6 specific configuration
+- include_vars: "{{ item }}"
+  with_items:
+    - vtiger6.yml
+    - version.yml
+  tags:
+    - configuration
+
 - name: General | Install Application packages
   apt: "name={{ item }} state=present"
   with_items:
@@ -30,7 +38,7 @@
   git: >
     repo=https://github.com/maestrano/vtiger6.git
     dest={{ vtiger_root_path }}
-    version={{ vtiger_version }}
+    version={{ application_version }}
     accept_hostkey=yes
     ssh_opts="-o StrictHostKeyChecking=no"
     update=yes
