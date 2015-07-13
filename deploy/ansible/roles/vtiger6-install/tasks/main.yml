@@ -13,9 +13,7 @@
     - curl
 
 - name: vTiger | Ensure MySQL is running
-  service: 
-    name: mysql 
-    state: started
+  command: service mysql start
   tags:
     - configuration
 
@@ -114,7 +112,7 @@
   file: "path={{ vtiger_root_path }} mode=755 owner=www-data group=www-data state=directory recurse=yes"
 
 - name: vTiger | Import Connec! data
-  shell: "(nohup php initialize.php 1>/dev/null 2>&1) &"
+  shell: "(nohup php initialize.php 1>/var/log/apache2/vtigercrm_initialize.log 2>&1) &"
   args:
     chdir: "{{ vtiger_root_path }}/maestrano/data"
   tags:
