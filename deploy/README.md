@@ -21,3 +21,9 @@ docker run -it \
   --add-host connec.maestrano.io:172.17.42.1 \
   maestrano/vtiger6:latest
  ```
+
+## Docker Hub
+The image can be pulled down from [Docker Hub](https://registry.hub.docker.com/u/maestrano/vtiger6/)
+**maestrano/vtiger6:stable**: Production version
+
+**maestrano/vtiger6:latest**: Develomment version
