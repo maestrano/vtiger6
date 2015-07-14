@@ -10,5 +10,5 @@ WORKDIR /etc/ansible
 # Install Vtiger
 RUN ansible-playbook -i hosts site.yml
 
-# Map MySQL and Apache volumes
-VOLUME ["/etc/mysql", "/var/lib/mysql", "/etc/apache2", "/etc/php5", "/var/lib/vtigercrm", "/var/log/apache2", "/var/log/mysql"]
+# Map Vtiger mutable volumes
+VOLUME ["/var/lib/vtigercrm"]
