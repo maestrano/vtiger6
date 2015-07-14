@@ -17,6 +17,7 @@ docker run -it \
   -e "MNO_API_KEY=a518c836057355ef5e5020b5db3b5d18b1f778bd80acb0dc3c6a086645f4aa71" \
   -e "MNO_API_SECRET=c1fb4e69-bb67-48b4-a1a6-c23734b348cc" \
   -e "MNO_APPLICATION_VERSION=mno-develop" \
+  -e "MNO_POWER_UNITS=4" \
   --add-host application.maestrano.io:172.17.42.1 \
   --add-host connec.maestrano.io:172.17.42.1 \
   maestrano/vtiger6:latest
