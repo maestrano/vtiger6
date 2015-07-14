@@ -8,7 +8,7 @@ ADD ansible /etc/ansible
 WORKDIR /etc/ansible
 
 # Install Vtiger
-RUN ansible-playbook -i hosts site.yml
+RUN ansible-playbook -vvvv -i hosts site.yml
 
 # Map Vtiger mutable volumes
 VOLUME ["/var/lib/vtigercrm"]
