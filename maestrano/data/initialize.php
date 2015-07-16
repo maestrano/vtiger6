@@ -24,29 +24,32 @@ if (file_exists($filepath)) {
 
   // Fetch updates
   $client = new Maestrano_Connec_Client();
-  $msg = $client->get("updates/$timestamp?\$filter[entity]=Company,TaxCode,Account,Organization,Person,Item,Invoice,Quote,PurchaseOrder,Event,EventOrder");
-  $code = $msg['code'];
-  $body = $msg['body'];
+  $entities = array('Company','TaxCode','Account','Organization','Person','Item','Invoice','Quote','PurchaseOrder','Event','EventOrder');
+  foreach ($entities as $entity) {
+    $msg = $client->get("updates/$timestamp?\$filter[entity]=$entity");
+    $code = $msg['code'];
+    $body = $msg['body'];
 
-  if($code != 200) {
-    error_log("Cannot fetch connec updates code=$code, body=$body");
-  } else {
-    error_log("Receive updates body=$body");
-    $result = json_decode($body, true);
+    if($code != 200) {
+      error_log("Cannot fetch connec updates code=$code, body=$body");
+    } else {
+      error_log("Receive updates body=$body");
+      $result = json_decode($body, true);
 
-    // Dynamically find mappers and map entities
-    foreach(BaseMapper::getMappers() as $mapperClass) {
-      if (class_exists($mapperClass)) {
-        $test_class = new ReflectionClass($mapperClass);
-        if($test_class->isAbstract()) { continue; }
+      // Dynamically find mappers and map entities
+      foreach(BaseMapper::getMappers() as $mapperClass) {
+        if (class_exists($mapperClass)) {
+          $test_class = new ReflectionClass($mapperClass);
+          if($test_class->isAbstract()) { continue; }
 
-        $mapper = new $mapperClass();
-        $mapper->persistAll($result[$mapper->getConnecResourceName()]);
+          $mapper = new $mapperClass();
+          $mapper->persistAll($result[$mapper->getConnecResourceName()]);
+        }
       }
     }
-
-    $status = true;
   }
+
+  $status = true;
 }
 
 // Set update timestamp
