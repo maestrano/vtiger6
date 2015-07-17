@@ -23,6 +23,20 @@ docker run -it \
   maestrano/vtiger6:latest
  ```
 
+## Setup your development environment
+Use `docker ps -a` to retrieve the name of the container that you just started, and launch this script:
+```bash
+ruby ./setup_devenv.rb <container name> <path>
+```
+It will retrieve the IP of your container, add it to your /etc/hosts file, and link the directory containing vTiger source files (stored inside of the container) to a local path.
+
+Some files will be created in this directory during the installation phase. Consequently, you will have to :
+- add the newly created files to your .git/info/excludes for them to be excluded from your next commits
+- temporarily untrack the versionned files that have been modified during the installation:
+```bash
+git update-index --assume-unchanged <file>
+```
+
 ## Docker Hub
 The image can be pulled down from [Docker Hub](https://registry.hub.docker.com/u/maestrano/vtiger6/)
 **maestrano/vtiger6:stable**: Production version
