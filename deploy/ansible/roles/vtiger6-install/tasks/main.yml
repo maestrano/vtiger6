@@ -110,10 +110,18 @@
 
 - name: vTiger | Set file permissions
   file: "path={{ vtiger_root_path }} mode=755 owner=www-data group=www-data state=directory recurse=yes"
+  tags:
+    - configuration
+
+- name: vTiger | Create initiailize log file
+  file: path=/var/log/apache2/dolibarr_initialize.log state=touch mode=0777
+  tags:
+    - configuration
 
 - name: vTiger | Import Connec! data
   shell: "(nohup php initialize.php 1>/var/log/apache2/vtigercrm_initialize.log 2>&1) &"
   args:
     chdir: "{{ vtiger_root_path }}/maestrano/data"
+  sudo_user: www-data
   tags:
     - configuration
