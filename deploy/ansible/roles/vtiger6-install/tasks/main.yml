@@ -113,7 +113,7 @@
   tags:
     - configuration
 
-- name: Dolibarr | Create initiailize log file
+- name: vTiger | Create initiailize log file
   file: path=/var/log/apache2/dolibarr_initialize.log state=touch mode=0777
   tags:
     - configuration
