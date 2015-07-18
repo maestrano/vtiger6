@@ -288,10 +288,11 @@ abstract class BaseMapper {
       $result = json_decode($body, true);
       if($saveResult) {
         // Save the complete response
-        error_log("processing entity_name=$this->local_entity_name entity=". json_encode($result));
+        error_log("saving back entity_name=$this->local_entity_name");
         return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
       } else {
         // Map the Connec! ID with the local one
+        error_log("mapping back entity_name=$this->local_entity_name");
         $this->findOrCreateIdMap($result[$this->connec_resource_name], $model);
         return $model;
       }
