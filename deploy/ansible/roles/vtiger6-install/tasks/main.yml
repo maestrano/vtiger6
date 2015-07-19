@@ -114,7 +114,7 @@
     - configuration
 
 - name: vTiger | Create initiailize log file
-  file: path=/var/log/apache2/dolibarr_initialize.log state=touch mode=0777
+  file: path=/var/log/apache2/vtigercrm_initialize.log state=touch mode=0777
   tags:
     - configuration
 
