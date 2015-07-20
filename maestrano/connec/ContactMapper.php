@@ -54,6 +54,7 @@ class ContactMapper extends BaseMapper {
     if($this->is_set($person_hash['last_name'])) { $person->column_fields['lastname'] = $person_hash['last_name']; }
     if($this->is_set($person_hash['description'])) { $person->column_fields['description'] = $person_hash['description']; }
     if($this->is_set($person_hash['job_title'])) { $person->column_fields['title'] = $person_hash['job_title']; }
+    if($this->is_set($person_hash['birth_date'])) { $person->column_fields['birthday'] = $this->format_date_to_php($person_hash['birth_date']); }
 
     if($this->is_set($person_hash['address_work'])) {
       if($this->is_set($person_hash['address_work']['billing'])) {
@@ -116,6 +117,7 @@ class ContactMapper extends BaseMapper {
     $person_hash['last_name'] = $person->column_fields['lastname'];
     $person_hash['description'] = $person->column_fields['description'];
     $person_hash['job_title'] = $person->column_fields['title'];
+    $person_hash['birth_date'] = $this->format_date_to_connec($person->column_fields['birthday']);
     
     $address = array();
     $billing_address = array();
@@ -153,6 +155,12 @@ class ContactMapper extends BaseMapper {
     $email_hash['address'] = $person->column_fields['email'];
     $email_hash['address2'] = $person->column_fields['secondaryemail'];
     if(!empty($email_hash)) { $person_hash['email'] = $email_hash; }
+
+    // Map Lead conversion option
+    // opts['from_lead'] = Connec! lead id
+    if($this->is_set($person->column_fields['opts'])) {
+      $person_hash['opts'] = $person->column_fields['opts'];
+    }
 
     // Map Organization
     if($this->is_set($person->column_fields['account_id'])) {
