@@ -5,6 +5,7 @@
     - version.yml
   tags:
     - configuration
+    - update
 
 - name: General | Install Application packages
   apt: "name={{ item }} state=present"
@@ -43,11 +44,20 @@
     ssh_opts="-o StrictHostKeyChecking=no"
     update=yes
     force=yes
+  tags:
+    - update
 
 - name: vTiger | Current commit hash
   shell: 'git log -n 1 --pretty=format:"%H" > {{ vtiger_root_path }}/.git-version'
   args:
     chdir: "{{ vtiger_root_path }}"
+  tags:
+    - update
+
+- name: Git | Ignore files permissions changes
+  command: "git config core.filemode false chdir={{ vtiger_root_path }}"
+  tags:
+    - update
 
 - name: vTiger | Configure Apache virtual host
   template: 
