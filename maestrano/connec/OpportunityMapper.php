@@ -36,8 +36,9 @@ class OpportunityMapper extends BaseMapper {
     if($this->is_set($opportunity_hash['description'])) { $potential->column_fields['description'] = $opportunity_hash['description']; }
     if($this->is_set($opportunity_hash['sales_stage'])) { $potential->column_fields['sales_stage'] = $opportunity_hash['sales_stage']; }
     if($this->is_set($opportunity_hash['type'])) { $potential->column_fields['opportunity_type'] = $opportunity_hash['type']; }
-    // if($this->is_set($opportunity_hash['probability'])) { $potential->column_fields['probability'] = $opportunity_hash['probability']; }
-    // if($this->is_set($opportunity_hash['amount'])) { $potential->column_fields['amount'] = $opportunity_hash['amount']; }
+    if($this->is_set($opportunity_hash['next_step'])) { $potential->column_fields['nextstep'] = $opportunity_hash['next_step']; }
+    if($this->is_set($opportunity_hash['probability'])) { $potential->column_fields['probability'] = number_format($opportunity_hash['probability'],2,'.',''); }
+    if($this->is_set($opportunity_hash['amount'])) { $potential->column_fields['amount'] = number_format($opportunity_hash['amount']['total_amount'],2,'.',''); }
     if($this->is_set($opportunity_hash['expected_close_date'])) { $potential->column_fields['closingdate'] = $this->format_date_to_php($opportunity_hash['expected_close_date']); }
 
     // Map Lead entity by id
@@ -52,10 +53,6 @@ class OpportunityMapper extends BaseMapper {
         if($this->is_set($contact->column_fields['account_id'])) {
           $potential->column_fields['related_to'] = $contact->column_fields['account_id'];
         }
-        error_log("*******");
-        error_log($contact->column_fields['account_id']);
-        error_log(json_encode($potential->column_fields));
-        error_log("*******");
       }
     }
   }
@@ -70,6 +67,7 @@ class OpportunityMapper extends BaseMapper {
     $opportunity_hash['description'] = $potential->column_fields['description'];
     $opportunity_hash['sales_stage'] = $potential->column_fields['sales_stage'];
     $opportunity_hash['type'] = $potential->column_fields['opportunity_type'];
+    $opportunity_hash['next_step'] = $potential->column_fields['nextstep'];
     $opportunity_hash['probability'] = $potential->column_fields['probability'];
     if($this->is_set($potential->column_fields['amount'])) {
       $amount = array();
