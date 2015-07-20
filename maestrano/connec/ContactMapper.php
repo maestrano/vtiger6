@@ -117,8 +117,10 @@ class ContactMapper extends BaseMapper {
     $person_hash['last_name'] = $person->column_fields['lastname'];
     $person_hash['description'] = $person->column_fields['description'];
     $person_hash['job_title'] = $person->column_fields['title'];
-    $person_hash['birth_date'] = $this->format_date_to_connec($person->column_fields['birthday']);
-    
+    if($this->is_set($person->column_fields['birthday'])) {
+      $person_hash['birth_date'] = $this->format_date_to_connec($person->column_fields['birthday']);
+    }
+
     $address = array();
     $billing_address = array();
     $billing_address['line1'] = $person->column_fields['otherstreet'];
