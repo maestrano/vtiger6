@@ -119,12 +119,24 @@
     chdir: "{{ vtiger_root_path }}"
 
 - name: vTiger | Set file permissions
-  file: "path={{ vtiger_root_path }} mode=755 owner=www-data group=www-data state=directory recurse=yes"
+  file:
+    path: "{{ vtiger_root_path }}"
+    mode: 0755
+    owner: www-data
+    group: www-data
+    state: directory
+    recurse: yes
   tags:
     - configuration
 
-- name: vTiger | Create initialize log file
-  file: path=/var/log/apache2/vtigercrm_initialize.log state=touch mode=0777
+- name: vTiger | Set file permissions
+  file:
+    path: /var/log/apache2
+    mode: 0755
+    owner: www-data
+    group: www-data
+    state: directory
+    recurse: yes
   tags:
     - configuration
 

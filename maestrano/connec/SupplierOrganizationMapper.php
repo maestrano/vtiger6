@@ -41,14 +41,17 @@ class SupplierOrganizationMapper extends BaseMapper {
     if($this->is_set($organization_hash['description'])) { $organization->column_fields['description'] = $organization_hash['description']; }
     if($this->is_set($organization_hash['industry'])) { $organization->column_fields['category'] = $organization_hash['industry']; }
 
-    if($this->is_set($organization_hash['address']) && $this->is_set($organization_hash['address']['shipping'])) {
-      $shipping_address = $organization_hash['address']['shipping'];
-      if($this->is_set($shipping_address['line1'])) { $organization->column_fields['street'] = $shipping_address['line1']; }
-      if($this->is_set($shipping_address['line2'])) { $organization->column_fields['pobox'] = $shipping_address['line2']; }
-      if($this->is_set($shipping_address['city'])) { $organization->column_fields['city'] = $shipping_address['city']; }
-      if($this->is_set($shipping_address['region'])) { $organization->column_fields['state'] = $shipping_address['region']; }
-      if($this->is_set($shipping_address['postal_code'])) { $organization->column_fields['postalcode'] = $shipping_address['postal_code']; }
-      if($this->is_set($shipping_address['country'])) { $organization->column_fields['country'] = $shipping_address['country']; }
+    // Map address with precedence given to billing
+    $address = nil;
+    if($this->is_set($organization_hash['address']) && $this->is_set($organization_hash['address']['billing'])) { $address = $organization_hash['address']['billing']; }
+    else if($this->is_set($organization_hash['address']) && $this->is_set($organization_hash['address']['shipping'])) { $address = $organization_hash['address']['shipping']; }
+    if($this->is_set($address)) {
+      if($this->is_set($address['line1'])) { $organization->column_fields['street'] = $address['line1']; }
+      if($this->is_set($address['line2'])) { $organization->column_fields['pobox'] = $address['line2']; }
+      if($this->is_set($address['city'])) { $organization->column_fields['city'] = $address['city']; }
+      if($this->is_set($address['region'])) { $organization->column_fields['state'] = $address['region']; }
+      if($this->is_set($address['postal_code'])) { $organization->column_fields['postalcode'] = $address['postal_code']; }
+      if($this->is_set($address['country'])) { $organization->column_fields['country'] = $address['country']; }
     }
 
     if($this->is_set($organization_hash['phone']['landline'])) { $organization->column_fields['phone'] = $organization_hash['phone']['landline']; }
