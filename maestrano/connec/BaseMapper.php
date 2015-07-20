@@ -127,7 +127,7 @@ abstract class BaseMapper {
     $code = $msg['code'];
 
     if($code != 200) {
-      error_log("cannot fetch Connec! entity code=$code, entity_name=$this->connec_entity_name, entity_id=$entity_id");
+      error_log("cannot fetch Connec! entity code=$code, entity_name=$this->connec_entity_name, entity_id=$entity_id, connec_endpoint=$this->connec_resource_endpoint");
     } else {
       $result = json_decode($msg['body'], true);
       error_log("processing entity_name=$this->connec_entity_name entity=". json_encode($result));
