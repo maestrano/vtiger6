@@ -5,6 +5,7 @@
     - version.yml
   tags:
     - configuration
+    - update
 
 - name: General | Install Application packages
   apt: "name={{ item }} state=present"
@@ -43,11 +44,20 @@
     ssh_opts="-o StrictHostKeyChecking=no"
     update=yes
     force=yes
+  tags:
+    - update
 
 - name: vTiger | Current commit hash
   shell: 'git log -n 1 --pretty=format:"%H" > {{ vtiger_root_path }}/.git-version'
   args:
     chdir: "{{ vtiger_root_path }}"
+  tags:
+    - update
+
+- name: Git | Ignore files permissions changes
+  command: "git config core.filemode false chdir={{ vtiger_root_path }}"
+  tags:
+    - update
 
 - name: vTiger | Configure Apache virtual host
   template: 
@@ -109,11 +119,31 @@
     chdir: "{{ vtiger_root_path }}"
 
 - name: vTiger | Set file permissions
-  file: "path={{ vtiger_root_path }} mode=755 owner=www-data group=www-data state=directory recurse=yes"
+  file:
+    path: "{{ vtiger_root_path }}"
+    mode: 0755
+    owner: www-data
+    group: www-data
+    state: directory
+    recurse: yes
+  tags:
+    - configuration
+
+- name: vTiger | Set file permissions
+  file:
+    path: /var/log/apache2
+    mode: 0755
+    owner: www-data
+    group: www-data
+    state: directory
+    recurse: yes
+  tags:
+    - configuration
 
 - name: vTiger | Import Connec! data
   shell: "(nohup php initialize.php 1>/var/log/apache2/vtigercrm_initialize.log 2>&1) &"
   args:
     chdir: "{{ vtiger_root_path }}/maestrano/data"
+  sudo_user: www-data
   tags:
     - configuration
