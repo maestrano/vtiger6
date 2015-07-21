@@ -198,7 +198,7 @@ class Maestrano_Connec_Client
     $opts[CURLOPT_URL] = $absUrl;
     $opts[CURLOPT_RETURNTRANSFER] = true;
     $opts[CURLOPT_CONNECTTIMEOUT] = 30;
-    $opts[CURLOPT_TIMEOUT] = 600;
+    $opts[CURLOPT_TIMEOUT] = 80;
     $opts[CURLOPT_HTTPHEADER] = $headers;
     if (!Maestrano::param('verify_ssl_certs'))
       $opts[CURLOPT_SSL_VERIFYPEER] = false;
@@ -235,5 +235,10 @@ class Maestrano_Connec_Client
     curl_close($curl);
     
     return array( 'body' => $rbody, 'code' => $rcode);
+  }
+
+  private function handleCurlError($errno, $message)
+  {
+    throw new Maestrano_Api_Error("curl_errno: $errno, message: $message");
   }
 }
