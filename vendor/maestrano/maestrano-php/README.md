@@ -569,8 +569,17 @@ $bill->setPriceCents(2000);
 <td>read/write</td>
 <td>Date</td>
 <td>-</td>
-<td>-</td>
+<td>false</td>
 <td>If the bill relates to a specific period then specifies when the period ended. Both period_started_at and period_ended_at need to be filled in order to appear on customer invoice.</td>
+<tr>
+
+<tr>
+<td><b>thirdParty</b></td>
+<td>read/write</td>
+<td>Boolean</td>
+<td>-</td>
+<td>-</td>
+<td>Whether this bill is related to a third party cost or not. External expenses engaged for customers - such as paying a  provider for sending SMS on behalf of customers - should be flagged as third party.</td>
 <tr>
 
 </table>

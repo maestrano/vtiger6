@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "477f32bd247762cb8f3e209e1526b43b",
+    "hash": "babaeb4721c98183f4742e5b97b10a37",
     "packages": [
         {
             "name": "maestrano/maestrano-php",
-            "version": "0.7.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maestrano/maestrano-php.git",
-                "reference": "bb82b37461afc98164d47695f652489642a001eb"
+                "reference": "9d14f29ee7b4d54810150ef856cff821bfd0bb84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maestrano/maestrano-php/zipball/bb82b37461afc98164d47695f652489642a001eb",
-                "reference": "bb82b37461afc98164d47695f652489642a001eb",
+                "url": "https://api.github.com/repos/maestrano/maestrano-php/zipball/9d14f29ee7b4d54810150ef856cff821bfd0bb84",
+                "reference": "9d14f29ee7b4d54810150ef856cff821bfd0bb84",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "marketplace",
                 "sme"
             ],
-            "time": "2015-06-19 02:25:32"
+            "time": "2015-07-21 05:38:51"
         }
     ],
     "packages-dev": [],
