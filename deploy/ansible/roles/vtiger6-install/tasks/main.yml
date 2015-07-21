@@ -15,6 +15,7 @@
 
 - name: vTiger | Ensure MySQL is running
   command: service mysql start
+  ignore_errors: yes
   tags:
     - configuration
 
@@ -129,7 +130,7 @@
   tags:
     - configuration
 
-- name: vTiger | Set file permissions
+- name: vTiger | Set log files permissions
   file:
     path: /var/log/apache2
     mode: 0755
