@@ -57,8 +57,8 @@ class ProductMapper extends BaseMapper {
       if($this->is_set($product_hash['sale_price']['net_amount'])) { $product->column_fields['unit_price'] = $product_hash['sale_price']['net_amount']; }
     }
 
-    // Set product stock level on Product creation when specified
-    if($this->is_new($product) && $this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
+    // Set product stock levels
+    if($this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
       $product->column_fields['qtyinstock'] = is_null($product_hash['initial_quantity']) ? $product_hash['quantity_on_hand'] : $product_hash['initial_quantity'];
       $product->column_fields['qtyindemand'] = $product_hash['quantity_committed'];
       $product->column_fields['reorderlevel'] = $product_hash['minimum_quantity'];
@@ -82,21 +82,21 @@ class ProductMapper extends BaseMapper {
     $product_hash['unit_type'] = $product->column_fields['usageunit'];
     $product_hash['start_date'] = $this->format_date_to_connec($product->column_fields['sales_start_date']);
     $product_hash['end_date'] = $this->format_date_to_connec($product->column_fields['sales_end_date']);
-    $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']);
+    
+    $unit_price = $this->format_string_to_decimal($product->column_fields['unit_price']);
+    $qtyinstock = $this->format_string_to_decimal($product->column_fields['qtyinstock']);
+    $qtyindemand = $this->format_string_to_decimal($product->column_fields['qtyindemand']);
+    $reorderlevel = $this->format_string_to_decimal($product->column_fields['reorderlevel']);
+
+    $product_hash['sale_price'] = array('net_amount' => $unit_price);
 
     // Inventory tracking
-    $qtyinstock = $product->column_fields['qtyinstock'];
-    $qtyindemand = $product->column_fields['qtyindemand'];
-    $unit_price = $product->column_fields['unit_price'];
-    $reorderlevel = $product->column_fields['reorderlevel'];
-    if($this->is_set($qtyinstock) && $this->is_set($qtyindemand)) {
-      $product_hash['quantity_on_hand'] = $qtyinstock;
-      $product_hash['quantity_committed'] = $qtyindemand;
-      $product_hash['quantity_available'] = $qtyinstock - $qtyindemand;
-      $product_hash['average_cost'] = $unit_price;
-      $product_hash['current_value'] = $qtyinstock * $unit_price;
-      $product_hash['minimum_quantity'] = $reorderlevel;
-    }
+    $product_hash['quantity_on_hand'] = $qtyinstock;
+    $product_hash['quantity_committed'] = $qtyindemand;
+    $product_hash['quantity_available'] = $qtyinstock - $qtyindemand;
+    $product_hash['average_cost'] = $unit_price;
+    $product_hash['current_value'] = $qtyinstock * $unit_price;
+    $product_hash['minimum_quantity'] = $reorderlevel;
 
     ProductMapper::mapTaxToConnecResource($product, $product_hash);
     ProductMapper::mapAccountToConnecResource($product, $product_hash);

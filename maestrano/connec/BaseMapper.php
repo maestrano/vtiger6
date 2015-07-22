@@ -45,6 +45,13 @@ abstract class BaseMapper {
     return $date->format('c');
   }
 
+  protected function format_string_to_decimal($string) {
+    $decimal_str = str_replace(',', '', $string);
+    return floatval($decimal_str);
+  }
+
+  
+
   // Overwrite me!
   // Return the Model local id
   abstract protected function getId($model);
