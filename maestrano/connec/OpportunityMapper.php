@@ -71,7 +71,7 @@ class OpportunityMapper extends BaseMapper {
     $opportunity_hash['probability'] = $potential->column_fields['probability'];
     if($this->is_set($potential->column_fields['amount'])) {
       $amount = array();
-      $amount['total_amount'] = BaseMapper::format_string_to_decimal($potential->column_fields['amount'])
+      $amount['total_amount'] = $this->format_string_to_decimal($potential->column_fields['amount']);
       $opportunity_hash['amount'] = $amount;
     }
     if($this->is_set($potential->column_fields['closingdate'])) {
