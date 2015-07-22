@@ -105,8 +105,8 @@ class Potentials extends CRMEntity {
 	{
 		global $log,$current_user;
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');
-					require('user_privileges/sharing_privileges_'.$current_user->id.'.php');
-					$tab_id = getTabid("Potentials");
+		require('user_privileges/sharing_privileges_'.$current_user->id.'.php');
+		$tab_id = getTabid("Potentials");
 		$log->debug("Entering create_list_query(".$order_by.",". $where.") method ...");
 		// Determine if the vtiger_account name is present in the where clause.
 		$account_required = preg_match("/accounts\.name/", $where);
@@ -160,18 +160,18 @@ class Potentials extends CRMEntity {
 				LEFT JOIN vtiger_account on vtiger_potential.related_to=vtiger_account.accountid
 				LEFT JOIN vtiger_contactdetails on vtiger_potential.contact_id=vtiger_contactdetails.contactid
 				LEFT JOIN vtiger_potentialscf on vtiger_potentialscf.potentialid=vtiger_potential.potentialid
-								LEFT JOIN vtiger_groups
-									ON vtiger_groups.groupid = vtiger_crmentity.smownerid
+				LEFT JOIN vtiger_groups
+					ON vtiger_groups.groupid = vtiger_crmentity.smownerid
 				LEFT JOIN vtiger_campaign
 					ON vtiger_campaign.campaignid = vtiger_potential.campaignid";
 
 		$query .= $this->getNonAdminAccessControlQuery('Potentials',$current_user);
 		$where_auto = "  vtiger_crmentity.deleted = 0 ";
 
-								if($where != "")
-									 $query .= "  WHERE ($where) AND ".$where_auto;
-								else
-									 $query .= "  WHERE ".$where_auto;
+		if($where != "")
+			 $query .= "  WHERE ($where) AND ".$where_auto;
+		else
+			 $query .= "  WHERE ".$where_auto;
 
 		$log->debug("Exiting create_export_query method ...");
 		return $query;
@@ -190,10 +190,10 @@ class Potentials extends CRMEntity {
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
 
-				$related_module = vtlib_getModuleNameById($rel_tab_id);
+		$related_module = vtlib_getModuleNameById($rel_tab_id);
 		require_once("modules/$related_module/$related_module.php");
 		$other = new $related_module();
-				vtlib_setup_modulevars($related_module, $other);
+		vtlib_setup_modulevars($related_module, $other);
 		$singular_modname = vtlib_toSingular($related_module);
 
 		$parenttab = getParentTab();
@@ -258,10 +258,10 @@ class Potentials extends CRMEntity {
 		$log->debug("Entering get_activities(".$id.") method ...");
 		$this_module = $currentModule;
 
-				$related_module = vtlib_getModuleNameById($rel_tab_id);
+		$related_module = vtlib_getModuleNameById($rel_tab_id);
 		require_once("modules/$related_module/Activity.php");
 		$other = new Activity();
-				vtlib_setup_modulevars($related_module, $other);
+		vtlib_setup_modulevars($related_module, $other);
 		$singular_modname = vtlib_toSingular($related_module);
 
 		$parenttab = getParentTab();
@@ -328,10 +328,10 @@ class Potentials extends CRMEntity {
 		$log->debug("Entering get_products(".$id.") method ...");
 		$this_module = $currentModule;
 
-				$related_module = vtlib_getModuleNameById($rel_tab_id);
+		$related_module = vtlib_getModuleNameById($rel_tab_id);
 		require_once("modules/$related_module/$related_module.php");
 		$other = new $related_module();
-				vtlib_setup_modulevars($related_module, $other);
+		vtlib_setup_modulevars($related_module, $other);
 		$singular_modname = vtlib_toSingular($related_module);
 
 		$parenttab = getParentTab();
@@ -379,9 +379,9 @@ class Potentials extends CRMEntity {
 		return $return_value;
 	}
 
-	/** Function used to get the Sales Stage history of the Potential
-	 *  @param $id - potentialid
-	 *  return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are array which contains all the column values of an row
+	/**	Function used to get the Sales Stage history of the Potential
+	 *	@param $id - potentialid
+	 *	return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are array which contains all the column values of an row
 	 */
 	function get_stage_history($id)
 	{
@@ -461,7 +461,7 @@ class Potentials extends CRMEntity {
 				where (vtiger_activity.activitytype != 'Emails')
 				and (vtiger_activity.status = 'Completed' or vtiger_activity.status = 'Deferred' or (vtiger_activity.eventstatus = 'Held' and vtiger_activity.eventstatus != ''))
 				and vtiger_seactivityrel.crmid=".$id."
-																and vtiger_crmentity.deleted = 0";
+				and vtiger_crmentity.deleted = 0";
 		//Don't add order by, because, for security, one more condition will be added with this query in include/RelatedListView.php
 
 		$log->debug("Exiting get_history method ...");
@@ -469,20 +469,20 @@ class Potentials extends CRMEntity {
 	}
 
 
-		/**
-		* Function to get Potential related Quotes
-		* @param  integer   $id  - potentialid
-		* returns related Quotes record in array format
-		*/
+	/**
+	* Function to get Potential related Quotes
+	* @param  integer   $id  - potentialid
+	* returns related Quotes record in array format
+	*/
 	function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_quotes(".$id.") method ...");
 		$this_module = $currentModule;
 
-				$related_module = vtlib_getModuleNameById($rel_tab_id);
+			$related_module = vtlib_getModuleNameById($rel_tab_id);
 		require_once("modules/$related_module/$related_module.php");
 		$other = new $related_module();
-				vtlib_setup_modulevars($related_module, $other);
+			vtlib_setup_modulevars($related_module, $other);
 		$singular_modname = vtlib_toSingular($related_module);
 
 		$parenttab = getParentTab();
@@ -513,7 +513,7 @@ class Potentials extends CRMEntity {
 					inner join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_quotes.quoteid
 					left outer join vtiger_potential on vtiger_potential.potentialid=vtiger_quotes.potentialid
 					left join vtiger_groups on vtiger_groups.groupid=vtiger_crmentity.smownerid
-										LEFT JOIN vtiger_quotescf ON vtiger_quotescf.quoteid = vtiger_quotes.quoteid
+					LEFT JOIN vtiger_quotescf ON vtiger_quotescf.quoteid = vtiger_quotes.quoteid
 					LEFT JOIN vtiger_quotesbillads ON vtiger_quotesbillads.quotebilladdressid = vtiger_quotes.quoteid
 					LEFT JOIN vtiger_quotesshipads ON vtiger_quotesshipads.quoteshipaddressid = vtiger_quotes.quoteid
 					left join vtiger_users on vtiger_users.id=vtiger_crmentity.smownerid
@@ -539,10 +539,10 @@ class Potentials extends CRMEntity {
 		$log->debug("Entering get_salesorder(".$id.") method ...");
 		$this_module = $currentModule;
 
-				$related_module = vtlib_getModuleNameById($rel_tab_id);
+		$related_module = vtlib_getModuleNameById($rel_tab_id);
 		require_once("modules/$related_module/$related_module.php");
 		$other = new $related_module();
-				vtlib_setup_modulevars($related_module, $other);
+		vtlib_setup_modulevars($related_module, $other);
 		$singular_modname = vtlib_toSingular($related_module);
 
 		$parenttab = getParentTab();
@@ -577,8 +577,8 @@ class Potentials extends CRMEntity {
 			left outer join vtiger_account on vtiger_account.accountid=vtiger_salesorder.accountid
 			left outer join vtiger_potential on vtiger_potential.potentialid=vtiger_salesorder.potentialid
 			left join vtiger_groups on vtiger_groups.groupid=vtiger_crmentity.smownerid
-						LEFT JOIN vtiger_salesordercf ON vtiger_salesordercf.salesorderid = vtiger_salesorder.salesorderid
-						LEFT JOIN vtiger_invoice_recurring_info ON vtiger_invoice_recurring_info.start_period = vtiger_salesorder.salesorderid
+			LEFT JOIN vtiger_salesordercf ON vtiger_salesordercf.salesorderid = vtiger_salesorder.salesorderid
+			LEFT JOIN vtiger_invoice_recurring_info ON vtiger_invoice_recurring_info.start_period = vtiger_salesorder.salesorderid
 			LEFT JOIN vtiger_sobillads ON vtiger_sobillads.sobilladdressid = vtiger_salesorder.salesorderid
 			LEFT JOIN vtiger_soshipads ON vtiger_soshipads.soshipaddressid = vtiger_salesorder.salesorderid
 			left join vtiger_users on vtiger_users.id=vtiger_crmentity.smownerid
@@ -680,7 +680,7 @@ class Potentials extends CRMEntity {
 		if ($queryplanner->requireTable("vtiger_lastModifiedByPotentials")){
 			$query .= " left join vtiger_users as vtiger_lastModifiedByPotentials on vtiger_lastModifiedByPotentials.id = vtiger_crmentityPotentials.modifiedby ";
 		}
-				if ($queryplanner->requireTable("vtiger_createdbyPotentials")){
+		if ($queryplanner->requireTable("vtiger_createdbyPotentials")){
 			$query .= " left join vtiger_users as vtiger_createdbyPotentials on vtiger_createdbyPotentials.id = vtiger_crmentityPotentials.smcreatorid ";
 		}
 		return $query;
