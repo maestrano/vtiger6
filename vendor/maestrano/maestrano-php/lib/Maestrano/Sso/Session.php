@@ -137,11 +137,7 @@ class Maestrano_Sso_Session
       return true;
     }
 
-    if (!$this->ssoTokenExists()) {
-      return false;
-    }
-
-    if ($this->isRemoteCheckRequired()) {
+    if (!$this->ssoTokenExists() || $this->isRemoteCheckRequired()) {
       if ($this->performRemoteCheck($httpClient)) {
         $this->save();
         return true;
