@@ -72,6 +72,10 @@ try {
       $eventOrderMapper = new EventOrderMapper();
       $eventOrderMapper->fetchConnecResource($entity_id);
       break;
+    case "OPPORTUNITIES":
+      $opportunityMapper = new OpportunityMapper();
+      $opportunityMapper->fetchConnecResource($entity_id);
+      break;
   }
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));

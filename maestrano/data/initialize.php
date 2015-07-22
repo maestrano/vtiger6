@@ -24,7 +24,7 @@ if (file_exists($filepath)) {
 
   // Fetch updates
   $client = new Maestrano_Connec_Client();
-  $entities = array('Company','TaxCode','Account','Organization','Person','Item','Invoice','Quote','PurchaseOrder','Event','EventOrder');
+  $entities = array('Company','TaxCode','Account','Organization','Person','Item','Invoice','Quote','PurchaseOrder','Event','EventOrder','Opportunity');
   foreach ($entities as $entity) {
     $msg = $client->get("updates/$timestamp?\$filter[entity]=$entity");
     $code = $msg['code'];
