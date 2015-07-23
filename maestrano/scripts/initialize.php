@@ -1,6 +1,7 @@
 <?php
 
 require_once '../init.php';
+define('DATA_SEQUENCE_FILE', 'maestrano/var/_data_sequence');
 
 // Open or create a file and returns its content
 function openAndReadFile($file_path) {
@@ -12,17 +13,16 @@ function openAndReadFile($file_path) {
   return file_get_contents($file_path);
 }
 
-
 // Read the last update timestamp
 function lastDataUpdateTimestamp() {
-  $timestamp = openAndReadFile('maestrano/var/_data_sequence');
+  $timestamp = openAndReadFile(DATA_SEQUENCE_FILE);
   return empty($timestamp) ? 0 : $timestamp;
 }
 
 // Update the update timestamp
 function setLastDataUpdateTimestamp($timestamp) {
-  file_put_contents('maestrano/var/_data_sequence', $timestamp);
+  file_put_contents(DATA_SEQUENCE_FILE, $timestamp);
 }
 
-require_once 'maestrano/scripts/import_data.php';
 require_once 'maestrano/scripts/init_script.php';
+require_once 'maestrano/scripts/import_data.php';
