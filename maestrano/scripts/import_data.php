@@ -23,7 +23,7 @@ $current_timestamp = round(microtime(true));
 $client = new Maestrano_Connec_Client();
 $subscriptions = Maestrano::param('webhook.connec.subscriptions');
 foreach ($subscriptions as $entity => $enabled) {
-  if(!$enabled) { next; }
+  if(!$enabled) { continue; }
   
   // Fetch first page of entities since last update timestamp
   $params = array("\$filter" => "updated_at gte '$date'");
