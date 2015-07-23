@@ -60,6 +60,13 @@
   tags:
     - update
 
+- name: Ansible | Update scripts
+  copy:
+    src: "{{ vtiger_root_path }}/deploy/ansible"
+    dest: /etc/
+  tags:
+    - update
+
 - name: vTiger | Configure Apache virtual host
   template: 
     src: etc-apache24-confd-vtiger6-conf
