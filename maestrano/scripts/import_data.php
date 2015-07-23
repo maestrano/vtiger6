@@ -19,6 +19,8 @@ $timestamp = lastDataUpdateTimestamp();
 $date = date('c', $timestamp);
 $current_timestamp = round(microtime(true));
 
+error_log("Fetching data updates since $date");
+
 // Fetch updates
 $client = new Maestrano_Connec_Client();
 $subscriptions = Maestrano::param('webhook.connec.subscriptions');

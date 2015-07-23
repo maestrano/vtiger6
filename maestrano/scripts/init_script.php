@@ -3,7 +3,6 @@
 // Run scripts located under maestrano/init/scripts
 // Scripts are run only once on application initialize
 
-
 // Run init scripts
 $init_script_file = 'maestrano/var/_init_scripts';
 $init_script_content = file_get_contents($init_script_file);

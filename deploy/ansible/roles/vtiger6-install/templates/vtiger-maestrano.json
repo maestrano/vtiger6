@@ -43,6 +43,7 @@
                 "payments": false,
                 "journals": false,
                 "projects": false,
+                "warehouses": false,
                 "work_locations": false,
                 "time_activities": false,
                 "time_sheets": false,
