@@ -1,0 +1,28 @@
+<?php
+
+require_once '../init.php';
+
+// Open or create a file and returns its content
+function openAndReadFile($file_path) {
+  if(!file_exists($file_path)) {
+    $fp = fopen($file_path, "w");
+    fwrite($fp,"");
+    fclose($fp);
+  }
+  return file_get_contents($file_path);
+}
+
+
+// Read the last update timestamp
+function lastDataUpdateTimestamp() {
+  $timestamp = openAndReadFile('maestrano/var/_data_sequence');
+  return empty($timestamp) ? 0 : $timestamp;
+}
+
+// Update the update timestamp
+function setLastDataUpdateTimestamp($timestamp) {
+  file_put_contents('maestrano/var/_data_sequence', $timestamp);
+}
+
+require_once 'maestrano/scripts/import_data.php';
+require_once 'maestrano/scripts/init_script.php';

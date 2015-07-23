@@ -146,11 +146,20 @@ abstract class BaseMapper {
   // Persist a list of Connec Resources as vTiger Models
   public function persistAll($resources_hash) {
     if(!is_null($resources_hash)) {
-      foreach($resources_hash as $resource_hash) {
+      // If this is an associative array, map its content
+      if(array_values($resources_hash) !== $resources_hash) {
         try {
-          $this->saveConnecResource($resource_hash);
+          $this->saveConnecResource($resources_hash);
         } catch (Exception $e) {
           error_log("Error when processing entity=".$this->connec_entity_name.", id=".$resource_hash['id'].", message=" . $e->getMessage());
+        }
+      } else {
+        foreach($resources_hash as $resource_hash) {
+          try {
+            $this->saveConnecResource($resource_hash);
+          } catch (Exception $e) {
+            error_log("Error when processing entity=".$this->connec_entity_name.", id=".$resource_hash['id'].", message=" . $e->getMessage());
+          }
         }
       }
     }
