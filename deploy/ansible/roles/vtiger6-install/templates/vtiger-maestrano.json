@@ -44,6 +44,7 @@
                 "journals": false,
                 "projects": false,
                 "warehouses": false,
+                "employees": false,
                 "work_locations": false,
                 "time_activities": false,
                 "time_sheets": false,
