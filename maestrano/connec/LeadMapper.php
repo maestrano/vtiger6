@@ -41,6 +41,8 @@ class LeadMapper extends BaseMapper {
     if($this->is_set($lead_hash['first_name'])) { $lead->column_fields['firstname'] = $lead_hash['first_name']; }
     if($this->is_set($lead_hash['last_name'])) { $lead->column_fields['lastname'] = $lead_hash['last_name']; }
     if($this->is_set($lead_hash['description'])) { $lead->column_fields['description'] = $lead_hash['description']; }
+    if($this->is_set($lead_hash['lead_status'])) { $lead->column_fields['leadstatus'] = $lead_hash['lead_status']; }
+    if($this->is_set($lead_hash['lead_source'])) { $lead->column_fields['leadsource'] = $lead_hash['lead_source']; }
 
     if($this->is_set($lead_hash['address_work']) && $this->is_set($lead_hash['address_work']['shipping'])) {
       $shipping_address = $lead_hash['address_work']['shipping'];
@@ -79,7 +81,7 @@ class LeadMapper extends BaseMapper {
   protected function mapModelToConnecResource($lead) {
     $lead_hash = array();
 
-    // Save as Customer
+    // Save as Lead
     $lead_hash['is_lead'] = true;
 
     // Unset Customer flag when creating a new Lead
@@ -91,6 +93,8 @@ class LeadMapper extends BaseMapper {
     $lead_hash['first_name'] = $lead->column_fields['firstname'];
     $lead_hash['last_name'] = $lead->column_fields['lastname'];
     $lead_hash['description'] = $lead->column_fields['description'];
+    $lead_hash['lead_status'] = $lead->column_fields['leadstatus'];
+    $lead_hash['lead_source'] = $lead->column_fields['leadsource'];
     
     $address = array();
     $shipping_address = array();

@@ -37,14 +37,14 @@
 
 - name: vTiger | Download application from Github
   sudo: false
-  git: >
-    repo=https://github.com/maestrano/vtiger6.git
-    dest={{ vtiger_root_path }}
-    version={{ application_version }}
-    accept_hostkey=yes
-    ssh_opts="-o StrictHostKeyChecking=no"
-    update=yes
-    force=yes
+  git:
+    repo: "https://github.com/{{ application_repository }}/vtiger6.git"
+    dest: "{{ vtiger_root_path }}"
+    version: "{{ application_version }}"
+    accept_hostkey: yes
+    ssh_opts: "-o StrictHostKeyChecking=no"
+    update: yes
+    force: yes
   tags:
     - update
 
@@ -57,6 +57,13 @@
 
 - name: Git | Ignore files permissions changes
   command: "git config core.filemode false chdir={{ vtiger_root_path }}"
+  tags:
+    - update
+
+- name: Ansible | Update scripts
+  copy:
+    src: "{{ vtiger_root_path }}/deploy/ansible"
+    dest: /etc/
   tags:
     - update
 
@@ -144,7 +151,7 @@
 - name: vTiger | Import Connec! data
   shell: "(nohup php initialize.php 1>/var/log/apache2/vtigercrm_initialize.log 2>&1) &"
   args:
-    chdir: "{{ vtiger_root_path }}/maestrano/data"
+    chdir: "{{ vtiger_root_path }}/maestrano/scripts"
   sudo_user: www-data
   tags:
     - configuration

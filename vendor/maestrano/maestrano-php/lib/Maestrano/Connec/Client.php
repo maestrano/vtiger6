@@ -119,12 +119,19 @@ class Maestrano_Connec_Client
 
 
   /**
+   * Scope the relative path to the Connec base URL
+   * If the path is preserved if an absolute URL is send.
+   *
    * @param $api the API to use (eg. v2 or reports)
-   * @param $relativePath the API resource path. E.g. '/organizations'
+   * @param $path the API resource path. E.g. '/organizations'
    * @return string the absolute url to the resource
    */
-  private function scopedUrl($api, $relativePath) {
-    return $this->base_url . $api . $this->scopedPath($relativePath);
+  private function scopedUrl($api, $path) {
+    if (preg_match("/https?\:\/\/.*/i", $path)) {
+      return $path;
+    } else {
+      return $this->base_url . $api . $this->scopedPath($path);
+    }
   }
 
   /**
@@ -198,7 +205,7 @@ class Maestrano_Connec_Client
     $opts[CURLOPT_URL] = $absUrl;
     $opts[CURLOPT_RETURNTRANSFER] = true;
     $opts[CURLOPT_CONNECTTIMEOUT] = 30;
-    $opts[CURLOPT_TIMEOUT] = 80;
+    $opts[CURLOPT_TIMEOUT] = Maestrano::param('connec.timeout');
     $opts[CURLOPT_HTTPHEADER] = $headers;
     if (!Maestrano::param('verify_ssl_certs'))
       $opts[CURLOPT_SSL_VERIFYPEER] = false;
@@ -235,10 +242,5 @@ class Maestrano_Connec_Client
     curl_close($curl);
     
     return array( 'body' => $rbody, 'code' => $rcode);
-  }
-
-  private function handleCurlError($errno, $message)
-  {
-    throw new Maestrano_Api_Error("curl_errno: $errno, message: $message");
   }
 }

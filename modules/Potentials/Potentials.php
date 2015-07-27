@@ -778,5 +778,18 @@ class Potentials extends CRMEntity {
 		}
 	}
 
+	// Hook Maestrano
+	function save($module_name, $fileid='', $pushToConnec=true) {
+		$result = parent::save($module_name, $fileid);
+
+		$mapper = 'OpportunityMapper';
+		if(class_exists($mapper)) {
+			$oppMapper = new $mapper();
+			$oppMapper->processLocalUpdate($this, $pushToConnec, false);
+		}
+
+		return $result;
+	}
+
 }
 ?>

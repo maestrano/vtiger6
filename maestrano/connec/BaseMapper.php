@@ -45,6 +45,13 @@ abstract class BaseMapper {
     return $date->format('c');
   }
 
+  protected function format_string_to_decimal($string) {
+    $decimal_str = str_replace(',', '', $string);
+    return floatval($decimal_str);
+  }
+
+  
+
   // Overwrite me!
   // Return the Model local id
   abstract protected function getId($model);
@@ -127,7 +134,7 @@ abstract class BaseMapper {
     $code = $msg['code'];
 
     if($code != 200) {
-      error_log("cannot fetch Connec! entity code=$code, entity_name=$this->connec_entity_name, entity_id=$entity_id");
+      error_log("cannot fetch Connec! entity code=$code, entity_name=$this->connec_entity_name, entity_id=$entity_id, connec_endpoint=$this->connec_resource_endpoint");
     } else {
       $result = json_decode($msg['body'], true);
       error_log("processing entity_name=$this->connec_entity_name entity=". json_encode($result));
@@ -139,11 +146,20 @@ abstract class BaseMapper {
   // Persist a list of Connec Resources as vTiger Models
   public function persistAll($resources_hash) {
     if(!is_null($resources_hash)) {
-      foreach($resources_hash as $resource_hash) {
+      // If this is an associative array, map its content
+      if(array_values($resources_hash) !== $resources_hash) {
         try {
-          $this->saveConnecResource($resource_hash);
+          $this->saveConnecResource($resources_hash);
         } catch (Exception $e) {
           error_log("Error when processing entity=".$this->connec_entity_name.", id=".$resource_hash['id'].", message=" . $e->getMessage());
+        }
+      } else {
+        foreach($resources_hash as $resource_hash) {
+          try {
+            $this->saveConnecResource($resource_hash);
+          } catch (Exception $e) {
+            error_log("Error when processing entity=".$this->connec_entity_name.", id=".$resource_hash['id'].", message=" . $e->getMessage());
+          }
         }
       }
     }
