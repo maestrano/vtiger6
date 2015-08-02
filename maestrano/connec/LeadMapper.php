@@ -75,6 +75,21 @@ class LeadMapper extends BaseMapper {
         $lead->column_fields['company'] = $account->column_fields['accountname'];
       }
     }
+
+    if($this->is_set($lead_hash['assignee_id']) && $this->is_set($lead_hash['assignee_type'])) {
+      if ($lead_hash['assignee_type'] == "Entity::AppUser") {
+        $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['assignee_id'], 'AppUser');
+        if ($mno_id_map) {
+          $lead->column_fields['assigned_user_id'] = $mno_id_map['app_entity_id'];
+        }
+      }
+      else if ($lead_hash['assignee_type'] == "Entity::Team") {
+        $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['assignee_id'], 'Team');
+        if ($mno_id_map) {
+          $lead->column_fields['assigned_user_id'] = $mno_id_map['app_entity_id'];
+        }
+      }
+    }
   }
 
   // Map the vTiger Person to a Connec resource hash
@@ -126,6 +141,22 @@ class LeadMapper extends BaseMapper {
         if($mno_id_map) { $lead_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
       }
     }
+
+    // Map Assigned User / team
+    if($this->is_set($lead->column_fields['assigned_user_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($lead->column_fields['assigned_user_id'], 'USERS');
+      if($mno_id_map) {
+        $lead_hash['assignee_id'] = $mno_id_map['mno_entity_guid'];
+        $lead_hash['assignee_type'] = "Entity::AppUser";
+      }
+      else {
+        $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($lead->column_fields['assigned_user_id'], 'Groups');
+        if($mno_id_map) {
+          $lead_hash['assignee_id'] = $mno_id_map['mno_entity_guid'];
+          $lead_hash['assignee_type'] = "Entity::Team";
+        }
+      }
+    }    
 
     return $lead_hash;
   }
