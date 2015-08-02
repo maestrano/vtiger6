@@ -1144,6 +1144,13 @@ class Users extends CRMEntity {
         //Save entity being called with the modulename as parameter
         $this->saveentity($module_name);
 
+        // Mno Hook
+        $mapper = 'UserMapper';
+        if(class_exists($mapper)) {
+            $userMapper = new $mapper();
+            $userMapper->processLocalUpdate($this, true, false);
+        }
+
         // Added for Reminder Popup support
         $query_prev_interval = $adb->pquery("SELECT reminder_interval from vtiger_users where id=?",
                 array($this->id));
