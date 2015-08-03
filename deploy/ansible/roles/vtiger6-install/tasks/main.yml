@@ -73,9 +73,13 @@
     dest: /etc/apache2/sites-available/vtigercrm.conf
     owner: root
     mode: 755
+  tags:
+    - configuration
 
 - name: vTiger | Enable Apache virtual host 
   file: src=/etc/apache2/sites-available/vtigercrm.conf dest=/etc/apache2/sites-enabled/vtigercrm.conf state=link
+  tags:
+    - configuration
 
 - name: Apache | Restart the Apache service
   service: 
@@ -153,5 +157,14 @@
   args:
     chdir: "{{ vtiger_root_path }}/maestrano/scripts"
   sudo_user: www-data
+  tags:
+    - configuration
+
+- name: vTiger | Cron job
+  cron:
+    name: vTiger job to run every minute
+    minute: "*/15"
+    hour: "*"
+    job: "sh {{ vtiger_root_path }}/cron/vtigercron.sh"
   tags:
     - configuration
