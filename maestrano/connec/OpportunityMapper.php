@@ -56,20 +56,14 @@ class OpportunityMapper extends BaseMapper {
       }
     }
 
-    if($this->is_set($opportunity_hash['assignee_id']) && $this->is_set($opportunity_hash['assignee_type'])) {
-      if ($opportunity_hash['assignee_type'] == "Entity::AppUser") {
-        $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($opportunity_hash['assignee_id'], 'AppUser');
-        if ($mno_id_map) {
-          $potential->column_fields['assigned_user_id'] = $mno_id_map['app_entity_id'];
-        }
-      }
-      else if ($opportunity_hash['assignee_type'] == "Entity::Team") {
-        $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($opportunity_hash['assignee_id'], 'Team');
-        if ($mno_id_map) {
-          $potential->column_fields['assigned_user_id'] = $mno_id_map['app_entity_id'];
-        }
-      }
+    $mno_id_map = false;
+    if ($opportunity_hash['assignee_type'] == "Entity::AppUser") {
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($opportunity_hash['assignee_id'], 'AppUser');
+    } else if ($opportunity_hash['assignee_type'] == "Entity::Team") {
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($opportunity_hash['assignee_id'], 'Team');
     }
+    if ($mno_id_map) { $potential->column_fields['assigned_user_id'] = $mno_id_map['app_entity_id']; }
+
   }
 
   // Map the vTiger Potential to a Connec Opportunity hash

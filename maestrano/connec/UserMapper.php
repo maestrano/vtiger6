@@ -30,22 +30,17 @@ class UserMapper extends BaseMapper {
 
   // Map the Connec resource attributes onto the vTiger User
   protected function mapConnecResourceToModel($user_hash, $user) {
-    if($this->is_set($user_hash['first_name'])) {
-      $user->column_fields['first_name'] = $user_hash['first_name'];
-      $user->column_fields['user_name'] = $user_hash['first_name'];
-    }
-    if($this->is_set($user_hash['last_name'])) {
-      $user->column_fields['last_name'] = $user_hash['last_name'];
-      if($this->is_set($user_hash['first_name'])) {
-        $user->column_fields['user_name'] = $user_hash['first_name'] . ' ' . $user_hash['last_name'];
-      }
-      else {
-        $user->column_fields['user_name'] = $user_hash['last_name'];
-      }
-    }
+    if($this->is_set($user_hash['first_name'])) { $user->column_fields['first_name'] = $user_hash['first_name']; }
+    if($this->is_set($user_hash['last_name'])) { $user->column_fields['last_name'] = $user_hash['last_name']; }
 
-    if($this->is_set($user_hash['email']['address'])) { $user->column_fields['email1'] = $user_hash['email']['address']; }
-    if($this->is_set($user_hash['email']['address2'])) { $user->column_fields['email2'] = $user_hash['email']['address2']; }
+    if($this->is_set($user_hash['email']['address'])) {
+      $user->column_fields['email1'] = $user_hash['email']['address'];
+      $user->column_fields['user_name'] = $user_hash['email']['address'];
+    }
+    if($this->is_set($user_hash['email']['address2'])) {
+      $user->column_fields['email2'] = $user_hash['email']['address2'];
+      $user->column_fields['user_name'] = $user_hash['email']['address'];
+    }
 
     if($this->is_set($user_hash['address_work'])) {
       if($this->is_set($user_hash['address_work']['billing'])) {
