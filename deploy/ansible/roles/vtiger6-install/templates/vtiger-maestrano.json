@@ -55,7 +55,7 @@
                 "venues": false,
                 "events": true,
                 "event_orders": true,
-                "users": true,
+                "app_users": true,
                 "teams": true
             }
         }
