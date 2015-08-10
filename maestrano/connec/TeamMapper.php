@@ -22,6 +22,9 @@ class TeamMapper extends BaseMapper {
   // TODO: TO BE TESTED
   protected function loadModelById($local_id) {
     $group = CRMEntity::getInstance("Groups");
+    error_log('---------------');
+    error_log(json_encode($group));
+    error_log('---------------');
     $group->retrieve_entity_info($local_id, "Groups");
     vtlib_setup_modulevars("Groups", $group);
     $group->id = $local_id;
