@@ -34,22 +34,17 @@ class TeamMapper extends BaseMapper {
     $group->column_fields['name'] = $team_hash['name'];
     $group->column_fields['description'] = $team_hash['description'];
 
-    // Map members
-    // Retrieve the list of users in vTiger team
-    $users_from_connec = $team_hash['members'];
+    $mno_users = $team_hash['members'];
+    $local_users = array();
+    for($j=0;$j<count($mno_users);$j++) {
+      $user_id = $mno_users[$j];
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($user_id, 'USERS');
 
-    error_log("----------------");
-    error_log(json_encode($team_hash));
-    error_log("----------------");
-
-    $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($team_hash['id'], 'Groups');
-    if($mno_id_map) {
-      error_log("----------------");
-      error_log(json_encode($mno_id_map));
-      error_log("----------------");
-      $local_group = $this->loadModelById($mno_id_map['local_id']);
+      if($mno_id_map) {
+        array_push($local_users, $mno_id_map['app_entity_id']);
+      }
     }
-
+    $group->column_fields['member_users_ids'] = $local_users;
   }
 
   // Map the vTiger User to a Connec User hash
