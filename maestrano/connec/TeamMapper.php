@@ -38,6 +38,10 @@ class TeamMapper extends BaseMapper {
     // Retrieve the list of users in vTiger team
     $users_from_connec = $team_hash['members'];
 
+    error_log("----------------");
+    error_log(json_encode($team_hash));
+    error_log("----------------");
+
     $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($team_hash['id'], 'Groups');
     if($mno_id_map) {
       error_log("----------------");
