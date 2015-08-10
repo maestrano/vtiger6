@@ -141,6 +141,6 @@ class UserMapper extends BaseMapper {
 
   // Persist the vTiger User
   protected function persistLocalModel($user, $resource_hash) {
-    $user->save("Users", $user->id, false);
+    $user->save("Users", false);
   }
 }

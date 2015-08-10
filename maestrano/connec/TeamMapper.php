@@ -8,7 +8,7 @@ class TeamMapper extends BaseMapper {
     parent::__construct();
 
     $this->connec_entity_name = 'Team';
-    $this->local_entity_name = 'Groups';
+    $this->local_entity_name = 'Settings_Groups_Record_Model';
     $this->connec_resource_name = 'teams';
     $this->connec_resource_endpoint = 'teams';
   }
@@ -21,33 +21,39 @@ class TeamMapper extends BaseMapper {
   // Return a local Group by id
   // TODO: TO BE TESTED
   protected function loadModelById($local_id) {
-    $group = CRMEntity::getInstance("Groups");
-    error_log('---------------');
-    error_log(json_encode($group));
-    error_log('---------------');
-    $group->retrieve_entity_info($local_id, "Groups");
-    vtlib_setup_modulevars("Groups", $group);
-    $group->id = $local_id;
-    $group->mode = 'edit';
+    $group = Settings_Groups_Record_Model::getInstanceMnoHook($local_id);
     return $group;
   }
 
   // Map the Connec resource attributes onto the vTiger Group
   protected function mapConnecResourceToModel($team_hash, $group) {
-    $group->column_fields['name'] = $team_hash['name'];
-    $group->column_fields['description'] = $team_hash['description'];
+    // These fields are always updated
+    $group->set('groupname', $team_hash['name']);
+    $group->set('description', $team_hash['description']);
 
-    $mno_users = $team_hash['members'];
-    $local_users = array();
-    for($j=0;$j<count($mno_users);$j++) {
-      $user_id = $mno_users[$j];
-      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($user_id, 'USERS');
-
-      if($mno_id_map) {
-        array_push($local_users, $mno_id_map['app_entity_id']);
+    if(json_encode($group)=="{}") {
+      // team does not exist locally : we update the users list
+      $mno_members_ids = $team_hash['members'];
+      $local_members_ids = array();
+      for($j=0;$j<count($mno_members_ids);$j++) {
+        $user_hash = $mno_members_ids[$j];
+        $user_mapper = new UserMapper();
+        $user_model = $user_mapper->findOrInitializeModel($user_hash);
+        $user_mapper->persistLocalModel($user_model, $user_hash);
+      error_log('-------------');
+        $mno_id_map = $user_mapper->findOrCreateIdMap($user_hash, $user_model);
+        $member = "Users:" . $mno_id_map['app_entity_id'];
+        array_push($local_members_ids, $member);
       }
+      $group->set('group_members', $local_members_ids);
+      error_log('-------------');
+      error_log($local_members_ids);
+      error_log('-------------');
     }
-    $group->column_fields['member_users_ids'] = $local_users;
+    else {
+      // team exists locally : the users list is not changed
+      $group->set('groupid', $group->data['groupid']);
+    }
   }
 
   // Map the vTiger User to a Connec User hash
@@ -59,7 +65,7 @@ class TeamMapper extends BaseMapper {
     $team_hash['description'] = $group->column_fields['description'];
 
     // Find mno id if team already exists in vTiger
-    $team_mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($this->getId($group), 'Groups');
+    $team_mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($this->getId($group), $this->local_entity_name);
     if($team_mno_id_map) {
       $mno_team_id =  $team_mno_id_map['mno_entity_guid'];
       $team_hash['id'] = $mno_team_id;
@@ -88,8 +94,7 @@ class TeamMapper extends BaseMapper {
   }
 
   // Persist the vTiger User
-  // TODO TO BE TESTED
   protected function persistLocalModel($group, $resource_hash) {
-    $group->save("Groups", $group->id, false);
+    $group->save(false);
   }
 }

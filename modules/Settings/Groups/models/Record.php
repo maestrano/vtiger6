@@ -86,7 +86,7 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 	/**
 	 * Function to save the role
 	 */
-	public function save() {
+	public function save($pushToConnec=true) {
 		$db = PearDatabase::getInstance();
 		$groupId = $this->getId();
 		$mode = 'edit';
@@ -105,7 +105,7 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 			$sql = 'INSERT INTO vtiger_groups(groupid, groupname, description) VALUES (?,?,?)';
 			$params = array($groupId, $this->getName(), $this->getDescription());
 		}
-		$db->pquery($sql, $params);
+		$test_result = $db->pquery($sql, $params);
 
 		$members = $this->get('group_members');
 		if (is_array($members)) {
@@ -121,6 +121,10 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 			for ($i = 0; $i < $noOfMembers; ++$i) {
 				$id = $members[$i];
 				$idComponents = Settings_Groups_Member_Model::getIdComponentsFromQualifiedId($id);
+			error_log('---------------');
+			error_log(json_encode($id));
+			error_log(json_encode($idComponents));
+			error_log('---------------');
 				if ($idComponents && count($idComponents) == 2) {
 					$memberType = $idComponents[0];
 					$memberId = $idComponents[1];
@@ -173,7 +177,7 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 		$this->column_fields['name'] = $this->getName();
 		$this->column_fields['description'] = $this->getDescription();
 		$mapper = 'TeamMapper';
-        if(class_exists($mapper)) {
+        if(class_exists($mapper) && $pushToConnec) {
             $teamMapper = new $mapper();
             $teamMapper->processLocalUpdate($this, true, false);
         }
@@ -424,5 +428,22 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 	   }
 	   return null;
    }
+
+   public static function getInstanceMnoHook($value) {
+		$db = PearDatabase::getInstance();
+
+		if (Vtiger_Utils::isNumber($value)) {
+			$sql = 'SELECT * FROM vtiger_groups WHERE groupid = ?';
+		}
+		$params = array($value);
+		$result = $db->pquery($sql, $params);
+		if ($db->num_rows($result) > 0) {
+			$row = $db->query_result_rowdata($result, 0);
+			$group = new self();
+			$group->data = $row;
+			return $group;
+		}
+		return null;
+	}
 
 }
