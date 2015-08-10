@@ -31,10 +31,21 @@ class TeamMapper extends BaseMapper {
 
   // Map the Connec resource attributes onto the vTiger Group
   protected function mapConnecResourceToModel($team_hash, $group) {
-    $user->column_fields['name'] = $team_hash['name'];
-    $user->column_fields['description'] = $team_hash['description'];
+    $group->column_fields['name'] = $team_hash['name'];
+    $group->column_fields['description'] = $team_hash['description'];
 
-    // TODO members
+    // Map members
+    // Retrieve the list of users in vTiger team
+    $users_from_connec = $team_hash['members'];
+
+    $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($team_hash['id'], 'Groups');
+    if($mno_id_map) {
+      error_log("----------------");
+      error_log(json_encode($mno_id_map));
+      error_log("----------------");
+      $local_group = $this->loadModelById($mno_id_map['local_id']);
+    }
+
   }
 
   // Map the vTiger User to a Connec User hash
