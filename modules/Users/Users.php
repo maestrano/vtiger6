@@ -1144,7 +1144,6 @@ class Users extends CRMEntity {
         //Save entity being called with the modulename as parameter
         $this->saveentity($module_name);
 
-error_log(json_encode($pushToConnec));
         // Mno Hook
         $mapper = 'UserMapper';
         if(class_exists($mapper)) {

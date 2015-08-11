@@ -38,17 +38,12 @@ class TeamMapper extends BaseMapper {
       for($j=0;$j<count($mno_members_ids);$j++) {
         $user_hash = $mno_members_ids[$j];
         $user_mapper = new UserMapper();
-        $user_model = $user_mapper->findOrInitializeModel($user_hash);
-        $user_mapper->persistLocalModel($user_model, $user_hash);
-      error_log('-------------');
-        $mno_id_map = $user_mapper->findOrCreateIdMap($user_hash, $user_model);
+        $user_model = $user_mapper->fetchConnecResource($user_hash['id']);
+        $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($user_hash['id'], 'APPUSER', 'USERS');
         $member = "Users:" . $mno_id_map['app_entity_id'];
         array_push($local_members_ids, $member);
       }
       $group->set('group_members', $local_members_ids);
-      error_log('-------------');
-      error_log($local_members_ids);
-      error_log('-------------');
     }
     else {
       // team exists locally : the users list is not changed

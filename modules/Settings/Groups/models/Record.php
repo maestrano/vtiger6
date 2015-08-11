@@ -121,10 +121,6 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 			for ($i = 0; $i < $noOfMembers; ++$i) {
 				$id = $members[$i];
 				$idComponents = Settings_Groups_Member_Model::getIdComponentsFromQualifiedId($id);
-			error_log('---------------');
-			error_log(json_encode($id));
-			error_log(json_encode($idComponents));
-			error_log('---------------');
 				if ($idComponents && count($idComponents) == 2) {
 					$memberType = $idComponents[0];
 					$memberId = $idComponents[1];
