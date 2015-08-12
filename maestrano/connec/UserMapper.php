@@ -81,8 +81,6 @@ class UserMapper extends BaseMapper {
       }
     }
 
-    // TODO role
-    // TODO teams
   }
 
   // Map the vTiger User to a Connec User hash
@@ -119,28 +117,52 @@ class UserMapper extends BaseMapper {
     $email_hash['address2'] = $user->column_fields['email2'];
     if(!empty($email_hash)) { $user_hash['email'] = $email_hash; }
 
-    // Find the teams (Groups) corresponding to the provided role
-    if($this->is_set($user->column_fields['roleid'])) {
-      $db = PearDatabase::getInstance();
-      $groupIdsContainingThisRole = array();
-      $roleId = $user->column_fields['roleid'];
+    // Not sure below is relevant
+    // // Find the teams (Groups) corresponding to the provided role
+    // if($this->is_set($user->column_fields['roleid'])) {
+    //   $db = PearDatabase::getInstance();
+    //   $groupIdsContainingThisRole = array();
+    //   $roleId = $user->column_fields['roleid'];
       
-      $resultGroupIds = $db->pquery('SELECT vtiger_group2role.groupid FROM vtiger_group2role WHERE vtiger_group2role.roleid=?',array($roleId));
-      for($j=0;$j<$db->num_rows($resultGroupIds);$j++) {
-        $groupId = $db->query_result($resultGroupIds,$j,'groupid');
-        if(!in_array($groupId, $groupIdsContainingThisRole)) {
-          array_push($groupIdsContainingThisRole, $groupId);
-        }
-      }
+    //   $resultGroupIds = $db->pquery('SELECT vtiger_group2role.groupid FROM vtiger_group2role WHERE vtiger_group2role.roleid=?',array($roleId));
+    //   for($j=0;$j<$db->num_rows($resultGroupIds);$j++) {
+    //     $groupId = $db->query_result($resultGroupIds,$j,'groupid');
+    //     if(!in_array($groupId, $groupIdsContainingThisRole)) {
+    //       array_push($groupIdsContainingThisRole, $groupId);
+    //     }
+    //   }
       
-      // TODO map corresponding team and add them to the Connec! push
-    }
+    //   // TODO map corresponding team and add them to the Connec! push
+    // }
 
     return $user_hash;
   }
 
   // Persist the vTiger User
   protected function persistLocalModel($user, $resource_hash) {
+    // Will be used to check if the user already exist locally
+    $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($resource_hash['id'], 'APPUSER', 'USERS');
+
     $user->save("Users", false);
+    // We make sure that the mnoIdMap is created before we start to parse the user's teams to bloc kany eventual recursive loop
+    $this->findOrCreateIdMap($resource_hash, $user);
+
+    // Add user to corresponding teams
+    if (!$mno_id_map) {
+      // User does not exist locally => we add him to its teams
+      $mno_teams = $resource_hash['teams'];
+      $team_mapper = new TeamMapper();
+      for($j=0;$j<count($mno_teams);$j++) {
+        $team_hash = $mno_teams[$j];
+        // Retrieve the local group if exists or create it based on data from Connec! Entity::Team otherwise
+        $group_model = $team_mapper->fetchConnecResource($team_hash['id']);
+        $group_members = array_keys($group_model->getMembers()["Users"]);
+        // At this stage, the user should exist (has been saved before), and have an id defined
+        array_push($group_members, "Users:" . json_encode($user->id));
+        $group_model->set('group_members', $group_members);
+        // Will save the new users list for the team
+        $team_mapper->persistLocalModel($group_model,null);
+      }
+    }
   }
 }

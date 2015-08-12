@@ -19,7 +19,6 @@ class TeamMapper extends BaseMapper {
   }
 
   // Return a local Group by id
-  // TODO: TO BE TESTED
   protected function loadModelById($local_id) {
     $group = Settings_Groups_Record_Model::getInstanceMnoHook($local_id);
     return $group;
