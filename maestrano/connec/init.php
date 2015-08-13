@@ -20,3 +20,5 @@ require_once 'maestrano/connec/EventMapper.php';
 require_once 'maestrano/connec/TicketMapper.php';
 require_once 'maestrano/connec/EventOrderMapper.php';
 require_once 'maestrano/connec/OpportunityMapper.php';
+require_once 'maestrano/connec/UserMapper.php';
+require_once 'maestrano/connec/TeamMapper.php';

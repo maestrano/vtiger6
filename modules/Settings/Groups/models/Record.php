@@ -86,7 +86,7 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 	/**
 	 * Function to save the role
 	 */
-	public function save() {
+	public function save($pushToConnec=true) {
 		$db = PearDatabase::getInstance();
 		$groupId = $this->getId();
 		$mode = 'edit';
@@ -105,7 +105,7 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 			$sql = 'INSERT INTO vtiger_groups(groupid, groupname, description) VALUES (?,?,?)';
 			$params = array($groupId, $this->getName(), $this->getDescription());
 		}
-		$db->pquery($sql, $params);
+		$test_result = $db->pquery($sql, $params);
 
 		$members = $this->get('group_members');
 		if (is_array($members)) {
@@ -115,6 +115,9 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 			$db->pquery('DELETE FROM vtiger_group2rs WHERE groupid=?', array($groupId));
 
 			$noOfMembers = count($members);
+			// Mno Hook
+			$usersInTeam = array();
+			// ---
 			for ($i = 0; $i < $noOfMembers; ++$i) {
 				$id = $members[$i];
 				$idComponents = Settings_Groups_Member_Model::getIdComponentsFromQualifiedId($id);
@@ -124,12 +127,38 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 
 					if ($memberType == Settings_Groups_Member_Model::MEMBER_TYPE_USERS) {
 						$db->pquery('INSERT INTO vtiger_users2group(userid, groupid) VALUES (?,?)', array($memberId, $groupId));
+					
+						// Mno Hook
+						if(!in_array($memberId, $usersInTeam)) {
+							array_push($usersInTeam, $memberId);
+						}
+						// ---
 					}
 					if ($memberType == Settings_Groups_Member_Model::MEMBER_TYPE_GROUPS) {
 						$db->pquery('INSERT INTO vtiger_group2grouprel(containsgroupid, groupid) VALUES (?,?)', array($memberId, $groupId));
+
+						// Mno Hook
+				        $resultUserIds = $db->pquery('SELECT vtiger_users2group.userid FROM vtiger_users2group WHERE vtiger_users2group.groupid=?',array($memberId));
+				        for($j=0;$j<$db->num_rows($resultUserIds);$j++) {
+				        	$userId = $db->query_result($resultUserIds,$j,'userid');
+							if(!in_array($userId, $usersInTeam)) {
+								array_push($usersInTeam, $userId);
+							}
+						}
+						// ---
 					}
 					if ($memberType == Settings_Groups_Member_Model::MEMBER_TYPE_ROLES) {
 						$db->pquery('INSERT INTO vtiger_group2role(roleid, groupid) VALUES (?,?)', array($memberId, $groupId));
+
+						// Mno Hook
+				        $resultUserIds = $db->pquery('SELECT vtiger_user2role.userid FROM vtiger_user2role WHERE vtiger_user2role.roleid=?',array($memberId));
+				        for($j=0;$j<$db->num_rows($resultUserIds);$j++) {
+				        	$userId = $db->query_result($resultUserIds,$j,'userid');
+							if(!in_array($userId, $usersInTeam)) {
+								array_push($usersInTeam, $userId);
+							}
+						}
+						// ---
 					}
 					if ($memberType == Settings_Groups_Member_Model::MEMBER_TYPE_ROLE_AND_SUBORDINATES) {
 						$db->pquery('INSERT INTO vtiger_group2rs(roleandsubid, groupid) VALUES (?,?)', array($memberId, $groupId));
@@ -137,6 +166,19 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 				}
 			}
 		}
+
+		// Mno Hook
+		$this->column_fields = array();
+		$this->column_fields['member_users_ids'] = $usersInTeam;
+		$this->column_fields['name'] = $this->getName();
+		$this->column_fields['description'] = $this->getDescription();
+		$mapper = 'TeamMapper';
+        if(class_exists($mapper) && $pushToConnec) {
+            $teamMapper = new $mapper();
+            $teamMapper->processLocalUpdate($this, true, false);
+        }
+		// ---
+
 		$this->recalculate($oldUsersList);
 	}
 
@@ -382,5 +424,22 @@ class Settings_Groups_Record_Model extends Settings_Vtiger_Record_Model {
 	   }
 	   return null;
    }
+
+   public static function getInstanceMnoHook($value) {
+		$db = PearDatabase::getInstance();
+
+		if (Vtiger_Utils::isNumber($value)) {
+			$sql = 'SELECT * FROM vtiger_groups WHERE groupid = ?';
+		}
+		$params = array($value);
+		$result = $db->pquery($sql, $params);
+		if ($db->num_rows($result) > 0) {
+			$row = $db->query_result_rowdata($result, 0);
+			$group = new self();
+			$group->data = $row;
+			return $group;
+		}
+		return null;
+	}
 
 }

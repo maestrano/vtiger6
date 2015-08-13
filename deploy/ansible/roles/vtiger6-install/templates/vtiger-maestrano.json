@@ -54,7 +54,9 @@
                 "pay_runs": false,
                 "venues": false,
                 "events": true,
-                "event_orders": true
+                "event_orders": true,
+                "app_users": true,
+                "teams": true
             }
         }
     }

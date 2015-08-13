@@ -1139,10 +1139,17 @@ class Users extends CRMEntity {
      * @param $module -- module name:: Type varchar
      *
      */
-    function save($module_name) {
+    function save($module_name, $pushToConnec=true) {
         global $log, $adb;
         //Save entity being called with the modulename as parameter
         $this->saveentity($module_name);
+
+        // Mno Hook
+        $mapper = 'UserMapper';
+        if(class_exists($mapper)) {
+            $userMapper = new $mapper();
+            $userMapper->processLocalUpdate($this, $pushToConnec, false);
+        }
 
         // Added for Reminder Popup support
         $query_prev_interval = $adb->pquery("SELECT reminder_interval from vtiger_users where id=?",
@@ -1160,13 +1167,12 @@ class Users extends CRMEntity {
             updateUser2RoleMapping($this->column_fields['roleid'],$this->id);
         }
 
-		//After adding new user, set the default activity types for new user
-		Vtiger_Util_Helper::setCalendarDefaultActivityTypesForUser($this->id);
+        //After adding new user, set the default activity types for new user
+        Vtiger_Util_Helper::setCalendarDefaultActivityTypesForUser($this->id);
 
         require_once('modules/Users/CreateUserPrivilegeFile.php');
         createUserPrivilegesfile($this->id);
         createUserSharingPrivilegesfile($this->id);
-
     }
 
 
