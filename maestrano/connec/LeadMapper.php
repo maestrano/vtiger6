@@ -144,7 +144,7 @@ class LeadMapper extends BaseMapper {
         $lead_hash['assignee_type'] = "Entity::AppUser";
       }
       else {
-        $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($lead->column_fields['assigned_user_id'], 'Groups');
+        $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($lead->column_fields['assigned_user_id'], 'Settings_Groups_Record_Model');
         if($mno_id_map) {
           $lead_hash['assignee_id'] = $mno_id_map['mno_entity_guid'];
           $lead_hash['assignee_type'] = "Entity::Team";

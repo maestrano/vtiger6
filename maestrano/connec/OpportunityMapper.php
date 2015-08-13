@@ -101,7 +101,7 @@ class OpportunityMapper extends BaseMapper {
         $opportunity_hash['assignee_type'] = "Entity::AppUser";
       }
       else {
-        $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($potential->column_fields['assigned_user_id'], 'Groups');
+        $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($potential->column_fields['assigned_user_id'], 'Settings_Groups_Record_Model');
         if($mno_id_map) {
           $opportunity_hash['assignee_id'] = $mno_id_map['mno_entity_guid'];
           $opportunity_hash['assignee_type'] = "Entity::Team";
