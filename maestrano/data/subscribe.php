@@ -76,6 +76,14 @@ try {
       $opportunityMapper = new OpportunityMapper();
       $opportunityMapper->fetchConnecResource($entity_id);
       break;
+    case "APPUSERS":
+      $userMapper = new UserMapper();
+      $userMapper->fetchConnecResource($entity_id);
+      break;
+    case "TEAMS":
+      $teamMapper = new TeamMapper();
+      $teamMapper->fetchConnecResource($entity_id);
+      break;
   }
 } catch (Exception $e) {
   error_log("Caught exception in subscribe " . json_encode($e->getMessage()));
