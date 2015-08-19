@@ -34,14 +34,16 @@ class MnoSsoUser extends Maestrano_Sso_User {
   * Find or Create a user based on the SAML response parameter and Add the user to current session
   */
   public function findOrCreate() {
-    // Find user by uid or email
+    // Find user by uid. Is it exists, it has already signed in using SSO
     $local_id = $this->getLocalIdByUid();
+    $new_user = ($local_id == null);
+    // Find user by email
     if($local_id == null) { $local_id = $this->getLocalIdByEmail(); }
 
     if ($local_id) {
       // User found, load it
       $this->local_id = $local_id;
-      $this->syncLocalDetails();
+      $this->syncLocalDetails($new_user);
     } else {
       // New user, create it
       $this->local_id = $this->createLocalUser();
@@ -225,16 +227,26 @@ class MnoSsoUser extends Maestrano_Sso_User {
    *
    * @return boolean whether the user was synced or not
    */
-   protected function syncLocalDetails() {
-     if($this->local_id) {
-       // Update record
-       $query = "UPDATE vtiger_users SET email1=?, first_name=?, last_name=? where id=?";
-       $upd = $this->connection->pquery($query, array($this->getEmail(), $this->getFirstName(), $this->getLastName(), $this->local_id));
-       return $upd;
-     }
+  protected function syncLocalDetails($new_user=false) {
+    if($this->local_id) {
+      // Update record
+      $query = "UPDATE vtiger_users SET email1=?, first_name=?, last_name=? where id=?";
+      $upd = $this->connection->pquery($query, array($this->getEmail(), $this->getFirstName(), $this->getLastName(), $this->local_id));
+      
+      // If User signs in for the first time, set user account
+      if($new_user) {
+        $this->_user = CRMEntity::getInstance("Users");
+        $this->_user->retrieve_entity_info($local_id, "Users");
+        vtlib_setup_modulevars("Users", $this->_user);
+        $this->_user->id = $this->local_id;
+        $this->_user->mode = 'edit';
+        $this->buildLocalUser();
+        $this->_user->save('Users');
 
-     return false;
-   }
+        $this->setLocalUid();
+      }
+    }
+  }
   
   /**
    * Set the Maestrano UID on a local user via id lookup
