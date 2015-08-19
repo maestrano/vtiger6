@@ -28,6 +28,18 @@ class UserMapper extends BaseMapper {
     return $user;
   }
 
+  // Return any existing User with same email
+  public function matchLocalModel($user_hash) {
+    global $adb;
+
+    // Fetch record
+    $query = "SELECT id from vtiger_users where email1=?";
+    $result = $adb->pquery($query, array($this->email));
+    if($result) { return $this->loadModelById($result->fields['id']); }
+    
+    return null;
+  }
+
   // Map the Connec resource attributes onto the vTiger User
   protected function mapConnecResourceToModel($user_hash, $user) {
     if($this->is_set($user_hash['first_name'])) { $user->column_fields['first_name'] = $user_hash['first_name']; }
