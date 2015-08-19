@@ -10,7 +10,7 @@
         "group_id": "{{ server_hostname }}"
     },
     "sso": {
-        {% if hub_idp_url is defined %}"host": "{{ hub_idp_url }}",{% endif %}
+        {% if hub_idp_url is defined %}"idp": "{{ hub_idp_url }}",{% endif %}
         "enabled": {{ sso_enabled }},
         "slo_enabled": true,
         "init_path": "/maestrano/auth/saml/init.php",
