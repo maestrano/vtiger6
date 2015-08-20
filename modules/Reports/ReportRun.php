@@ -319,6 +319,7 @@ class ReportRun extends CRMEntity
 				//user has no access to this field, skip it.
 				continue;
 			}
+
 			$querycolumns = $this->getEscapedColumns($selectedfields);
 			if(isset($module) && $module!="") {
 				$mod_strings = return_module_language($current_language,$module);
@@ -359,7 +360,6 @@ class ReportRun extends CRMEntity
 				// To check if the field in the report is a custom field
 				// and if yes, get the label of this custom field freshly from the vtiger_field as it would have been changed.
 				// Asha - Reference ticket : #4906
-
 				if($querycolumns == "") {
 					$columnslist[$fieldcolname] =  $this->getColumnSQL($selectedfields);
 				} else {
@@ -597,7 +597,6 @@ class ReportRun extends CRMEntity
 	 *  returns the case query for the escaped columns
 	 */
 	function getEscapedColumns($selectedfields) {
-
 		$tableName = $selectedfields[0];
 		$columnName = $selectedfields[1];
 		$moduleFieldLabel = $selectedfields[2];
@@ -611,8 +610,7 @@ class ReportRun extends CRMEntity
 			$queryColumn = "trim(case when (vtiger_usersModComments.user_name not like '' and vtiger_crmentity.crmid!='') then $concatSql end) AS ModComments_Creator";
 			$this->queryPlanner->addTable('vtiger_usersModComments');
             $this->queryPlanner->addTable("vtiger_usersModComments");
-        } elseif(($fieldInfo['uitype'] == '10' || isReferenceUIType($fieldInfo['uitype']))
-				&& $fieldInfo['uitype'] != '52' && $fieldInfo['uitype'] != '53') {
+    } elseif(($fieldInfo['uitype'] == '10' || isReferenceUIType($fieldInfo['uitype'])) && $fieldInfo['uitype'] != '52' && $fieldInfo['uitype'] != '53') {
 			$fieldSqlColumns = $this->getReferenceFieldColumnList($moduleName, $fieldInfo);
 			if(count($fieldSqlColumns) > 0) {
 				$queryColumn = "(CASE WHEN $tableName.$columnName NOT LIKE '' THEN (CASE";
@@ -4396,7 +4394,7 @@ class ReportRun extends CRMEntity
 				$entityTableName = $entityTableFieldNames['tablename'];
 				$entityFieldNames = $entityTableFieldNames['fieldname'];
 
-				$referenceTableName = '';
+				$referenceTableName = $entityTableName;
 				$dependentTableName = '';
 
 				if($moduleName == 'HelpDesk' && $referenceModule == 'Accounts') {
@@ -4469,16 +4467,23 @@ class ReportRun extends CRMEntity
 					$referenceTableName = 'vtiger_accountPotentials';
 				} elseif ($moduleName == 'ModComments' && $referenceModule == 'Users') {
 					$referenceTableName = 'vtiger_usersModComments';
-				} elseif (in_array($referenceModule, $reportSecondaryModules)) {
-					$referenceTableName = "{$entityTableName}Rel$referenceModule";
-					$dependentTableName = "vtiger_crmentityRel{$referenceModule}{$fieldInstance->getFieldId()}";
-				} elseif (in_array($moduleName, $reportSecondaryModules)) {
-					$referenceTableName = "{$entityTableName}Rel$moduleName";
-					$dependentTableName = "vtiger_crmentityRel{$moduleName}{$fieldInstance->getFieldId()}";
-				} else {
-					$referenceTableName = "{$entityTableName}Rel{$moduleName}{$fieldInstance->getFieldId()}";
-					$dependentTableName = "vtiger_crmentityRel{$moduleName}{$fieldInstance->getFieldId()}";
 				}
+
+				/*** Fix Maestrano
+				 * By default vTiger assumes custom Related Modules are named "Module1RelModule2"
+				 * It seems to be more reliable to join usign the related entity table name instead
+				 ***/
+
+				// elseif (in_array($referenceModule, $reportSecondaryModules)) {
+				// 	$referenceTableName = "{$entityTableName}Rel$referenceModule";
+				// 	$dependentTableName = "vtiger_crmentityRel{$referenceModule}{$fieldInstance->getFieldId()}";
+				// } elseif (in_array($moduleName, $reportSecondaryModules)) {
+				// 	$referenceTableName = "{$entityTableName}Rel$moduleName";
+				// 	$dependentTableName = "vtiger_crmentityRel{$moduleName}{$fieldInstance->getFieldId()}";
+				// } else {
+				// 	$referenceTableName = "{$entityTableName}Rel{$moduleName}{$fieldInstance->getFieldId()}";
+				// 	$dependentTableName = "vtiger_crmentityRel{$moduleName}{$fieldInstance->getFieldId()}";
+				// }
 
 				$this->queryPlanner->addTable($referenceTableName);
 
