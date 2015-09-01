@@ -1,0 +1,114 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_pdfmaker</name>
+			<sql><![CDATA[
+                CREATE TABLE `vtiger_pdfmaker` (
+                `templateid` int(11) NOT NULL,
+                `filename` varchar(100) NOT NULL,
+                `module` varchar(255) NOT NULL,
+                `body` longblob NOT NULL,
+                `description` text NOT NULL,
+                `deleted` int(1) NOT NULL default '0',
+                PRIMARY KEY  (`templateid`)
+              ) ENGINE=InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_seq</name>
+			<sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_seq` (
+                    `id` int(11) NOT NULL default '1'
+                  ) ENGINE=InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_settings</name>
+			<sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_settings` (
+                    `templateid` int(11) NOT NULL,
+                    `margin_top` decimal(12,1) default NULL,
+                    `margin_bottom` decimal(12,1) default NULL,
+                    `margin_left` decimal(12,1) default NULL,
+                    `margin_right` decimal(12,1) default NULL,
+                    `format` varchar(255) NOT NULL default 'A4',
+                    `orientation` varchar(255) NOT NULL default 'portrait',
+                    `decimals` tinyint(2) NOT NULL,
+                    `decimal_point` char(2) NOT NULL,
+                    `thousands_separator` char(2) NOT NULL,
+                    `header` text NOT NULL,
+                    `footer` text NOT NULL,
+                    `encoding` VARCHAR( 20 ) NOT NULL DEFAULT 'auto',
+                    `file_name` VARCHAR( 255 ) NULL,
+                    `is_portal` TINYINT( 1 ) NOT NULL DEFAULT '0',
+                    `is_listview` TINYINT( 1 ) NOT NULL DEFAULT '0',
+                    `owner` INT( 11 ) NOT NULL DEFAULT '1',
+                    `sharingtype` CHAR( 7 ) NOT NULL DEFAULT 'public',
+                    `disp_header` TINYINT( 1 ) NOT NULL DEFAULT '3',
+                    `disp_footer` TINYINT( 1 ) NOT NULL DEFAULT '7',
+                    PRIMARY KEY  (`templateid`)
+                  ) ENGINE=InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_breakline</name>
+			<sql><![CDATA[
+            CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_breakline` (
+                    `crmid` INT NOT NULL ,
+                    `productid` INT NOT NULL ,
+                    `sequence` INT NOT NULL ,
+                    `show_header` TINYINT( 1 ) NOT NULL DEFAULT '0',
+                    `show_subtotal` TINYINT( 1 ) NOT NULL DEFAULT '0',
+                    PRIMARY KEY ( `crmid` , `productid` , `sequence` )
+                    ) ENGINE = InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_images</name>
+			<sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_images` (
+                `crmid` INT NOT NULL ,
+                `productid` INT NOT NULL ,
+                `sequence` INT NOT NULL ,
+                `attachmentid` INT NOT NULL ,
+                `width` INT NULL ,
+                `height` INT NULL ,
+                PRIMARY KEY ( `crmid` , `productid` , `sequence` )
+                ) ENGINE = InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_releases</name>
+			<sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_releases` (
+                `id` INT NOT NULL AUTO_INCREMENT ,
+                `version` VARCHAR( 10 ) NOT NULL ,
+                `date` DATETIME NOT NULL ,
+                `updated` TINYINT( 1 ) NOT NULL ,
+                PRIMARY KEY ( `id` )
+                ) ENGINE = InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_productbloc_tpl</name>
+			<sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_productbloc_tpl` (
+                `id` int(11) NOT NULL auto_increment,
+                `name` varchar(255) NOT NULL,
+                `body` longtext NOT NULL,
+                PRIMARY KEY  (`id`)
+              ) ENGINE=InnoDB
+            ]]></sql>
+		</table>
+		<table>
+			<name>vtiger_pdfmaker_ignorepicklistvalues</name>
+			<sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS `vtiger_pdfmaker_ignorepicklistvalues` (
+                  `value` varchar(100) NOT NULL,
+                  PRIMARY KEY  (`value`)
+                ) ENGINE=InnoDB
+            ]]></sql>
+		</table>
+	</tables>
+</schema>
