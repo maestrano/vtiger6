@@ -268,6 +268,12 @@ function setMailServerProperties($mail)
 		$server = $_REQUEST['server'];
 	else
 		$server = $adb->query_result($res,0,'server');
+		
+	if(!empty($server) || $server=="sendmail"){
+		$mail->IsSendmail();
+		return;
+	}
+	
 	if(isset($_REQUEST['server_username']))
 		$username = $_REQUEST['server_username'];
 	else
