@@ -92,6 +92,8 @@
     dest: "{{ vtiger_root_path }}/config.inc.php"
     owner: root
     mode: 755
+  tags:
+    - configuration
 
 - name: vTiger | Configuration file app_setup.php
   copy: 
