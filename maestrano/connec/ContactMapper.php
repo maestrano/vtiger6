@@ -165,7 +165,7 @@ class ContactMapper extends BaseMapper {
     }
 
     // Map Organization
-    if($this->is_set($person->column_fields['account_id'])) {
+    if($this->is_set($person->column_fields['account_id']) && $person->column_fields['account_id'] != 0) {
       $organization_id = $this->customer_organization_mapper->findConnecIdByLocalId($person->column_fields['account_id']);
       if($organization_id) { $person_hash['organization_id'] = $organization_id; }
     } else {
