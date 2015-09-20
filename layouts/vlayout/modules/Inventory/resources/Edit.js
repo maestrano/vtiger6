@@ -734,7 +734,7 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 			discountValue = 0;
 		}
 		if(isNaN(discountValue) ||  discountValue < 0){
-           discountValue = 0;
+                        discountValue = 0;
 		}
 		if(discountType == Inventory_Edit_Js.percentageDiscountType){
 				rowPercentageField.removeClass('hide').focus();
@@ -775,10 +775,10 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 			var individualTaxRow = taxPercentage.closest('tr');
 			var individualTaxPercentage = taxPercentage.val();
 			if(individualTaxPercentage == ""){
-				individualTaxPercentage = "0.00";
+				individualTaxPercentage = "0";
 			}
              if(isNaN(individualTaxPercentage)){
-                var individualTaxTotal = "0.00";
+                var individualTaxTotal = "0";
             } else {
                 var individualTaxPercentage = parseFloat(individualTaxPercentage);
                 var individualTaxTotal = Math.abs(individualTaxPercentage * totalAfterDiscount)/100;
@@ -874,7 +874,7 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 			var groupTaxPercentageElement = jQuery(domElement);
 			var groupTaxRow = groupTaxPercentageElement.closest('tr');
             if(isNaN(groupTaxPercentageElement.val())){
-                var groupTaxValue = "0.00";
+                var groupTaxValue = "0";
             } else {
                 var groupTaxValue = Math.abs(amount * groupTaxPercentageElement.val())/100;
             }
@@ -894,12 +894,12 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 			var currentTaxPer = jQuery(domElement);
 			var currentParentRow = currentTaxPer.closest('tr');
 			var currentTaxPerValue = currentTaxPer.val();
-            var currentTaxTotal = "0.00";
+            var currentTaxTotal = "0";
 			if(currentTaxPerValue == ""){
-				currentTaxPerValue = "0.00";
+				currentTaxPerValue = "0";
 			}
              if(isNaN(currentTaxPerValue)){
-                var currentTaxTotal = "0.00";
+                var currentTaxTotal = "0";
             } else {
 				currentTaxPerValue = parseFloat(currentTaxPerValue);
                 var currentTaxTotal = Math.abs(currentTaxPerValue * shippingHandlingCharge)/100;
@@ -931,6 +931,12 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 		this.setGrandTotal(grandTotal);
 	},
 
+        setShippingAndHandlingAmountForTax : function() {
+           shippingAndHandlingValue= this.getShippingAndHandling();
+           jQuery('#shAmountForTax').text(shippingAndHandlingValue);
+           return this;
+	},
+    
 	registerFinalDiscountShowEvent : function(){
 		var thisInstance = this;
 		jQuery('#finalDiscount').on('click',function(e){
@@ -1033,7 +1039,7 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 		this.getAdjustmentTextElement().on('focusout',function(e){
 			var value = jQuery(e.currentTarget).val();
 			if(value == ""){
-				jQuery(e.currentTarget).val("0.00");
+				jQuery(e.currentTarget).val("0");
 			}
 			thisInstance.calculateGrandTotal();
 		});
@@ -1134,6 +1140,7 @@ Vtiger_Edit_Js("Inventory_Edit_Js",{
 		this.setShippingAndHandlingTaxTotal();
 		this.calculatePreTaxTotal();
 		this.calculateGrandTotal();
+                this.setShippingAndHandlingAmountForTax();
 	},
 
 	finalDiscountChangeActions : function() {

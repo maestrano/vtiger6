@@ -82,7 +82,7 @@
 	<!--added this div for Temporarily -->
 {if $LISTVIEW_ENTRIES_COUNT eq '0'}
 	<div class="row-fluid">
-		<div class="emptyRecordsDiv">{vtranslate('LBL_NO', $MODULE)} {vtranslate($RELATED_MODULE, $RELATED_MODULE)} {vtranslate('LBL_FOUND', $MODULE)}.</div>
+		<div class="emptyRecordsDiv">{vtranslate('LBL_EQ_ZERO', $MODULE)} {vtranslate($RELATED_MODULE, $RELATED_MODULE)} {vtranslate('LBL_FOUND', $MODULE)}.</div>
 	</div>
 {/if}
 </div>

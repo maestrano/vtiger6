@@ -244,6 +244,9 @@ $languageStrings = array(
     'Pacific/Auckland'  =>  '(UTC+12:00) Auckland',
     'Asia/Magadan'  =>  '(UTC+12:00) Magadan',
     'Pacific/Tongatapu'  =>  '(UTC+13:00) Nukualofa',
+    
+    // currency seperatar in user preferance
+      'LBL_Space' => 'Space',
 );
 
 $jsLanguageStrings = array(

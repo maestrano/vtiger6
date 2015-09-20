@@ -191,18 +191,19 @@
 							</td>
 						</tr>
 						<tr class="hide">
-							<td colspan="6" class="row-fluid" style="padding-left: 5%;padding-right: 5%;background-image: none !important;">
+                         <td colspan="6" class="row-fluid" style="padding-left: 5%;padding-right: 5%;background-image: none !important;">
 								<div class="row-fluid hide" data-togglecontent="{$TABID}-fields">
-								<div class="span12"><label class="themeTextColor font-x-large pull-left"><strong>{vtranslate('LBL_TOOLS',$QUALIFIED_MODULE)}</strong></label></div>
-								<table class="table table-bordered">
-								{assign var=UTILITY_ACTION_COUNT value=0}
+                                    {assign var=UTILITY_ACTION_COUNT value=0}
 								{assign var="ALL_UTILITY_ACTIONS_ARRAY" value=array()}
 								{foreach from=$ALL_UTILITY_ACTIONS item=ACTION_MODEL}
 									{if $ACTION_MODEL->isModuleEnabled($PROFILE_MODULE)}
 										{assign var="testArray" array_push($ALL_UTILITY_ACTIONS_ARRAY,$ACTION_MODEL)}
 									{/if}
 								{/foreach}
-								{foreach from=$ALL_UTILITY_ACTIONS_ARRAY item=ACTION_MODEL name="actions"}
+								  {if $ALL_UTILITY_ACTIONS_ARRAY}
+                                    <div class="span12"><label class="themeTextColor font-x-large pull-left"><strong>{vtranslate('LBL_TOOLS',$QUALIFIED_MODULE)}</strong></label></div>
+                                    <table class="table table-bordered">
+                                {foreach from=$ALL_UTILITY_ACTIONS_ARRAY item=ACTION_MODEL name="actions"}
 									{if $smarty.foreach.actions.index % 3 == 0}
 										<tr>
 									{/if}
@@ -220,6 +221,7 @@
 									{/if}
 								{/foreach}
 								</table>
+                            {/if}
 								</div>
 							</td>
 						</tr>

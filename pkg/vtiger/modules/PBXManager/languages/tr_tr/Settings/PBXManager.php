@@ -16,7 +16,7 @@ $languageStrings = array(
     'LBL_INFO_WEBAPP_URL' => 'Biçiminde Asterisk App URL yapılandırın', 
     'LBL_FORMAT_WEBAPP_URL' => '(Protokol) :/ / (asterisk_ip): (port)',
     'LBL_FORMAT_INFO_WEBAPP_URL' => 'ex:http://0.0.0.0:5000',
-    'LBL_INFO_CONTEXT' => 'Yapılandırılmış vtiger Specfic bağlam edin Asterisk sunucusu (extensions.conf)',
+    'LBL_INFO_CONTEXT' => 'Vtiger Özel bağlam sizin Asterisk sunucusu yapılandırılmış (extensions.conf)',
     'LBL_PBXMANAGER_INFO' => 'Asterisk sunucu ayrıntıları  Yapılandır sonr Vtiger yıldız bağlayıcı Asterisk sunucu yükleme',
     
     'webappurl'=>'Vtiger yıldız Web URL',

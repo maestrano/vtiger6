@@ -49,17 +49,20 @@ class VTCreateTodoTask extends VTTask{
 			$baseDate = date('Y-m-d');
 		}
 		$time = explode(' ',$baseDate);
-		if(count($time) < 2) {
-            $timeWithSec = Vtiger_Time_UIType::getTimeValueWithSeconds($this->time);
-            $dbInsertDateTime = DateTimeField::convertToDBTimeZone($baseDate.' '.$timeWithSec);
-            $time = $dbInsertDateTime->format('H:i:s');
-		} else {
-			$time = $time[1];
-		}
+		
 		preg_match('/\d\d\d\d-\d\d-\d\d/', $baseDate, $match);
 		$baseDate = strtotime($match[0]);
         $date = strftime('%Y-%m-%d', $baseDate+$this->days*24*60*60*(strtolower($this->direction)=='before'?-1:1));
-		// Added to check if the user/group is active
+		
+        if($this->time) {
+            $timeWithSec = Vtiger_Time_UIType::getTimeValueWithSeconds($this->time);
+            $dbInsertDateTime = DateTimeField::convertToDBTimeZone($date.' '.$timeWithSec);
+            $time = $dbInsertDateTime->format('H:i:s');
+		} else {
+			$time = $time[1];
+		}	
+
+        // Added to check if the user/group is active
 		if(!empty($this->assigned_user_id)) {
 			$userExists = $adb->pquery('SELECT 1 FROM vtiger_users WHERE id = ? AND status = ?', array($this->assigned_user_id, 'Active'));
 			if($adb->num_rows($userExists)) {

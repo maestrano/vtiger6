@@ -678,7 +678,7 @@ if (typeof(MailManager) == 'undefined') {
 					//var responseJSON = JSON.parse(response);
 					var resultJSON = responseJSON['result'];
 					if (!resultJSON['ui']) {
-						Vtiger_Helper_Js.showPnotify(app.vtranslate('JSLBL_Failed_To_Open_Email'));
+						Vtiger_Helper_Js.showPnotify(app.vtranslate('JSLBL_Failed_To_Open_Mail'));
 						return;
 					}
 

@@ -79,24 +79,41 @@
 			<div class="listViewContentDiv">
 			<div class="listViewEntriesDiv">
 				<table class="table table-bordered listViewEntriesTable">
-					<thead>
+				<thead>
 						<tr class="listViewHeaders">
-							<th colspan="4" class="narrowWidthType">
-								<input align="left" type="checkbox" name="selectall" id="parentCheckBox" onClick='MailManager.toggleSelect(this.checked,"mc_box");'/>&nbsp;&nbsp;
-							</th>
+							<th width="3%" class="listViewHeaderValues" ><input align="left" type="checkbox" name="selectall" id="parentCheckBox" onClick='MailManager.toggleSelect(this.checked,"mc_box");'/></th>
+                            {if $FOLDER->isSentFolder()}
+                            <th width="27%" class="listViewHeaderValues"  >{vtranslate('LBL_TO', $MODULE)}</th>
+							{else}
+                            <th width="27%" class="listViewHeaderValues"  >{vtranslate('LBL_FROM', $MODULE)}</th>
+                            {/if}
+                            <th class="listViewHeaderValues" >{vtranslate('LBL_SUBJECT', $MODULE)}</th>
+							<th width="17%" class="listViewHeaderValues"  align="right" >{vtranslate('LBL_Date', $MODULE)}</th>
 						</tr>
 					</thead>
 					<tbody>
 						{if $FOLDER->mails()}
-							{foreach item=MAIL from=$FOLDER->mails()}
-								<tr class="listViewEntries {if $MAIL->isRead()}mm_normal{else}fontBold{/if} mm_clickable"
-									id="_mailrow_{$MAIL->msgNo()}" onmouseover='MailManager.highLightListMail(this);' onmouseout='MailManager.unHighLightListMail(this);'>
-									<td width="3%" class="narrowWidthType"><input type='checkbox' value = "{$MAIL->msgNo()}" name = 'mc_box' onclick='MailManager.toggleSelectMail(this.checked, this);'></td>
-									<td width="27%" class="narrowWidthType" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->from(30)}</td>
-									<td class="narrowWidthType" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->subject()}</td>
-									<td width="17%" class="narrowWidthType" align="right" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->date(true)}</td>
-								</tr>
-							{/foreach}
+							{if $FOLDER->isSentFolder()}
+								{foreach item=MAIL from=$FOLDER->mails()}
+									<tr class="listViewEntries {if $MAIL->isRead()}mm_normal{else}fontBold{/if} mm_clickable"
+										id="_mailrow_{$MAIL->msgNo()}" onmouseover='MailManager.highLightListMail(this);' onmouseout='MailManager.unHighLightListMail(this);'>
+										<td width="3%" class="narrowWidthType"><input type='checkbox' value = "{$MAIL->msgNo()}" name = 'mc_box' onclick='MailManager.toggleSelectMail(this.checked, this);'></td>
+										<td width="27%" class="narrowWidthType" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{vtranslate('LBL_TO', $MODULE)}: {$MAIL->to()}</td>
+										<td class="narrowWidthType" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->subject()}</td>
+										<td width="17%" class="narrowWidthType" align="right" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->date(true)}</td>
+									</tr>
+								{/foreach}
+							{else}
+								{foreach item=MAIL from=$FOLDER->mails()}
+									<tr class="listViewEntries {if $MAIL->isRead()}mm_normal{else}fontBold{/if} mm_clickable"
+										id="_mailrow_{$MAIL->msgNo()}" onmouseover='MailManager.highLightListMail(this);' onmouseout='MailManager.unHighLightListMail(this);'>
+										<td width="3%" class="narrowWidthType"><input type='checkbox' value = "{$MAIL->msgNo()}" name = 'mc_box' onclick='MailManager.toggleSelectMail(this.checked, this);'></td>
+										<td width="27%" class="narrowWidthType" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->from(30)}</td>
+										<td class="narrowWidthType" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->subject()}</td>
+										<td width="17%" class="narrowWidthType" align="right" onclick="MailManager.mail_open('{$FOLDER->name()}', {$MAIL->msgNo()});">{$MAIL->date(true)}</td>
+									</tr>
+								{/foreach}
+							{/if}
 						{else}
 							<tr>
 								<td colspan="3"><strong>{vtranslate('LBL_No_Mails_Found',$MODULE)}</strong></td>

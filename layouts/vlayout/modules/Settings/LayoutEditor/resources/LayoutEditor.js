@@ -1453,8 +1453,10 @@ jQuery.Class('Settings_LayoutEditor_Js', {
 			var params = app.getvalidationEngineOptions(true);
 			params.binded = false,
 			params.onValidationComplete = function(form,valid){
-				if(valid) {
-					thisInstance.registerSaveFieldDetailsEvent(form);
+            if(valid) {
+					 if(form.hasClass('fieldDetailsForm')){
+                        thisInstance.registerSaveFieldDetailsEvent(form);
+                    }
 				}
 				return false;
 			}
