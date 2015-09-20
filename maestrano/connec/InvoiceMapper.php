@@ -49,8 +49,8 @@ class InvoiceMapper extends TransactionMapper {
     $invoice_hash['transaction_number'] = $invoice->column_fields['customerno'];
     $invoice_hash['deposit'] = $invoice->column_fields['received'];
     $invoice_hash['balance'] = $invoice->column_fields['balance'];
-    $invoice_hash['transaction_date'] = $this->format_date_to_connec($invoice->column_fields['invoicedate']);
-    $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']);
+    if($this->is_set($invoice->column_fields['invoicedate'])) { $invoice_hash['transaction_date'] = $this->format_date_to_connec($invoice->column_fields['invoicedate']); }
+    if($this->is_set($invoice->column_fields['duedate'])) { $invoice_hash['due_date'] = $this->format_date_to_connec($invoice->column_fields['duedate']); }
     $invoice_hash['status'] = $this->invoice_status_mapping_reverse[$invoice->column_fields['invoicestatus']];
 
     return $invoice_hash;

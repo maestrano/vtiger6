@@ -313,4 +313,29 @@ class TransactionMapper extends BaseMapper {
       }
     }
   }
+
+  // Map transaction lines IDs from Connec! to the local ones
+  public function processConnecResponse($transaction_hash, $transaction) {
+    // Map transaction lines ids
+    $line_number = 1;
+    foreach ($transaction_hash['lines'] as $transaction_line) {
+      $transaction_line_local_id = $transaction->id . "#" . $transaction_line['line_number'];
+      $transaction_line_mno_id = $transaction_hash['id'] . "#" . $transaction_line['id'];
+      $mno_transaction_line_id = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction_line_local_id, "TRANSACTION_LINE");
+      if($mno_transaction_line_id) {
+        MnoIdMap::updateIdMapEntry($mno_transaction_line_id['mno_entity_guid'], $transaction_line_mno_id, "TRANSACTION_LINE");
+      } else {
+        MnoIdMap::addMnoIdMap($transaction_line_local_id, "TRANSACTION_LINE", $transaction_line_mno_id, "TRANSACTION_LINE");
+      }
+      $line_number++;
+    }
+
+    // Delete non-existing transaction lines ID Maps
+    while(MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->id . "#" . $line_number, "TRANSACTION_LINE")) {
+      MnoIdMap::hardDeleteMnoIdMap($transaction->id . "#" . $line_number, "TRANSACTION_LINE");
+      $line_number++;
+    }
+
+    return $transaction;
+  }
 }
