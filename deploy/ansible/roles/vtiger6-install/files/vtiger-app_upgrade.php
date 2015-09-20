@@ -50,7 +50,48 @@ $db_utf8_support = $dbCheckResult['db_utf8_support'];
 if ($next == true) {
   // Migrate database to latest version
   echo "Migrating vTiger database\n";
-  Install_InitSchema_Model::upgrade();
+
+  $migrationModuleModel = Migration_Module_Model::getInstance();
+
+  $getAllowedMigrationVersions = $migrationModuleModel->getAllowedMigrationVersions();
+  $getDBVersion = str_replace(array('.', ' '),'', $migrationModuleModel->getDBVersion());
+  $getLatestSourceVersion = str_replace(array('.', ' '),'', $migrationModuleModel->getLatestSourceVersion());
+  $migrateVersions = array();
+  foreach($getAllowedMigrationVersions as $getAllowedMigrationVersion) {
+    foreach($getAllowedMigrationVersion as $version => $label) {
+      if(strcasecmp($version, $getDBVersion) == 0 || $reach == 1) {
+        $reach = 1;
+        $migrateVersions[] = $version;
+      }
+    }
+  }
+  $migrateVersions[] = $getLatestSourceVersion;
+
+  $patchCount  = count($migrateVersions);
+
+  define('VTIGER_UPGRADE', true);
+
+  for($i=0; $i<$patchCount; $i++){
+    $filename =  "modules/Migration/schema/".$migrateVersions[$i]."_to_".$migrateVersions[$i+1].".php";
+    if(is_file($filename)) {
+      if(!defined('INSTALLATION_MODE')) {
+        echo "Database migration - ".$migrateVersions[$i]." ==> ".$migrateVersions[$i+1]." Database changes -- Starts.";
+      }
+      $_i_statesaved = $i;
+      include($filename);
+      $i = $_i_statesaved;
+      if(!defined('INSTALLATION_MODE')) {
+        echo "Database migration - ".$migrateVersions[$i]." ==> ".$migrateVersions[$i+1]." Database changes -- Ends.";
+      }
+    } else if(isset($migrateVersions[$patchCount+1])){
+      echo "There is no Database Changes from ".$migrateVersions[$i]." ==> ".$migrateVersions[$i+1];
+    }
+  }
+
+  //update vtiger version in db
+  $migrationModuleModel->updateVtigerVersion();
+  // To carry out all the necessary actions after migration
+  $migrationModuleModel->postMigrateActivities();
 
   echo "Application has been upgraded\n";
 
