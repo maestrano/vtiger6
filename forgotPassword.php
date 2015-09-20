@@ -44,8 +44,15 @@ if (isset($_REQUEST['user_name']) && isset($_REQUEST['emailId'])) {
                             This request was made on ' . date("Y-m-d H:i:s") . ' and will expire in next 24 hours.<br><br> 
 		            Regards,<br> 
 		            VtigerCRM Open source Support Team.<br>' ;
-                $mail = new PHPMailer();
-        setMailerProperties($mail, 'Request : ForgotPassword - vtigercrm', $content, 'support@vtiger.com', $username, $email);
+        $mail = new PHPMailer();
+        $query = "select from_email_field,server_username from vtiger_systems where server_type=?";
+        $params = array('email');
+        $result = $adb->pquery($query,$params);
+        $from = $adb->query_result($result,0,'from_email_field');
+        if($from == '') {$from =$adb->query_result($result,0,'server_username'); }
+        $subject='Request : ForgotPassword - vtigercrm';
+        
+        setMailerProperties($mail,$subject, $content, $from, $username, $email);
         $status = MailSend($mail);
         if ($status === 1)
             header('Location:  index.php?modules=Users&view=Login&status=1');

@@ -51,6 +51,10 @@ class Users_Login_Action extends Vtiger_Action_Controller {
 			$moduleModel = Users_Module_Model::getInstance('Users');
 			$moduleModel->saveLoginHistory($user->column_fields['user_name']);
 			//End
+            
+              if(isset($_SESSION['return_params'])){ 
+					$return_params = $_SESSION['return_params'];
+				}
 
 			header ('Location: index.php?module=Users&parent=Settings&view=SystemSetup');
 			exit();

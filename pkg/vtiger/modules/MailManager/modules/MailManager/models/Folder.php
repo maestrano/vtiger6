@@ -34,6 +34,15 @@ class MailManager_Folder_Model {
 			return $prefix.$this->mName;
 		}
 	}
+    
+     public function isSentFolder() {
+		$mailBoxModel = MailManager_Mailbox_Model::activeInstance();
+        $folderName = $mailBoxModel->folder();
+		if($this->mName == $folderName) {
+			return true;
+		}
+		return false;
+	}
 
 	public function setName($name) {
 		$this->mName = $name;

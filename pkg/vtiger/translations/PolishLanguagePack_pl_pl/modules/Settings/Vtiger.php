@@ -142,7 +142,7 @@ $languageStrings = array(
 	'LBL_OPTIONS1'=>'',
 	'LBL_OPTIONS2'=>"",
 	'LBL_MAIL_SERVER_SMTP'=>'Mail Server Settings (SMTP)',
-	'LBL_OUTGOING_SERVER_FROM_FIELD'=>'NOTE: If "From Email" field is set to blank then the User Email address will be picked up.',
+	'LBL_OUTGOING_SERVER_NOTE' => 'UWAGA: Serwer poczty wychodzącej należy ustawić na SSL lub TLS Protocal i przypadku "Od E-mail" pole jest ustawione na puste to adres e-mail użytkownika zostanie odebrany.', // TODO: Review
 	'LBL_TESTMAILSTATUS'=>'Test Mail Status : ',
 	'LBL_MAILSENDERROR'=>'Mail could not be sent to the admin user. Please check the admin emailid/Server settings',
 );

@@ -89,7 +89,7 @@ class Google_Utils_Helper {
     static function getCallbackUrl($request, $options = array()) {
         global $site_URL;
 
-        $callback = $site_URL . "/index.php?module=" . $request['module'] . "&view=List&sourcemodule=" . $request['sourcemodule'];
+        $callback = rtrim($site_URL, '/') . "/index.php?module=" . $request['module'] . "&view=List&sourcemodule=" . $request['sourcemodule'];
         foreach ($options as $key => $value) {
             $callback.="&" . $key . "=" . $value;
         }

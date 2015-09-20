@@ -16,7 +16,7 @@ $languageStrings = array(
     'LBL_INFO_WEBAPP_URL' => 'Configureer uw Asterisk App-URL in het formaat', 
     'LBL_FORMAT_WEBAPP_URL' => '(Protocol) :/ / (asterisk_ip): (poort)',
     'LBL_FORMAT_INFO_WEBAPP_URL' => 'ex: http://0.0.0.0:5000',
-    'LBL_INFO_CONTEXT' => 'Vtiger Specfic context geconfigureerd in uw Asterisk server (extensions.conf)',
+    'LBL_INFO_CONTEXT' => 'Vtiger Specifieke context geconfigureerd in uw Asterisk server (extensions.conf)',
     'LBL_PBXMANAGER_INFO' => 'Configure Asterisk-Server-gegevens na Installeren Vtiger Asterisk Connector  in uw Asterisk-Server',
     
     'webappurl'=>'Vtiger Askterisk Web URL',

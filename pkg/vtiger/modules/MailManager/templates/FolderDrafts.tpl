@@ -71,9 +71,10 @@
 				<table class="table table-bordered listViewEntriesTable">
 					<thead>
 						<tr class="listViewHeaders">
-							<th colspan="4" class="narrowWidthType">
-								<input align="left" type="checkbox" class='small'  name="selectall" id="parentCheckBox" onClick='MailManager.toggleSelect(this.checked,"mc_box");'/>
-							</th>
+							<th width="3%" class="listViewHeaderValues" ><input align="left" type="checkbox" name="selectall" id="parentCheckBox" onClick='MailManager.toggleSelect(this.checked,"mc_box");'/></th>
+                            <th width="27%" class="listViewHeaderValues"  >{vtranslate('LBL_TO', $MODULE)}</th>
+							<th class="listViewHeaderValues" >{vtranslate('LBL_SUBJECT', $MODULE)}</th>
+							<th width="17%" class="listViewHeaderValues"  align="right" >{vtranslate('LBL_Date', $MODULE)}</th>
 						</tr>
 					</thead>
 					<tbody>

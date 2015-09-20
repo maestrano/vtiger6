@@ -352,6 +352,7 @@ $languageStrings = array(
 	'LBL_NEXT_MONTH'               => 'Következő hónap'             ,
 	'LBL_NEXT_WEEK'                => 'Következő hét'               ,
 	'LBL_NO'                       => 'Nem'                         ,
+	'LBL_EQ_ZERO'                  => 'Nincs'                       ,
 	'LBL_NONE'                     => '--'                          ,
 	'LBL_NOTE'                     => 'Megjegyzés'                  ,
 	'LBL_NOTEPAD' 				   => 'Jegyzetfüzet'                ,

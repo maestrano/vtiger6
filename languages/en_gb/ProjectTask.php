@@ -44,5 +44,5 @@ $languageStrings = array(
 	'In Progress' => 'In Progress',
 	'Completed' => 'Completed',
 	'Deferred' => 'Deferred',
-	'Canceled ' => 'Canceled',
+	'Canceled ' => 'Cancelled',
 );

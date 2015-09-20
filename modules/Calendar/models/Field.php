@@ -64,23 +64,13 @@ class Calendar_Field_Model extends Vtiger_Field_Model {
 			if ($this->getName() == 'date_start') {
 				$dateTimeValue = $value . ' '. $recordInstance->get('time_start');
 				$value = $this->getUITypeModel()->getDisplayValue($dateTimeValue);
-				list($startDate, $startTime) = explode(' ', $value);
-
-				$currentUser = Users_Record_Model::getCurrentUserModel();
-				if($currentUser->get('hour_format') == '12')
-					$startTime = Vtiger_Time_UIType::getTimeValueInAMorPM($startTime);
-
-				return $startDate . ' ' . $startTime;
+				list($startDate, $startTime,$meridiem) = explode(' ', $value);
+                 return $startDate . ' ' . $startTime.' '. $meridiem;
 			} else if ($this->getName() == 'due_date') {
 				$dateTimeValue = $value . ' '. $recordInstance->get('time_end');
 				$value = $this->getUITypeModel()->getDisplayValue($dateTimeValue);
-				list($startDate, $startTime) = explode(' ', $value);
-
-				$currentUser = Users_Record_Model::getCurrentUserModel();
-				if($currentUser->get('hour_format') == '12')
-					$startTime = Vtiger_Time_UIType::getTimeValueInAMorPM($startTime);
-
-				return $startDate . ' ' . $startTime;
+				list($startDate, $startTime,$meridiem) = explode(' ', $value);
+                return $startDate . ' ' . $startTime.' '. $meridiem;
 			}
 		}
 		return parent::getDisplayValue($value, $record, $recordInstance);
