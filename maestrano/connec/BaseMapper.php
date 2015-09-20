@@ -50,7 +50,6 @@ abstract class BaseMapper {
     return floatval($decimal_str);
   }
 
-  
 
   // Overwrite me!
   // Return the Model local id
@@ -82,6 +81,13 @@ abstract class BaseMapper {
   // Optional: Check the hash is valid for mapping, if false, resource is skipped
   protected function validate($resource_hash) {
     return true;
+  }
+
+  // Overwrite me!
+  // Optional: Method called after pushing an Entity to Connec
+  // Add any custom logic to map the response back to the model
+  public function processConnecResponse($resource_hash, $model) {
+    return $model;
   }
 
   public function getConnecResourceName() {
@@ -313,6 +319,10 @@ abstract class BaseMapper {
         // Map the Connec! ID with the local one
         error_log("mapping back entity_name=$this->local_entity_name");
         $this->findOrCreateIdMap($result[$this->connec_resource_name], $model);
+
+        // Custom response processing
+        error_log("processing back entity_name=$this->local_entity_name");
+        $this->processConnecResponse($result[$this->connec_resource_name], $model);
         return $model;
       }
     }
