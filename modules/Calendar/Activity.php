@@ -109,10 +109,10 @@ class Activity extends CRMEntity {
 	function save_module($module)
 	{
 		global $adb;
-		//Handling module specific save
+        //Handling module specific save
 		//Insert into seactivity rel
 		$insertion_mode = $this->mode;
-		if(isset($this->column_fields['parent_id']) && $this->column_fields['parent_id'] != '')
+        if(isset($this->column_fields['parent_id']) && $this->column_fields['parent_id'] != '')
 		{
 			$this->insertIntoEntityTable("vtiger_seactivityrel", $module);
 		}
@@ -120,19 +120,10 @@ class Activity extends CRMEntity {
 		{
 			$this->deleteRelation("vtiger_seactivityrel");
 		}
-        //Insert into cntactivity rel
-        if(isset($this->column_fields['contact_id']) && $this->column_fields['contact_id'] != '')
-        {
-                $this->insertIntoEntityTable('vtiger_cntactivityrel', $module);
-        }
-        elseif($this->column_fields['contact_id'] =='' && $insertion_mode=="edit")
-        {
-                $this->deleteRelation('vtiger_cntactivityrel');
-        }
-		$recordId = $this->id;
+
+        $recordId = $this->id;
 		if(isset($_REQUEST['contactidlist']) && $_REQUEST['contactidlist'] != '') {
 			$adb->pquery( 'DELETE from vtiger_cntactivityrel WHERE activityid = ?', array($recordId));
-
 
 			$contactIdsList = explode (';', $_REQUEST['contactidlist']);
 			$count = count($contactIdsList);
@@ -145,10 +136,20 @@ class Activity extends CRMEntity {
 				}
 			}
 			$adb->pquery($sql, array());
-		} else if ($_REQUEST['contactidlist'] == '' && $this->column_fields['contact_id'] == '' && $insertion_mode == "edit") {
+		} else if ($_REQUEST['contactidlist'] == '' && $insertion_mode == "edit") {
         	$adb->pquery('DELETE FROM vtiger_cntactivityrel WHERE activityid = ?', array($recordId));
         }
-
+        
+        //Insert into cntactivity rel
+        if(isset($this->column_fields['contact_id']) && $this->column_fields['contact_id'] != '' && !isset($_REQUEST['contactidlist']))
+        {
+                $this->insertIntoEntityTable('vtiger_cntactivityrel', $module);
+        }
+        elseif($this->column_fields['contact_id'] =='' && $insertion_mode=="edit" && !isset($_REQUEST['contactidlist']))
+        {
+                $this->deleteRelation('vtiger_cntactivityrel');
+        }
+        
 		$recur_type='';
 		if(($recur_type == "--None--" || $recur_type == '') && $this->mode == "edit")
 		{

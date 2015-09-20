@@ -172,7 +172,7 @@ $languageStrings = array(
 	'LBL_OPTIONS1'=>'',
 	'LBL_OPTIONS2'=>"",
 	'LBL_MAIL_SERVER_SMTP'=>'Mail Server Settings (SMTP)',
-	'LBL_OUTGOING_SERVER_FROM_FIELD'=>'NOTE: If "From Email" field is set to blank then the User Email address will be picked up.',
+	'LBL_OUTGOING_SERVER_NOTE' => 'ملاحظة: يجب تعيين خادم البريد الصادر إلى SSL أو TLS Protocal ومجموعة إذا كان الحقل "من إرسال" إلى فارغة ثم سيتم اختيار عنوان البريد الإلكتروني للمستخدم فوق.',
 	'LBL_TESTMAILSTATUS'=>'Test Mail Status : ',
 	'LBL_MAILSENDERROR'=>'Mail could not be sent to the admin user. Please check the admin emailid/Server settings',
 	

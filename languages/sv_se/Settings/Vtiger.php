@@ -168,7 +168,7 @@ $languageStrings = array(
 	'LBL_OPTIONS1'=>'',
 	'LBL_OPTIONS2'=>"",
 	'LBL_MAIL_SERVER_SMTP'=>'E-postserverinställningar (SMTP)',
-	'LBL_OUTGOING_SERVER_FROM_FIELD'=>'OBS: Om "Från E-post" fältet är satt till tomt har Användare E-post-adress kommer att plockas upp.',
+	'LBL_OUTGOING_SERVER_NOTE' => 'OBS: Utgående server bör sättas till SSL eller TLS Protocol och If "Från e-post" fältet är inställt på tomt då användar E-postadress kommer att plockas upp.', // TODO: Review
 	'LBL_TESTMAILSTATUS'=>'Testa E-poststatus : ',
 	'LBL_MAILSENDERROR'=>'Mail kunde inte skickas till administratorn. Vänligen kontrollera admin E-Postid / serverinställningar',
 	

@@ -60,7 +60,7 @@ class Google_Oauth2_Connector {
         $this->service_name = $this->service_provider . $module;
         $this->client_id = Google_Config_Connector::$clientId;
         $this->client_secret = Google_Config_Connector::$clientSecret;
-        $this->redirect_uri = $site_URL . 'index.php?module=Google&view=List&operation=sync&sourcemodule=' . 
+        $this->redirect_uri = rtrim($site_URL, '/') . '/index.php?module=Google&view=List&operation=sync&sourcemodule=' . 
                 $this->source_module . '&service=' . $this->service_name;
         
         $this->scope = $this->scopes[$this->source_module];
@@ -119,7 +119,7 @@ class Google_Oauth2_Connector {
     
     public function getState($source) {
         global $site_URL;
-        $callbackUri = $site_URL . '/index.php?module=Google&view=List&operation=sync&sourcemodule=' . 
+        $callbackUri = rtrim($site_URL, '/') . '/index.php?module=Google&view=List&operation=sync&sourcemodule=' . 
                 $this->source_module . '&service=' . $source;
         $stateDetails['url'] = $callbackUri;
         $parse = parse_url($site_URL);

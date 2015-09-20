@@ -900,7 +900,8 @@ class QueryGenerator {
 
 		$operator = strtolower($operator);
 		$db = PearDatabase::getInstance();
-
+        $inEqualityFieldTypes = array('currency','percentage','double','integer','number');
+        
 		if(is_string($value) && $this->ignoreComma == false) {
             $commaSeparatedFieldTypes = array('picklist', 'multipicklist', 'owner', 'date', 'datetime', 'time');
             if(in_array($field->getFieldDataType(), $commaSeparatedFieldTypes)) {
@@ -1023,7 +1024,14 @@ class QueryGenerator {
                         $value = $dateTime[0];
                     }
                 }
-			} else if ($field->getFieldDataType() === 'currency') {
+			} else   if(in_array($field->getFieldDataType(), $inEqualityFieldTypes)){
+                if ($operator == 'g' || $operator == 'l') {
+                    $value = substr($value, 4);
+                } else if ($operator == 'h' || $operator == 'm') {
+                    $value = substr($value, 5);
+                }
+               
+            } else if ($field->getFieldDataType() === 'currency') {
 				$uiType = $field->getUIType();
 				if ($uiType == 72) {
 					$value = CurrencyField::convertToDBFormat($value, null, true);
