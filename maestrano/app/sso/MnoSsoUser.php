@@ -190,7 +190,6 @@ class MnoSsoUser extends Maestrano_Sso_User {
     }
   }
   
-  
   /**
    * Get the ID of a local user via Maestrano UID lookup
    *
@@ -264,7 +263,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
     return false;
   }
 
-   /**
+  /**
   * Generate a random password.
   * Convenient to set dummy passwords on users
   *
