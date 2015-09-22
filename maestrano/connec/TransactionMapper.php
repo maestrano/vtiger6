@@ -153,16 +153,11 @@ class TransactionMapper extends BaseMapper {
     $transaction_hash['title'] = $transaction->column_fields['subject'];
     $transaction_hash['public_note'] = $transaction->column_fields['notes'];
 
-    // Map Organization
+    // Map Organization or Vendor
     if($this->is_set($transaction->column_fields['account_id'])) {
       $organization_id = $this->customer_organization_mapper->findConnecIdByLocalId($transaction->column_fields['account_id']);
       if($organization_id) { $transaction_hash['organization_id'] = $organization_id; }
-    } else {
-      $transaction_hash['organization_id'] = '';
-    }
-
-    // Map Vendor
-    if($this->is_set($transaction->column_fields['vendor_id'])) {
+    } else if($this->is_set($transaction->column_fields['vendor_id'])) {
       $organization_id = $this->supplier_organization_mapper->findConnecIdByLocalId($transaction->column_fields['vendor_id']);
       if($organization_id) { $transaction_hash['organization_id'] = $organization_id; }
     } else {
