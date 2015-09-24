@@ -64,6 +64,10 @@ try {
       $purchaseOrderMapper = new PurchaseOrderMapper();
       $purchaseOrderMapper->fetchConnecResource($entity_id);
       break;
+    case "SALESORDERS":
+      $salesOrderMapper = new SalesOrderMapper();
+      $salesOrderMapper->fetchConnecResource($entity_id);
+      break;
     case "EVENTS":
       $eventMapper = new EventMapper();
       $eventMapper->fetchConnecResource($entity_id);
