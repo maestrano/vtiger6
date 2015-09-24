@@ -52,6 +52,7 @@ class TransactionMapper extends BaseMapper {
       $transaction->column_fields['subject'] = $transaction_hash['transaction_number'];
     }
     if($this->is_set($transaction_hash['public_note'])) { $transaction->column_fields['notes'] = $transaction_hash['public_note']; }
+    else if($this->is_set($transaction_hash['private_note'])) { $transaction->column_fields['notes'] = $transaction_hash['private_note']; }
 
     // Map Organization
     if($this->is_set($transaction_hash['organization_id'])) {
