@@ -605,6 +605,19 @@ class SalesOrder extends CRMEntity {
         return $query;
     }
 
+  // Hook Maestrano
+  function save($module_name, $fileid='', $pushToConnec=true) {
+    $result = parent::save($module_name, $fileid);
+
+    $mapper = 'SalesOrderMapper';
+    if(class_exists($mapper)) {
+      $salesOrderMapper = new $mapper();
+      $salesOrderMapper->processLocalUpdate($this, $pushToConnec, false);
+    }
+
+    return $result;
+  }
+
 }
 
 ?>
