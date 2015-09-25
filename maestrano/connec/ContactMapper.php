@@ -97,9 +97,9 @@ class ContactMapper extends BaseMapper {
     if($this->is_set($person_hash['email']['address2'])) { $person->column_fields['secondaryemail'] = $person_hash['email']['address2']; }
 
     // Map Organization
-    if($this->is_set($person_hash['organization_id'])) {
-      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($person_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
-      if($mno_id_map) { $person->column_fields['account_id'] = $mno_id_map['app_entity_id']; }
+    if(array_key_exists('organization_id', $person_hash)) {
+      $organization = $this->customer_organization_mapper->loadModelByConnecId($person_hash['organization_id']);
+      if($organization) { $person->column_fields['account_id'] = $organization->id; }
     }
   }
 
