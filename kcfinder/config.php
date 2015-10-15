@@ -18,13 +18,13 @@
 
 $_CONFIG = array(
 
-    'disabled' => true,
+    'disabled' => false,
     'readonly' => false,
     'denyZipDownload' => true,
 
     'theme' => "oxygen",
 
-    'uploadURL' => "upload",
+    'uploadURL' => "/upload",
     'uploadDir' => "",
 
     'dirPerms' => 0755,

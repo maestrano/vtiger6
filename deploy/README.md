@@ -1,47 +1,47 @@
-# Build vTiger6 application container
+# Vtiger 6 by Maestrano
+This version of Vtiger is customized to provide Single Sing-On and Connec!™ data sharing. By default, these options are not enabled so an instance of the application can be launched in a Docker container and be run as-is.
+More information on [Maestrano SSO](https://maestrano.com) and [Connec!™ data sharing](https://maestrano.com/connec)
 
-## Build Docker container with default vTiger6 installation
-`sudo docker build -t "maestrano:vtiger-6.2.0" .`
+## Build Docker container with default Vtiger installation
+`sudo docker build -t .`
 
-## Start Docker container
-`sudo docker run -t -i --name=vtiger6_container maestrano:vtiger-6.2.0`
+## Activate Maestrano customisation on start (SSO and Connec!™ data sharing)
+This is achieved by specifying Maestrano environment variables
 
-You can add extra hosts entry to your cotnainers with the option `--add-host hostname:IP`:
+```bash
+docker run -it \
+  -e "MNO_SSO_ENABLED=true" \
+  -e "MNO_CONNEC_ENABLED=true" \
+  -e "MNO_MAESTRANO_ENVIRONMENT=local" \
+  -e "MNO_SERVER_HOSTNAME=vtiger6.app.dev.maestrano.io" \
+  -e "MNO_API_KEY=a518c836057355ef5e5020b5db3b5d18b1f778bd80acb0dc3c6a086645f4aa71" \
+  -e "MNO_API_SECRET=c1fb4e69-bb67-48b4-a1a6-c23734b348cc" \
+  -e "MNO_APPLICATION_VERSION=mno-develop" \
+  -e "MNO_POWER_UNITS=4" \
+  --add-host application.maestrano.io:172.17.42.1 \
+  --add-host connec.maestrano.io:172.17.42.1 \
+  maestrano/vtiger6:latest
+ ```
 
-`sudo docker run -t -i --add-host application.maestrano.io:172.17.42.1 --add-host connec.maestrano.io:172.17.42.1 --name=vtiger6_container maestrano:vtiger-6.2.0`
+## Setup your development environment
+Use `docker ps -a` to retrieve the name of the container that you just started, and launch this script (from directory deploy/):
 
-## Retrieve container details (IP address...)
-`sudo docker inspect vtiger6_container`
+```bash
+ruby ./setup_devenv.rb <container name> <path>
+```
 
-And then access the container with http://[IP_ADDRESS] to check vTiger is running
+It will retrieve the IP of your container, add it to your /etc/hosts file, and link the directory containing vTiger source files (stored inside of the container) to a local path.
 
-## Apply the maestrano patch (SSO and Connec! data sharing)
-ansible-playbook /etc/ansible/playbooks/configure_vtiger6.yml -c local --extra-vars='{"sso_enabled": "true", "connec_enabled": "true", "maestrano_environment": "local", "server_hostname": "vtiger6.app.dev.maestrano.io", "api_key": "94cd736d57484d5e42ed1a194de0af7508b1163a35909ab7fe3b713a90816661", "api_secret": "baa59b5b-cb6b-4e4b-8682-b3966877840e"}'
+Some files will be created in this directory during the installation phase. Consequently, you will have to :
+- add the newly created files to your .git/info/excludes for them to be excluded from your next commits
+- temporarily untrack the versionned files that have been modified during the installation:
 
-### Maestrano configuration variables:
- - sso_enabled
- - connec_enabled
- - maestrano_environment (production, uat, local)
- - server_hostname (cube uid)
- - api_key
- - api_secret
- - innodb_additional_mem_pool_size (4M, 8M, 16M) based on container allocate PU
- - innodb_buffer_pool_size (64M, 128M, 256M) based on container allocate PU
- - php_memory_limit (64M, 128M, 256M) based on container allocate PU
+```bash
+git update-index --assume-unchanged <file>
+```
 
-## TODO
-Map container mysql data and vtiger directory as volumes and do backups:
--v /path/in/host:/var/lib/mysql -v /path/in/host:/var/lib/vtiger/webapp
+## Docker Hub
+The image can be pulled down from [Docker Hub](https://registry.hub.docker.com/u/maestrano/vtiger6/)
+**maestrano/vtiger6:stable**: Production version
 
-
-# Docker cheat-sheet
-
-## List docker containers
-`sudo docker ps`
-
-## Stop and remove all containers
-sudo docker stop $(docker ps -a -q)
-sudo docker rm $(docker ps -a -q)
-
-## Remove untagged images
-sudo docker images -q --filter "dangling=true" | xargs docker rmi
+**maestrano/vtiger6:latest**: Develomment version

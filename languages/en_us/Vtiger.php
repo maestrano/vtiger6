@@ -352,6 +352,7 @@ $languageStrings = array(
 	'LBL_NEXT_MONTH' => 'Next Month',
 	'LBL_NEXT_WEEK' => 'Next Week',
 	'LBL_NO' => 'No',
+	'LBL_EQ_ZERO' => 'No',
 	'LBL_NONE' => 'None',
 	'LBL_NOTE' => 'Note',
 	'LBL_NOTEPAD' => 'Notepad',

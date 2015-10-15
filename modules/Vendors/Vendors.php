@@ -552,5 +552,15 @@ class Vendors extends CRMEntity {
     return $result;
   }
 
+  function mark_deleted($fileid) {
+    $mapper = 'SupplierOrganizationMapper';
+    if(class_exists($mapper)) {
+      $this->id = $fileid;
+      $contactMapper = new $mapper();
+      $contactMapper->processLocalUpdate($this, false, true);
+    }
+
+    parent::mark_deleted($fileid);
+  }
 }
 ?>

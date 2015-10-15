@@ -64,6 +64,10 @@ try {
       $purchaseOrderMapper = new PurchaseOrderMapper();
       $purchaseOrderMapper->fetchConnecResource($entity_id);
       break;
+    case "SALESORDERS":
+      $salesOrderMapper = new SalesOrderMapper();
+      $salesOrderMapper->fetchConnecResource($entity_id);
+      break;
     case "EVENTS":
       $eventMapper = new EventMapper();
       $eventMapper->fetchConnecResource($entity_id);
@@ -71,6 +75,18 @@ try {
     case "EVENTORDERS":
       $eventOrderMapper = new EventOrderMapper();
       $eventOrderMapper->fetchConnecResource($entity_id);
+      break;
+    case "OPPORTUNITIES":
+      $opportunityMapper = new OpportunityMapper();
+      $opportunityMapper->fetchConnecResource($entity_id);
+      break;
+    case "APPUSERS":
+      $userMapper = new UserMapper();
+      $userMapper->fetchConnecResource($entity_id);
+      break;
+    case "TEAMS":
+      $teamMapper = new TeamMapper();
+      $teamMapper->fetchConnecResource($entity_id);
       break;
   }
 } catch (Exception $e) {

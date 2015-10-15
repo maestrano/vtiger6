@@ -155,7 +155,7 @@ $languageStrings = array(
 	'LBL_OPTIONS1'=>'',
 	'LBL_OPTIONS2'=>"",
 	'LBL_MAIL_SERVER_SMTP'=>'Servidor de Correo (SMTP)',
-	'LBL_OUTGOING_SERVER_FROM_FIELD'=>'NOTA: Si el campo "Email de" se deja en blanco se utilizará la cuenta de correo del usuario.',
+	'LBL_OUTGOING_SERVER_NOTE' => 'NOTA: El servidor saliente debe establecerse en SSL o TLS Protocal y Si el campo "Desde el correo electrónico" se pone en blanco a continuación, la dirección de correo electrónico del usuario será recogido.',
 	'LBL_TESTMAILSTATUS'=>'Estado del Correo de Verificación : ',
 	'LBL_MAILSENDERROR'=>'El correo no se puede enviar al administrador. Comprueba su email y los datos de configuración.',
 

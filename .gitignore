@@ -10,9 +10,8 @@ maestrano/var/*
 maestrano.json
 migrate.php
 install.php
-languages/en_us/EventManagement.php
-languages/en_us/EventTicket.php
-languages/fr_fr/EventManagement.php
-languages/fr_fr/EventTicket.php
+languages
 modules/EventManagement/
 modules/EventTicket/
+.git-version
+app_setup.php

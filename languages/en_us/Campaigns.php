@@ -58,3 +58,7 @@ $languageStrings = array(
         'Planning'=>'Planning', 
         'Active'=>'Active'
 );
+
+$jsLanguageStrings = array(
+       'JS_LBL_ARE_YOU_SURE_YOU_WANT_TO_ADD_THIS_FILTER' => 'Are you sure you want to add this filter records?.',
+ );

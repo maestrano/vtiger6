@@ -16,6 +16,7 @@ class Settings_Groups_Save_Action extends Settings_Vtiger_Index_Action {
 		$recordId = $request->get('record');
 
 		$moduleModel = Settings_Vtiger_Module_Model::getInstance($qualifiedModuleName);
+		
 		if(!empty($recordId)) {
 			$recordModel = Settings_Groups_Record_Model::getInstance($recordId);
 		} else {

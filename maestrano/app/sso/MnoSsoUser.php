@@ -34,14 +34,16 @@ class MnoSsoUser extends Maestrano_Sso_User {
   * Find or Create a user based on the SAML response parameter and Add the user to current session
   */
   public function findOrCreate() {
-    // Find user by uid or email
+    // Find user by uid. Is it exists, it has already signed in using SSO
     $local_id = $this->getLocalIdByUid();
+    $new_user = ($local_id == null);
+    // Find user by email
     if($local_id == null) { $local_id = $this->getLocalIdByEmail(); }
 
     if ($local_id) {
       // User found, load it
       $this->local_id = $local_id;
-      $this->syncLocalDetails();
+      $this->syncLocalDetails($new_user);
     } else {
       // New user, create it
       $this->local_id = $this->createLocalUser();
@@ -124,7 +126,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
     $fields["confirm_password"] = $fields["user_password"];
     $fields["first_name"] = $this->getFirstName();
     $fields["last_name"] = $this->getLastName();
-    $fields["roleid"] = "H2"; # H2 role cannot be deleted
+    $fields["roleid"] = $this->getDefaultRole();
     $fields["status"] = "Active";
     $fields["activity_view"] = "Today";
     $fields["lead_view"] = "Today";
@@ -188,7 +190,6 @@ class MnoSsoUser extends Maestrano_Sso_User {
     }
   }
   
-  
   /**
    * Get the ID of a local user via Maestrano UID lookup
    *
@@ -225,16 +226,26 @@ class MnoSsoUser extends Maestrano_Sso_User {
    *
    * @return boolean whether the user was synced or not
    */
-   protected function syncLocalDetails() {
-     if($this->local_id) {
-       // Update record
-       $query = "UPDATE vtiger_users SET email1=?, first_name=?, last_name=? where id=?";
-       $upd = $this->connection->pquery($query, array($this->getEmail(), $this->getFirstName(), $this->getLastName(), $this->local_id));
-       return $upd;
-     }
+  protected function syncLocalDetails($new_user=false) {
+    if($this->local_id) {
+      // Update record
+      $query = "UPDATE vtiger_users SET email1=?, first_name=?, last_name=? where id=?";
+      $upd = $this->connection->pquery($query, array($this->getEmail(), $this->getFirstName(), $this->getLastName(), $this->local_id));
+      
+      // If User signs in for the first time, set user account
+      if($new_user) {
+        $this->_user = CRMEntity::getInstance("Users");
+        $this->_user->retrieve_entity_info($local_id, "Users");
+        vtlib_setup_modulevars("Users", $this->_user);
+        $this->_user->id = $this->local_id;
+        $this->_user->mode = 'edit';
+        $this->buildLocalUser();
+        $this->_user->save('Users');
 
-     return false;
-   }
+        $this->setLocalUid();
+      }
+    }
+  }
   
   /**
    * Set the Maestrano UID on a local user via id lookup
@@ -252,7 +263,7 @@ class MnoSsoUser extends Maestrano_Sso_User {
     return false;
   }
 
-   /**
+  /**
   * Generate a random password.
   * Convenient to set dummy passwords on users
   *
@@ -266,5 +277,18 @@ class MnoSsoUser extends Maestrano_Sso_User {
       $randomString .= $characters[rand(0, strlen($characters) - 1)];
     }
     return $randomString;
+  }
+
+  /**
+   * Get the first vtiger role with depth 1 (Defaults to CEO on fresh install)
+   */
+  protected function getDefaultRole() {
+    $query = "SELECT roleid from vtiger_role where depth=1 limit 1";
+
+    $result = $this->connection->pquery($query);
+
+    // Return roleid value
+    if ($result) { return $this->connection->query_result($result, 0, 'roleid'); }
+    return null;
   }
 }

@@ -102,6 +102,10 @@ function vtws_convertlead($entityvalues, $user) {
 					}
 				}
 				if ($create) {
+					// Mno Hook
+					$entityObjectValues['opts'] = array();
+					$entityObjectValues['opts']['from_lead'] = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($leadIdComponents[1], 'Leads')['mno_entity_guid'];
+
 					$entityRecord = vtws_create($entityvalue['name'], $entityObjectValues, $user);
 					$entityIds[$entityName] = $entityRecord['id'];
 				}

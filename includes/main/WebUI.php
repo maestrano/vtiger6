@@ -22,9 +22,15 @@ class Vtiger_WebUI extends Vtiger_EntryPoint {
 	 * @throws AppException
 	 */
 	protected function checkLogin (Vtiger_Request $request) {
-		if (!$this->hasLogin()) {
-			header('Location: index.php');
-			throw new AppException('Login is required');
+		 if (!$this->hasLogin()) {
+			    $return_params = $_SERVER['QUERY_STRING'];
+                 if($return_params && !$_SESSION['return_params']) {
+                    //Take the url that user would like to redirect after they have successfully logged in.
+                    $return_params = urlencode($return_params);
+                    Vtiger_Session::set('return_params', $return_params);
+                }
+                header ('Location: index.php');
+                throw new AppException('Login is required');
 		}
 	}
 
@@ -50,7 +56,7 @@ class Vtiger_WebUI extends Vtiger_EntryPoint {
 		$moduleModel = Vtiger_Module_Model::getInstance($moduleName);
 
 		if (empty($moduleModel)) {
-			throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND'));
+			throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND') . " for module: " . json_encode($request->getModule()) . ", handler: " . json_encode($handler));
 		}
 
 		$userPrivilegesModel = Users_Privileges_Model::getCurrentUserPrivilegesModel();
@@ -200,7 +206,7 @@ class Vtiger_WebUI extends Vtiger_EntryPoint {
 				$response = $handler->process($request);
 				$this->triggerPostProcess($handler, $request);
 			} else {
-				throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND'));
+				throw new AppException(vtranslate('LBL_HANDLER_NOT_FOUND') . " handler: " . json_encode($handler) . ", module: " . json_encode($module));
 			}
 		} catch(Exception $e) {
 			if ($view) {

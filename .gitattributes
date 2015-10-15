@@ -1,0 +1,5 @@
+user_privileges merge=ours
+tabdata.php merge=ours
+parent_tabdata.php merge=ours
+config.inc.php merge=ours
+maestrano.json merge=ours

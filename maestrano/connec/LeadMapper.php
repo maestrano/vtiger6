@@ -41,6 +41,8 @@ class LeadMapper extends BaseMapper {
     if($this->is_set($lead_hash['first_name'])) { $lead->column_fields['firstname'] = $lead_hash['first_name']; }
     if($this->is_set($lead_hash['last_name'])) { $lead->column_fields['lastname'] = $lead_hash['last_name']; }
     if($this->is_set($lead_hash['description'])) { $lead->column_fields['description'] = $lead_hash['description']; }
+    if($this->is_set($lead_hash['lead_status'])) { $lead->column_fields['leadstatus'] = $lead_hash['lead_status']; }
+    if($this->is_set($lead_hash['lead_source'])) { $lead->column_fields['leadsource'] = $lead_hash['lead_source']; }
 
     if($this->is_set($lead_hash['address_work']) && $this->is_set($lead_hash['address_work']['shipping'])) {
       $shipping_address = $lead_hash['address_work']['shipping'];
@@ -63,55 +65,66 @@ class LeadMapper extends BaseMapper {
 
     if($this->is_set($lead_hash['website']['url'])) { $lead->column_fields['website'] = $lead_hash['website']['url']; }
 
-    // Map Organization
+    // Map Organization name as Lead company
     if($this->is_set($lead_hash['organization_id'])) {
       $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['organization_id'], 'ORGANIZATION', 'ACCOUNTS');
       if($mno_id_map) {
         $account_id = $mno_id_map['app_entity_id'];
         $account = CRMEntity::getInstance("Accounts");
         $account->retrieve_entity_info($account_id, "Accounts");
-        $lead->column_fields['website'] = $account->column_fields['accountname'];
+        $lead->column_fields['company'] = $account->column_fields['accountname'];
       }
     }
+
+    $mno_id_map = false;
+    if ($lead_hash['assignee_type'] == "Entity::AppUser") {
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['assignee_id'], 'AppUser');
+    } else if ($lead_hash['assignee_type'] == "Entity::Team") {
+      $mno_id_map = MnoIdMap::findMnoIdMapByMnoIdAndEntityName($lead_hash['assignee_id'], 'Team');
+    }
+    if ($mno_id_map) { $lead->column_fields['assigned_user_id'] = $mno_id_map['app_entity_id']; }
+
   }
 
   // Map the vTiger Person to a Connec resource hash
   protected function mapModelToConnecResource($lead) {
     $lead_hash = array();
 
-    // Save as Customer
+    // Save as Lead
     $lead_hash['is_lead'] = true;
 
     // Unset Customer flag when creating a new Lead
     if($this->is_new($lead)) { $lead_hash['is_customer'] = false; }
 
     // Map attributes
-    if($this->is_set($lead->column_fields['lead_no'])) { $lead_hash['code'] = $lead->column_fields['lead_no']; }
-    if($this->is_set($lead->column_fields['salutationtype'])) { $lead_hash['title'] = $lead->column_fields['salutationtype']; }
-    if($this->is_set($lead->column_fields['firstname'])) { $lead_hash['first_name'] = $lead->column_fields['firstname']; }
-    if($this->is_set($lead->column_fields['lastname'])) { $lead_hash['last_name'] = $lead->column_fields['lastname']; }
-    if($this->is_set($lead->column_fields['description'])) { $lead_hash['description'] = $lead->column_fields['description']; }
+    $lead_hash['code'] = $lead->column_fields['lead_no'];
+    $lead_hash['title'] = $lead->column_fields['salutationtype'];
+    $lead_hash['first_name'] = $lead->column_fields['firstname'];
+    $lead_hash['last_name'] = $lead->column_fields['lastname'];
+    $lead_hash['description'] = $lead->column_fields['description'];
+    $lead_hash['lead_status'] = $lead->column_fields['leadstatus'];
+    $lead_hash['lead_source'] = $lead->column_fields['leadsource'];
     
     $address = array();
     $shipping_address = array();
-    if($this->is_set($lead->column_fields['lane'])) { $shipping_address['line1'] = $lead->column_fields['lane']; }
-    if($this->is_set($lead->column_fields['pobox'])) { $shipping_address['line2'] = $lead->column_fields['pobox']; }
-    if($this->is_set($lead->column_fields['city'])) { $shipping_address['city'] = $lead->column_fields['city']; }
-    if($this->is_set($lead->column_fields['state'])) { $shipping_address['region'] = $lead->column_fields['state']; }
-    if($this->is_set($lead->column_fields['code'])) { $shipping_address['postal_code'] = $lead->column_fields['code']; }
-    if($this->is_set($lead->column_fields['country'])) { $shipping_address['country'] = $lead->column_fields['country']; }
+    $shipping_address['line1'] = $lead->column_fields['lane'];
+    $shipping_address['line2'] = $lead->column_fields['pobox'];
+    $shipping_address['city'] = $lead->column_fields['city'];
+    $shipping_address['region'] = $lead->column_fields['state'];
+    $shipping_address['postal_code'] = $lead->column_fields['code'];
+    $shipping_address['country'] = $lead->column_fields['country'];
     if(!empty($shipping_address)) { $address['shipping'] = $shipping_address; }
     if(!empty($address)) { $lead_hash['address_work'] = $address; }
 
     $phone_work_hash = array();
-    if($this->is_set($lead->column_fields['phone'])) { $phone_work_hash['landline'] = $lead->column_fields['phone']; }
-    if($this->is_set($lead->column_fields['mobile'])) { $phone_work_hash['mobile'] = $lead->column_fields['mobile']; }
-    if($this->is_set($lead->column_fields['fax'])) { $phone_work_hash['fax'] = $lead->column_fields['fax']; }
+    $phone_work_hash['landline'] = $lead->column_fields['phone'];
+    $phone_work_hash['mobile'] = $lead->column_fields['mobile'];
+    $phone_work_hash['fax'] = $lead->column_fields['fax'];
     if(!empty($phone_work_hash)) { $lead_hash['phone_work'] = $phone_work_hash; }
 
     $email_hash = array();
-    if($this->is_set($lead->column_fields['email'])) { $email_hash['address'] = $lead->column_fields['email']; }
-    if($this->is_set($lead->column_fields['secondaryemail'])) { $email_hash['address2'] = $lead->column_fields['secondaryemail']; }
+    $email_hash['address'] = $lead->column_fields['email'];
+    $email_hash['address2'] = $lead->column_fields['secondaryemail'];
     if(!empty($email_hash)) { $lead_hash['email'] = $email_hash; }
 
     // Map Organization by Name
@@ -122,6 +135,22 @@ class LeadMapper extends BaseMapper {
         if($mno_id_map) { $lead_hash['organization_id'] = $mno_id_map['mno_entity_guid']; }
       }
     }
+
+    // Map Assigned User / team
+    if($this->is_set($lead->column_fields['assigned_user_id'])) {
+      $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($lead->column_fields['assigned_user_id'], 'USERS');
+      if($mno_id_map) {
+        $lead_hash['assignee_id'] = $mno_id_map['mno_entity_guid'];
+        $lead_hash['assignee_type'] = "Entity::AppUser";
+      }
+      else {
+        $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($lead->column_fields['assigned_user_id'], 'Settings_Groups_Record_Model');
+        if($mno_id_map) {
+          $lead_hash['assignee_id'] = $mno_id_map['mno_entity_guid'];
+          $lead_hash['assignee_type'] = "Entity::Team";
+        }
+      }
+    }    
 
     return $lead_hash;
   }

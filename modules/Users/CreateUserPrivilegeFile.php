@@ -81,8 +81,15 @@ function createUserPrivilegesfile($userid)
 			$newbuf .= "\n";
 			$newbuf .= "\$current_user_profiles=".constructSingleArray(getUserProfile($userid)).";\n";
 			$newbuf .= "\n";
-			$newbuf .= "\$profileGlobalPermission=".constructArray($globalPermissionArr).";\n";
-			$newbuf .="\n";		
+			// Mno fix: avoid buggy php when empty array
+			if (count($globalPermissionArr) > 0) {
+				$newbuf .= "\$profileGlobalPermission=".constructArray($globalPermissionArr).";\n";
+				$newbuf .="\n";		
+			}
+			else {
+				$newbuf .= "\$profileGlobalPermission=array();\n";
+				$newbuf .="\n";	
+			}
 			$newbuf .= "\$profileTabsPermission=".constructArray($tabsPermissionArr).";\n";
 			$newbuf .="\n";		
 			$newbuf .= "\$profileActionPermission=".constructTwoDimensionalArray($actionPermissionArr).";\n";

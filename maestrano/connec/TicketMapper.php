@@ -23,7 +23,7 @@ class TicketMapper extends BaseMapper {
   }
 
   // Return a local Ticket by id
-  protected function loadModelById($local_id) {
+  public function loadModelById($local_id) {
     $ticket = CRMEntity::getInstance("EventTicket");
     $ticket->retrieve_entity_info($local_id, "EventTicket");
     vtlib_setup_modulevars("EventTicket", $ticket);
@@ -60,16 +60,15 @@ class TicketMapper extends BaseMapper {
     $ticket_hash = array();
 
     // Map attributes
-    if($this->is_set($ticket->column_fields['ticket_name'])) { $ticket_hash['name'] = $ticket->column_fields['ticket_name']; }
-    if($this->is_set($ticket->column_fields['description'])) { $ticket_hash['description'] = $ticket->column_fields['description']; }
-    if($this->is_set($ticket->column_fields['quantity_total'])) { $ticket_hash['quantity_total'] = $ticket->column_fields['quantity_total']; }
-    if($this->is_set($ticket->column_fields['quantity_sold'])) { $ticket_hash['quantity_sold'] = $ticket->column_fields['quantity_sold']; }
-    if($this->is_set($ticket->column_fields['minimum_quantity'])) { $ticket_hash['minimum_quantity'] = $ticket->column_fields['minimum_quantity']; }
-    if($this->is_set($ticket->column_fields['maximum_quantity'])) { $ticket_hash['maximum_quantity'] = $ticket->column_fields['maximum_quantity']; }
-    if($this->is_set($ticket->column_fields['sales_start'])) { $ticket_hash['sales_start'] = $ticket->column_fields['sales_start']; }
-    if($this->is_set($ticket->column_fields['sales_end'])) { $ticket_hash['sales_end'] = $ticket->column_fields['sales_end']; }
-
-    if($this->is_set($ticket->column_fields['ticket_price'])) { $ticket_hash['cost'] = array('total_amount' => $ticket->column_fields['ticket_price']); }
+    $ticket_hash['name'] = $ticket->column_fields['ticket_name'];
+    $ticket_hash['description'] = $ticket->column_fields['description'];
+    $ticket_hash['quantity_total'] = $ticket->column_fields['quantity_total'];
+    $ticket_hash['quantity_sold'] = $ticket->column_fields['quantity_sold'];
+    $ticket_hash['minimum_quantity'] = $ticket->column_fields['minimum_quantity'];
+    $ticket_hash['maximum_quantity'] = $ticket->column_fields['maximum_quantity'];
+    $ticket_hash['sales_start'] = $ticket->column_fields['sales_start'];
+    $ticket_hash['sales_end'] = $ticket->column_fields['sales_end'];
+    $ticket_hash['cost'] = array('total_amount' => $ticket->column_fields['ticket_price']);
 
     return $ticket_hash;
   }

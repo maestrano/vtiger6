@@ -44,18 +44,24 @@ class ProductMapper extends BaseMapper {
     if($this->is_set($product_hash['code'])) { $product->column_fields['product_no'] = $product_hash['code']; }
     if($this->is_set($product_hash['name'])) { $product->column_fields['productname'] = $product_hash['name']; }
     if($this->is_set($product_hash['description'])) { $product->column_fields['description'] = $product_hash['description']; }
-    if($this->is_set($product_hash['reference'])) { $product->column_fields['productcode'] = $product_hash['reference']; }
+    if($this->is_set($product_hash['serial_number'])) { $product->column_fields['serial_no'] = $product_hash['serial_number']; }
+    if($this->is_set($product_hash['part_number'])) { $product->column_fields['productcode'] = $product_hash['part_number']; }
+    
     if($this->is_set($product_hash['unit'])) { $product->column_fields['qty_per_unit'] = $product_hash['unit']; }
     if($this->is_set($product_hash['unit_type'])) { $product->column_fields['usageunit'] = $product_hash['unit_type']; }
+
+    if($this->is_set($product_hash['start_date'])) { $product->column_fields['sales_start_date'] = $this->format_date_to_php($product_hash['start_date']); }
+    if($this->is_set($product_hash['end_date'])) { $product->column_fields['sales_end_date'] = $this->format_date_to_php($product_hash['end_date']); }
 
     if($this->is_set($product_hash['sale_price'])) {
       if($this->is_set($product_hash['sale_price']['net_amount'])) { $product->column_fields['unit_price'] = $product_hash['sale_price']['net_amount']; }
     }
 
-    // Track product inventory from another application
+    // Set product stock levels
     if($this->is_set($product_hash['is_inventoried']) && $product_hash['is_inventoried']) {
-      $product->column_fields['qtyinstock'] = $product_hash['quantity_on_hand'];
+      $product->column_fields['qtyinstock'] = is_null($product_hash['initial_quantity']) ? $product_hash['quantity_on_hand'] : $product_hash['initial_quantity'];
       $product->column_fields['qtyindemand'] = $product_hash['quantity_committed'];
+      $product->column_fields['reorderlevel'] = $product_hash['minimum_quantity'];
     }
   }
 
@@ -67,26 +73,30 @@ class ProductMapper extends BaseMapper {
     if($this->is_new($product)) { $product_hash['type'] = 'PURCHASED'; }
 
     // Map attributes
-    if($this->is_set($product->column_fields['product_no'])) { $product_hash['code'] = $product->column_fields['product_no']; }
-    if($this->is_set($product->column_fields['productname'])) { $product_hash['name'] = $product->column_fields['productname']; }
-    if($this->is_set($product->column_fields['description'])) { $product_hash['description'] = $product->column_fields['description']; }
-    if($this->is_set($product->column_fields['productcode'])) { $product_hash['reference'] = $product->column_fields['productcode']; }
-    if($this->is_set($product->column_fields['qty_per_unit'])) { $product_hash['unit'] = $product->column_fields['qty_per_unit']; }
-    if($this->is_set($product->column_fields['usageunit'])) { $product_hash['unit_type'] = $product->column_fields['usageunit']; }
+    $product_hash['code'] = $product->column_fields['product_no'];
+    $product_hash['name'] = $product->column_fields['productname'];
+    $product_hash['description'] = $product->column_fields['description'];
+    $product_hash['serial_number'] = $product->column_fields['serial_no'];
+    $product_hash['part_number'] = $product->column_fields['productcode'];
+    $product_hash['unit'] = $product->column_fields['qty_per_unit'];
+    $product_hash['unit_type'] = $product->column_fields['usageunit'];
+    $product_hash['start_date'] = $this->format_date_to_connec($product->column_fields['sales_start_date']);
+    $product_hash['end_date'] = $this->format_date_to_connec($product->column_fields['sales_end_date']);
+    
+    $unit_price = $this->format_string_to_decimal($product->column_fields['unit_price']);
+    $qtyinstock = $this->format_string_to_decimal($product->column_fields['qtyinstock']);
+    $qtyindemand = $this->format_string_to_decimal($product->column_fields['qtyindemand']);
+    $reorderlevel = $this->format_string_to_decimal($product->column_fields['reorderlevel']);
 
-    if($this->is_set($product->column_fields['unit_price'])) { $product_hash['sale_price'] = array('net_amount' => $product->column_fields['unit_price']); }
+    $product_hash['sale_price'] = array('net_amount' => $unit_price);
 
     // Inventory tracking
-    $qtyinstock = $product->column_fields['qtyinstock'];
-    $qtyindemand = $product->column_fields['qtyindemand'];
-    $unit_price = $product->column_fields['unit_price'];
-    if($this->is_set($qtyinstock) && $this->is_set($qtyindemand)) {
-      $product_hash['quantity_on_hand'] = $qtyinstock;
-      $product_hash['quantity_committed'] = $qtyindemand;
-      $product_hash['quantity_available'] = $qtyinstock - $qtyindemand;
-      $product_hash['average_cost'] = $qtyinstock * $unit_price;
-      $product_hash['current_value'] = $unit_price;
-    }
+    $product_hash['quantity_on_hand'] = $qtyinstock;
+    $product_hash['quantity_committed'] = $qtyindemand;
+    $product_hash['quantity_available'] = $qtyinstock - $qtyindemand;
+    $product_hash['average_cost'] = $unit_price;
+    $product_hash['current_value'] = $qtyinstock * $unit_price;
+    $product_hash['minimum_quantity'] = $reorderlevel;
 
     ProductMapper::mapTaxToConnecResource($product, $product_hash);
     ProductMapper::mapAccountToConnecResource($product, $product_hash);

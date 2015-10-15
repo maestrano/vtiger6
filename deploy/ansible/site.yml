@@ -1,0 +1,10 @@
+---
+
+# This playbook installs and configures vTiger6
+- hosts: localhost
+  connection: local
+  roles:
+    - apache
+    - mysql
+    - ssmtp
+    - vtiger6-install

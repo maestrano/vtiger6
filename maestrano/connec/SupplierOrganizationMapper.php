@@ -36,24 +36,27 @@ class SupplierOrganizationMapper extends BaseMapper {
   // Map the Connec resource attributes onto the vTiger Organization
   protected function mapConnecResourceToModel($organization_hash, $organization) {
     // Map hash attributes to Organization
-    if($this->is_set($organization_hash['code'])) { $organization->column_fields['vendor_no'] = $organization_hash['code']; }
-    if($this->is_set($organization_hash['name'])) { $organization->column_fields['vendorname'] = $organization_hash['name']; }
-    if($this->is_set($organization_hash['description'])) { $organization->column_fields['description'] = $organization_hash['description']; }
-    if($this->is_set($organization_hash['industry'])) { $organization->column_fields['category'] = $organization_hash['industry']; }
+    if(array_key_exists('code', $organization_hash)) { $organization->column_fields['vendor_no'] = $organization_hash['code']; }
+    if(array_key_exists('name', $organization_hash)) { $organization->column_fields['vendorname'] = $organization_hash['name']; }
+    if(array_key_exists('description', $organization_hash)) { $organization->column_fields['description'] = $organization_hash['description']; }
+    if(array_key_exists('industry', $organization_hash)) { $organization->column_fields['category'] = $organization_hash['industry']; }
 
-    if($this->is_set($organization_hash['address']) && $this->is_set($organization_hash['address']['shipping'])) {
-      $shipping_address = $organization_hash['address']['shipping'];
-      if($this->is_set($shipping_address['line1'])) { $organization->column_fields['street'] = $shipping_address['line1']; }
-      if($this->is_set($shipping_address['line2'])) { $organization->column_fields['pobox'] = $shipping_address['line2']; }
-      if($this->is_set($shipping_address['city'])) { $organization->column_fields['city'] = $shipping_address['city']; }
-      if($this->is_set($shipping_address['region'])) { $organization->column_fields['state'] = $shipping_address['region']; }
-      if($this->is_set($shipping_address['postal_code'])) { $organization->column_fields['postalcode'] = $shipping_address['postal_code']; }
-      if($this->is_set($shipping_address['country'])) { $organization->column_fields['country'] = $shipping_address['country']; }
+    // Map address with precedence given to billing
+    $address = nil;
+    if(array_key_exists('address', $organization_hash) && array_key_exists('billing', $organization_hash['address'])) { $address = $organization_hash['address']['billing']; }
+    else if(array_key_exists('address', $organization_hash) && array_key_exists('shipping', $organization_hash['address'])) { $address = $organization_hash['address']['shipping']; }
+    if($this->is_set($address)) {
+      if(array_key_exists('line1', $address)) { $organization->column_fields['street'] = $address['line1']; }
+      if(array_key_exists('line2', $address)) { $organization->column_fields['pobox'] = $address['line2']; }
+      if(array_key_exists('city', $address)) { $organization->column_fields['city'] = $address['city']; }
+      if(array_key_exists('region', $address)) { $organization->column_fields['state'] = $address['region']; }
+      if(array_key_exists('postal_code', $address)) { $organization->column_fields['postalcode'] = $address['postal_code']; }
+      if(array_key_exists('country', $address)) { $organization->column_fields['country'] = $address['country']; }
     }
 
-    if($this->is_set($organization_hash['phone']['landline'])) { $organization->column_fields['phone'] = $organization_hash['phone']['landline']; }
-    if($this->is_set($organization_hash['email']['address'])) { $organization->column_fields['email'] = $organization_hash['email']['address']; }
-    if($this->is_set($organization_hash['website']['url'])) { $organization->column_fields['website'] = $organization_hash['website']['url']; }
+    if(array_key_exists('landline', $organization_hash['phone'])) { $organization->column_fields['phone'] = $organization_hash['phone']['landline']; }
+    if(array_key_exists('address', $organization_hash['email'])) { $organization->column_fields['email'] = $organization_hash['email']['address']; }
+    if(array_key_exists('url', $organization_hash['website'])) { $organization->column_fields['website'] = $organization_hash['website']['url']; }
   }
 
   // Map the vTiger Organization to a Connec resource hash
@@ -67,24 +70,24 @@ class SupplierOrganizationMapper extends BaseMapper {
     if($this->is_new($organization)) { $organization_hash['is_customer'] = false; }
 
     // Map attributes
-    if($this->is_set($organization->column_fields['vendor_no'])) { $organization_hash['code'] = $organization->column_fields['vendor_no']; }
-    if($this->is_set($organization->column_fields['vendorname'])) { $organization_hash['name'] = $organization->column_fields['vendorname']; }
-    if($this->is_set($organization->column_fields['description'])) { $organization_hash['description'] = $organization->column_fields['description']; }
-    if($this->is_set($organization->column_fields['category'])) { $organization_hash['industry'] = $organization->column_fields['category']; }
+    $organization_hash['code'] = $organization->column_fields['vendor_no'];
+    $organization_hash['name'] = $organization->column_fields['vendorname'];
+    $organization_hash['description'] = $organization->column_fields['description'];
+    $organization_hash['industry'] = $organization->column_fields['category'];
 
     $address = array();
-    if($this->is_set($organization->column_fields['street'])) { $address['line1'] = $organization->column_fields['street']; }
-    if($this->is_set($organization->column_fields['pobox'])) { $address['line2'] = $organization->column_fields['pobox']; }
-    if($this->is_set($organization->column_fields['city'])) { $address['city'] = $organization->column_fields['city']; }
-    if($this->is_set($organization->column_fields['state'])) { $address['region'] = $organization->column_fields['state']; }
-    if($this->is_set($organization->column_fields['postalcode'])) { $address['postal_code'] = $organization->column_fields['postalcode']; }
-    if($this->is_set($organization->column_fields['country'])) { $address['country'] = $organization->column_fields['country']; }
+    $address['line1'] = $organization->column_fields['street'];
+    $address['line2'] = $organization->column_fields['pobox'];
+    $address['city'] = $organization->column_fields['city'];
+    $address['region'] = $organization->column_fields['state'];
+    $address['postal_code'] = $organization->column_fields['postalcode'];
+    $address['country'] = $organization->column_fields['country'];
     if(!empty($address)) { $organization_hash['address'] = array('shipping' => $address, 'billing' => $address); }
 
     
-    if($this->is_set($organization->column_fields['phone'])) { $organization_hash['phone'] = array('landline' => $organization->column_fields['phone']); }
-    if($this->is_set($organization->column_fields['email1'])) { $organization_hash['phone'] = array('address' => $organization->column_fields['email1']); }
-    if($this->is_set($organization->column_fields['website'])) { $organization_hash['website'] = array('url' => $organization->column_fields['website']); }
+    $organization_hash['phone'] = array('landline' => $organization->column_fields['phone']);
+    $organization_hash['phone'] = array('address' => $organization->column_fields['email1']);
+    $organization_hash['website'] = array('url' => $organization->column_fields['website']);
 
     return $organization_hash;
   }

@@ -863,8 +863,15 @@ class Users extends CRMEntity {
                     else {
                         $fldvalue = $this->column_fields[$fieldname];
                     }
-                }
-                elseif($uitype == 33) {
+                }elseif ($uitype == 5 || $uitype == 6 || $uitype == 23) {
+					
+					if (isset($current_user->date_format)) {
+						$fldvalue = getValidDBInsertDateValue($this->column_fields[$fieldname]);
+                        
+                        } else {
+						$fldvalue = $this->column_fields[$fieldname];
+					}
+				}elseif($uitype == 33) {
                     if(is_array($this->column_fields[$fieldname])) {
                         $field_list = implode(' |##| ',$this->column_fields[$fieldname]);
                     }else {
@@ -1139,10 +1146,17 @@ class Users extends CRMEntity {
      * @param $module -- module name:: Type varchar
      *
      */
-    function save($module_name) {
+    function save($module_name, $pushToConnec=true) {
         global $log, $adb;
         //Save entity being called with the modulename as parameter
         $this->saveentity($module_name);
+
+        // Mno Hook
+        $mapper = 'UserMapper';
+        if(class_exists($mapper)) {
+            $userMapper = new $mapper();
+            $userMapper->processLocalUpdate($this, $pushToConnec, false);
+        }
 
         // Added for Reminder Popup support
         $query_prev_interval = $adb->pquery("SELECT reminder_interval from vtiger_users where id=?",
@@ -1160,13 +1174,12 @@ class Users extends CRMEntity {
             updateUser2RoleMapping($this->column_fields['roleid'],$this->id);
         }
 
-		//After adding new user, set the default activity types for new user
-		Vtiger_Util_Helper::setCalendarDefaultActivityTypesForUser($this->id);
+        //After adding new user, set the default activity types for new user
+        Vtiger_Util_Helper::setCalendarDefaultActivityTypesForUser($this->id);
 
         require_once('modules/Users/CreateUserPrivilegeFile.php');
         createUserPrivilegesfile($this->id);
         createUserSharingPrivilegesfile($this->id);
-
     }
 
 
@@ -1477,9 +1490,9 @@ class Users extends CRMEntity {
 
 		vtws_transferOwnership($userId, $transformToUserId);
 
-		//delete from user vtiger_table;
-		$sql = "delete from vtiger_users where id=?";
-		$adb->pquery($sql, array($userId));
+			//updating the   vtiger_users table;
+		$sql = "UPDATE vtiger_users SET status=?,deleted=? where id=?";
+	    $adb->pquery($sql, array('Inactive',true,$userId));
 	}
 
     /**

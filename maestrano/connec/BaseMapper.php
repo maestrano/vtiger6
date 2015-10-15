@@ -27,11 +27,11 @@ abstract class BaseMapper {
   }
 
   protected function is_set($variable) {
-    return (!is_null($variable) && isset($variable) && !(is_string($variable) && trim($variable)===''));
+    return (!is_null($variable) && isset($variable) && !empty($variable) && !(is_string($variable) && trim($variable)===''));
   }
 
   protected function is_new($entity) {
-    return ($entity->column_fields['createdtime'] == $entity->column_fields['modifiedtime']);
+    return ($entity->mode != 'edit');
   }
 
   protected function format_date_to_php($connec_date) {
@@ -39,9 +39,17 @@ abstract class BaseMapper {
   }
 
   protected function format_date_to_connec($php_date) {
+    if(!$this->is_set($php_date)) { return ''; }
     $date = DateTime::createFromFormat($this->_date_format, $php_date);
+    if(!$date) { $date = DateTime::createFromFormat('Y-m-d', $php_date); }
     return $date->format('c');
   }
+
+  protected function format_string_to_decimal($string) {
+    $decimal_str = str_replace(',', '', $string);
+    return floatval($decimal_str);
+  }
+
 
   // Overwrite me!
   // Return the Model local id
@@ -75,6 +83,13 @@ abstract class BaseMapper {
     return true;
   }
 
+  // Overwrite me!
+  // Optional: Method called after pushing an Entity to Connec
+  // Add any custom logic to map the response back to the model
+  public function processConnecResponse($resource_hash, $model) {
+    return $model;
+  }
+
   public function getConnecResourceName() {
     return $this->connec_resource_name;
   }
@@ -95,6 +110,28 @@ abstract class BaseMapper {
     }
   }
 
+  // Map a local Model to Connec! ID. If the Model is not locally mapped, it is pushed to Connec!
+  public function findConnecIdByLocalId($local_id) {
+    error_log("load Connec! ID by local id entity_name=$this->local_entity_name, local_id=$local_id");
+
+    if($local_id == 0) { return null; }
+
+    // Find the local mapping
+    $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
+    if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
+
+    // Mapping is missing, push the Entity to Connec!
+    $model = $this->loadModelById($local_id);
+    $this->pushToConnec($model);
+
+    // Try to fetch the local mapping again
+    $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
+    if($mno_id_map) { return $mno_id_map['mno_entity_guid']; }
+
+    error_log("cannot push Entity to Connec! entity_name=$this->local_entity_name, local_id=$local_id");
+    return null;
+  }
+
   // Fetch and persist a Connec! resounce by id
   public function fetchConnecResource($entity_id) {
     error_log("fetch connec resource entity_name=$this->connec_entity_name, entity_id=$entity_id");
@@ -103,7 +140,7 @@ abstract class BaseMapper {
     $code = $msg['code'];
 
     if($code != 200) {
-      error_log("cannot fetch Connec! entity code=$code, entity_name=$this->connec_entity_name, entity_id=$entity_id");
+      error_log("cannot fetch Connec! entity code=$code, entity_name=$this->connec_entity_name, entity_id=$entity_id, connec_endpoint=$this->connec_resource_endpoint");
     } else {
       $result = json_decode($msg['body'], true);
       error_log("processing entity_name=$this->connec_entity_name entity=". json_encode($result));
@@ -115,11 +152,20 @@ abstract class BaseMapper {
   // Persist a list of Connec Resources as vTiger Models
   public function persistAll($resources_hash) {
     if(!is_null($resources_hash)) {
-      foreach($resources_hash as $resource_hash) {
+      // If this is an associative array, map its content
+      if(array_values($resources_hash) !== $resources_hash) {
         try {
-          $this->saveConnecResource($resource_hash);
+          $this->saveConnecResource($resources_hash);
         } catch (Exception $e) {
           error_log("Error when processing entity=".$this->connec_entity_name.", id=".$resource_hash['id'].", message=" . $e->getMessage());
+        }
+      } else {
+        foreach($resources_hash as $resource_hash) {
+          try {
+            $this->saveConnecResource($resource_hash);
+          } catch (Exception $e) {
+            error_log("Error when processing entity=".$this->connec_entity_name.", id=".$resource_hash['id'].", message=" . $e->getMessage());
+          }
         }
       }
     }
@@ -167,13 +213,16 @@ abstract class BaseMapper {
   // Map a Connec Resource to an vTiger Model
   public function findOrCreateIdMap($resource_hash, $model) {
     $local_id = $this->getId($model);
-    error_log("findOrCreateIdMap entity=$this->connec_entity_name, local_id=$local_id, entity_id=" .$resource_hash['id']);
+    error_log("findOrCreateIdMap entity=$this->connec_entity_name, local_id=$local_id, entity_id=" . $resource_hash['id']);
     
     if($local_id == 0 || is_null($resource_hash['id'])) { return null; }
 
     $mno_id_map = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($local_id, $this->local_entity_name);
-    if(!$mno_id_map) {
-      error_log("map connec resource entity=$this->connec_entity_name, id=" . $resource_hash['id'] . ", local_id=$local_id");
+    if($mno_id_map && $mno_id_map['mno_entity_guid'] != $resource_hash['id']) {
+      error_log("mno_id_map changed from " . $mno_id_map['mno_entity_guid'] . " to " . $resource_hash['id']);
+      return MnoIdMap::addMnoIdMap($local_id, $this->local_entity_name, $resource_hash['id'], $this->connec_entity_name);
+    } else if(!$mno_id_map) {
+      error_log("map connec resource entity=$this->connec_entity_name, id=" . $resource_hash['id'] . ", local_id=$local_id, local_entity=$this->local_entity_name");
       return MnoIdMap::addMnoIdMap($local_id, $this->local_entity_name, $resource_hash['id'], $this->connec_entity_name);
     }
 
@@ -183,18 +232,12 @@ abstract class BaseMapper {
   // Process a Model update event
   // $pushToConnec: option to notify Connec! of the model update
   // $delete:       option to soft delete the local entity mapping amd ignore further Connec! updates
-  public function processLocalUpdate($model, $pushToConnec=true, $delete=false) {
+  public function processLocalUpdate($model, $pushToConnec=true, $delete=false, $saveResult=false) {
     $pushToConnec = $pushToConnec && Maestrano::param('connec.enabled');
 
     error_log("process local update entity=$this->connec_entity_name, local_id=" . $this->getId($model) . ", pushToConnec=$pushToConnec, delete=$delete");
-    
-    if($pushToConnec) {
-      $this->pushToConnec($model);
-    }
-
-    if($delete) {
-      $this->flagAsDeleted($model);
-    }
+    if($pushToConnec) { $this->pushToConnec($model, $saveResult); }
+    if($delete) { $this->flagAsDeleted($model); }
   }
 
   // Find an vTiger entity matching the Connec resource or initialize a new one
@@ -235,7 +278,8 @@ abstract class BaseMapper {
   }
 
   // Transform an vTiger Model into a Connec Resource and push it to Connec
-  protected function pushToConnec($model) {
+  // If the $saveResult parameter is set to true, the Connec! result is persisted
+  protected function pushToConnec($model, $saveResult=false) {
     error_log("push entity to connec entity=$this->connec_entity_name, local_id=" . $this->getId($model));
 
     // Transform the Model into a Connec hash
@@ -266,9 +310,21 @@ abstract class BaseMapper {
       return false;
     } else {
       error_log("Processing Connec! response code=$code, body=$body");
-      $result = json_decode($response['body'], true);
-      error_log("processing entity_name=$this->local_entity_name entity=". json_encode($result));
-      return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
+      $result = json_decode($body, true);
+      if($saveResult) {
+        // Save the complete response
+        error_log("saving back entity_name=$this->local_entity_name");
+        return $this->saveConnecResource($result[$this->connec_resource_name], true, $model);
+      } else {
+        // Map the Connec! ID with the local one
+        error_log("mapping back entity_name=$this->local_entity_name");
+        $this->findOrCreateIdMap($result[$this->connec_resource_name], $model);
+
+        // Custom response processing
+        error_log("processing back entity_name=$this->local_entity_name");
+        $this->processConnecResponse($result[$this->connec_resource_name], $model);
+        return $model;
+      }
     }
   }
 

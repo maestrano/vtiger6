@@ -20,7 +20,7 @@ abstract class Maestrano_Api_Util
     }
     return true;
   }
-  
+
   public static function toUnderscore($string) {
     return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $string));
   }
@@ -39,10 +39,10 @@ abstract class Maestrano_Api_Util
       if ($k[0] == '_') {
         continue;
       }
-      
+
       // Convert key to underscore
       $kReal = self::toUnderscore($k);
-      
+
       if ($v instanceof Maestrano_Api_Object) {
         $results[$kReal] = $v->__toArray(true);
       } else if (is_array($v)) {
@@ -63,31 +63,32 @@ abstract class Maestrano_Api_Util
    * @param string $apiToken
    * @return Maestrano_Api_Object|array
    */
-  public static function convertToMaestranoObject($resp, $apiToken)
+  public static function convertToMaestranoObject($resp, $preset)
   {
     $types = array(
       'account_bill' => 'Maestrano_Account_Bill',
       'account_recurring_bill' => 'Maestrano_Account_RecurringBill',
       'account_group' => 'Maestrano_Account_Group',
       'account_user' => 'Maestrano_Account_User',
+      'account_reseller' => 'Maestrano_Account_Reseller',
     );
-    
+
     if (self::isList($resp)) {
       $mapped = array();
       foreach ($resp as $i)
-        array_push($mapped, self::convertToMaestranoObject($i, $apiToken));
+        array_push($mapped, self::convertToMaestranoObject($i, $preset));
       return $mapped;
-    
+
     } else if (is_array($resp)) {
-      if (isset($resp['object']) 
+      if (isset($resp['object'])
           && is_string($resp['object'])
           && isset($types[$resp['object']])) {
-        
+
         $class = $types[$resp['object']];
       } else {
         $class = 'Maestrano_Api_Object';
       }
-      return Maestrano_Api_Object::scopedConstructFrom($class, $resp, $apiToken);
+      return Maestrano_Api_Object::scopedConstructFrom($class, $resp, $preset);
     } else {
       // Automatically convert dates
       if (preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $resp)) {
