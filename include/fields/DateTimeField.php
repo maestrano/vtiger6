@@ -265,12 +265,7 @@ class DateTimeField {
 		$date = self::convertToUserTimeZone($this->datetime, $user);
 		$time = $date->format("H:i:s");
 		$log->debug("Exiting getDisplayTime method ...");
-                
-                //Convert time to user preferred value
-                $userModel = Users_Privileges_Model::getCurrentUserModel();
-                if($userModel->get('hour_format') == '12'){
-                        $time = Vtiger_Time_UIType::getTimeValueInAMorPM($time);
-                }
+       
 		return $time;
 	}
 

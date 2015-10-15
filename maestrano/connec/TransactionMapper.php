@@ -52,6 +52,7 @@ class TransactionMapper extends BaseMapper {
       $transaction->column_fields['subject'] = $transaction_hash['transaction_number'];
     }
     if($this->is_set($transaction_hash['public_note'])) { $transaction->column_fields['notes'] = $transaction_hash['public_note']; }
+    else if($this->is_set($transaction_hash['private_note'])) { $transaction->column_fields['notes'] = $transaction_hash['private_note']; }
 
     // Map Organization
     if($this->is_set($transaction_hash['organization_id'])) {
@@ -153,16 +154,11 @@ class TransactionMapper extends BaseMapper {
     $transaction_hash['title'] = $transaction->column_fields['subject'];
     $transaction_hash['public_note'] = $transaction->column_fields['notes'];
 
-    // Map Organization
+    // Map Organization or Vendor
     if($this->is_set($transaction->column_fields['account_id'])) {
       $organization_id = $this->customer_organization_mapper->findConnecIdByLocalId($transaction->column_fields['account_id']);
       if($organization_id) { $transaction_hash['organization_id'] = $organization_id; }
-    } else {
-      $transaction_hash['organization_id'] = '';
-    }
-
-    // Map Vendor
-    if($this->is_set($transaction->column_fields['vendor_id'])) {
+    } else if($this->is_set($transaction->column_fields['vendor_id'])) {
       $organization_id = $this->supplier_organization_mapper->findConnecIdByLocalId($transaction->column_fields['vendor_id']);
       if($organization_id) { $transaction_hash['organization_id'] = $organization_id; }
     } else {
@@ -312,5 +308,30 @@ class TransactionMapper extends BaseMapper {
         $_REQUEST[$request_tax_name] = $tax->get('percentage');
       }
     }
+  }
+
+  // Map transaction lines IDs from Connec! to the local ones
+  public function processConnecResponse($transaction_hash, $transaction) {
+    // Map transaction lines ids
+    $line_number = 1;
+    foreach ($transaction_hash['lines'] as $transaction_line) {
+      $transaction_line_local_id = $transaction->id . "#" . $transaction_line['line_number'];
+      $transaction_line_mno_id = $transaction_hash['id'] . "#" . $transaction_line['id'];
+      $mno_transaction_line_id = MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction_line_local_id, "TRANSACTION_LINE");
+      if($mno_transaction_line_id) {
+        MnoIdMap::updateIdMapEntry($mno_transaction_line_id['mno_entity_guid'], $transaction_line_mno_id, "TRANSACTION_LINE");
+      } else {
+        MnoIdMap::addMnoIdMap($transaction_line_local_id, "TRANSACTION_LINE", $transaction_line_mno_id, "TRANSACTION_LINE");
+      }
+      $line_number++;
+    }
+
+    // Delete non-existing transaction lines ID Maps
+    while(MnoIdMap::findMnoIdMapByLocalIdAndEntityName($transaction->id . "#" . $line_number, "TRANSACTION_LINE")) {
+      MnoIdMap::hardDeleteMnoIdMap($transaction->id . "#" . $line_number, "TRANSACTION_LINE");
+      $line_number++;
+    }
+
+    return $transaction;
   }
 }

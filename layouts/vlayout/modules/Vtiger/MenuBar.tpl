@@ -252,7 +252,7 @@
 	</div>
 	{assign var="announcement" value=$ANNOUNCEMENT->get('announcement')}
 	<div class="announcement noprint" id="announcement">
-		<marquee direction="left" scrolldelay="10" scrollamount="3" behavior="scroll" class="marStyle" onmouseover="javascript:stop();" onmouseout="javascript:start();">{if !empty($announcement)}{$announcement}{else}{vtranslate('LBL_NO_ANNOUNCEMENTS',$MODULE)}{/if}</marquee>
+		<marquee direction="left" scrolldelay="10" scrollamount="3" behavior="scroll" class="marStyle" onMouseOver="this.setAttribute('scrollamount', 0, 0);" OnMouseOut="this.setAttribute('scrollamount', 6, 0);">{if !empty($announcement)}{$announcement}{else}{vtranslate('LBL_NO_ANNOUNCEMENTS',$MODULE)}{/if}</marquee>
 	</div>
 	<input type='hidden' value="{$MODULE}" id='module' name='module'/>
 	<input type="hidden" value="{$PARENT_MODULE}" id="parent" name='parent' />

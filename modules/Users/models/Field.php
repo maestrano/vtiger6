@@ -111,6 +111,11 @@ class Users_Field_Model extends Vtiger_Field_Model {
 		 if($this->get('uitype') == 32){
 			return Vtiger_Language_Handler::getLanguageLabel($value);
 		 }
+          
+         $fieldName = $this->getFieldName();
+         if(($fieldName == 'currency_decimal_separator' || $fieldName == 'currency_grouping_separator') && ($value == '&nbsp;')) {
+             return vtranslate('LBL_Space', 'Users');
+         }
         return parent::getDisplayValue($value, $recordId);
     }
 

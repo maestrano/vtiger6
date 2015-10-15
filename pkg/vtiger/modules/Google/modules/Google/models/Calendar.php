@@ -59,7 +59,7 @@ class Google_Calendar_Model extends WSAPP_SyncRecordModel {
             $gStart = "00:00";
         }
         $start = new DateTime($gStart);
-        $timeZone = new DateTimeZone('UTC');
+        $timeZone = new DateTimeZone(date_default_timezone_get());
         $start->setTimezone($timeZone);
         $startUTC = $start->format('H:i:s');
         $gDateTime = $when->getDateTime();
@@ -92,7 +92,7 @@ class Google_Calendar_Model extends WSAPP_SyncRecordModel {
             $gEnd = "00:00";
         }
         $end = new DateTime($gEnd);
-        $timeZone = new DateTimeZone('UTC');
+        $timeZone = new DateTimeZone(date_default_timezone_get());
         $end->setTimezone($timeZone);
         $endUTC = $end->format('H:i:s');
         $gDateTime = $when->getDateTime();
@@ -237,9 +237,19 @@ class Google_Calendar_Model extends WSAPP_SyncRecordModel {
      * @return <date> Vtiger date Format
      */
     public function vtigerFormat($date) {
+        $origDate = $date;
+        
         list($date, $timestring) = explode('T', $date);
         list($time, $tz) = explode('.', $timestring);
-
+        
+       // EDIT - if this is UTC lets change it to correct system time
+        if(substr($tz,-1) == 'Z') {
+            $date = new DateTime($origDate);
+            $timeZone = new DateTimeZone(date_default_timezone_get());
+            $date->setTimezone($timeZone);
+            $date = $date->format('Y-m-d H:i:s');
+            return $date;
+        }
         return $date . " " . $time;
     }
 

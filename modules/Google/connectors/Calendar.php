@@ -140,7 +140,7 @@ Class Google_Calendar_Connector extends WSAPP_TargetConnector {
         }
         
         if (count($calendarRecords) > 0) {
-            $maxModifiedTime = date('Y-m-d H:i:s', strtotime(Google_Contacts_Model::vtigerFormat(end($calendarRecords)->getUpdated())) + 1);
+            $maxModifiedTime = date('Y-m-d H:i:s', strtotime(Google_Calendar_Model::vtigerFormat(end($calendarRecords)->getUpdated())) + 1);
         }
 
         $googleRecords = array();

@@ -43,6 +43,7 @@ class Vtiger_DashBoard_Model extends Vtiger_Base_Model {
 	public function getSelectableDashboard() {
 		$db = PearDatabase::getInstance();
 		$currentUser = Users_Record_Model::getCurrentUserModel();
+        $currentUserPrivilegeModel = Users_Privileges_Model::getCurrentUserPrivilegesModel();
 		$moduleModel = $this->getModule();
 
 		$sql = 'SELECT * FROM vtiger_links WHERE linktype = ?
@@ -65,7 +66,9 @@ class Vtiger_DashBoard_Model extends Vtiger_Base_Model {
 					continue;
 				}
 			}
-			$widgets[] = Vtiger_Widget_Model::getInstanceFromValues($row);
+			 if($this->checkModulePermission($row)) {
+                $widgets[] = Vtiger_Widget_Model::getInstanceFromValues($row);
+            }
 		}
 
 		return $widgets;
@@ -81,7 +84,7 @@ class Vtiger_DashBoard_Model extends Vtiger_Base_Model {
 		$currentUser = Users_Record_Model::getCurrentUserModel();
 		$moduleModel = $this->getModule();
 
-		$sql = " SELECT vtiger_links.*, vtiger_module_dashboard_widgets.userid, vtiger_module_dashboard_widgets.id as widgetid, vtiger_module_dashboard_widgets.position as position, vtiger_links.linkid as id FROM vtiger_links ".
+		$sql = " SELECT vtiger_links.*, vtiger_module_dashboard_widgets.userid, vtiger_module_dashboard_widgets.filterid, vtiger_module_dashboard_widgets.data, vtiger_module_dashboard_widgets.id as widgetid, vtiger_module_dashboard_widgets.position as position, vtiger_links.linkid as id FROM vtiger_links ".
 				" INNER JOIN vtiger_module_dashboard_widgets ON vtiger_links.linkid=vtiger_module_dashboard_widgets.linkid".
 				" WHERE (vtiger_module_dashboard_widgets.userid = ? AND linktype = ? AND tabid = ?)";
 		$params = array($currentUser->getId(), 'DASHBOARDWIDGET', $moduleModel->getId());

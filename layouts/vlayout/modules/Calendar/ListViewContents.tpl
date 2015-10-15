@@ -81,7 +81,7 @@
              </td>
          {/foreach}
          <td> 
-             <button data-trigger="listSearch">Search</button> 
+             <button data-trigger="listSearch">{vtranslate('LBL_SEARCH', $MODULE )}</button> 
          </td>
         </tr>
 		{foreach item=LISTVIEW_ENTRY from=$LISTVIEW_ENTRIES name=listview}
@@ -159,7 +159,7 @@
 			<tr>
 				<td>
 					{assign var=SINGLE_MODULE value="SINGLE_$MODULE"}
-					{vtranslate('LBL_NO')} {vtranslate($MODULE, $MODULE)} {vtranslate('LBL_FOUND')}.{if $IS_MODULE_EDITABLE} {vtranslate('LBL_CREATE')} <a href="{$MODULE_MODEL->getCreateRecordUrl()}">{vtranslate($SINGLE_MODULE, $MODULE)}</a>{/if}
+					{vtranslate('LBL_EQ_ZERO')} {vtranslate($MODULE, $MODULE)} {vtranslate('LBL_FOUND')}.{if $IS_MODULE_EDITABLE} {vtranslate('LBL_CREATE')} <a href="{$MODULE_MODEL->getCreateRecordUrl()}">{vtranslate($SINGLE_MODULE, $MODULE)}</a>{/if}
 				</td>
 			</tr>
 		</tbody>

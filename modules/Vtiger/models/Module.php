@@ -554,19 +554,17 @@ class Vtiger_Module_Model extends Vtiger_Module {
      * @return <Array> returns related fields list.
      */
 	public function getRelatedListFields() {
-		$entityInstance = CRMEntity::getInstance($this->getName());
-        $list_fields_name = $entityInstance->list_fields_name;
-        $list_fields = $entityInstance->list_fields;
-        $relatedListFields = array();
-		foreach ($list_fields as $key => $fieldInfo) {
-			foreach ($fieldInfo as $columnName) {
-				if(array_key_exists($key, $list_fields_name)){
-					$relatedListFields[$columnName] = $list_fields_name[$key];
-				}
-			}
-
-		}
-        return $relatedListFields;
+            $entityInstance = CRMEntity::getInstance($this->getName());
+            $list_fields_name = $entityInstance->list_fields_name;
+            $list_fields = $entityInstance->list_fields;
+            $relatedListFields = array();
+            foreach ($list_fields as $key => $fieldInfo) {
+                $columnName = $fieldInfo[1];
+                if(array_key_exists($key, $list_fields_name)){
+                    $relatedListFields[$columnName] = $list_fields_name[$key];
+                }
+            }
+            return $relatedListFields;
 	}
 
 	public function getConfigureRelatedListFields(){
@@ -622,9 +620,9 @@ class Vtiger_Module_Model extends Vtiger_Module {
                 $instance = self::getInstanceFromModuleObject($moduleObject);
                 Vtiger_Cache::set('module',$value,$instance);
 				if (is_string($value)) {
-					Vtiger_Cache::set('module', $moduleObject->id, $instance);
-				} else if (is_int($value)) {
 					Vtiger_Cache::set('module', $moduleObject->name, $instance);
+				} else if (is_int($value)) {
+					Vtiger_Cache::set('module', $moduleObject->id, $instance);
 				}
             }
         }
@@ -1314,7 +1312,13 @@ class Vtiger_Module_Model extends Vtiger_Module {
 
 		//modify query if any module has summary fields, those fields we are displayed in related list of that module
 		$relatedListFields = $relatedModule->getConfigureRelatedListFields();
-		if(count($relatedListFields) > 0) {
+		
+        if($relatedModuleName == 'Documents') {
+                    $relatedListFields['filelocationtype'] = 'filelocationtype';
+                    $relatedListFields['filestatus'] = 'filestatus';
+                }
+
+        if(count($relatedListFields) > 0) {
 			$currentUser = Users_Record_Model::getCurrentUserModel();
 			$queryGenerator = new QueryGenerator($relatedModuleName, $currentUser);
 			$queryGenerator->setFields($relatedListFields);

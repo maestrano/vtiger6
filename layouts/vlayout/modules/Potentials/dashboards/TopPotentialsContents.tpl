@@ -11,31 +11,29 @@
 -->*}
 <div style='padding:5px'>
 {if count($MODELS) > 0}
-	<div class='row-fluid'>
+<div class='row-fluid'>
 		<div class='span12'>
 			<div class='row-fluid'>
-				<div class='span4'>
-					<b>{vtranslate('Potential Name', $MODULE_NAME)}</b>
+				 {foreach item=HEADER from=$MODULE_HEADER}
+                <div class='span4'>
+					<b>{vtranslate({$HEADER}, $MODULE_NAME)}</b>
 				</div>
-				<div class='span4'>
-					<b>{vtranslate('Amount', $MODULE_NAME)}</b>
-				</div>
-				<div class='span4'>
-					<b>{vtranslate('Related To', $MODULE_NAME)}</b>
-				</div>
+                 {/foreach}
 			</div>
 		</div>
 		<hr>
-		{foreach item=MODEL from=$MODELS}
-		<div class='row-fluid'>
-			<div class='span4'>
-				<a href="{$MODEL->getDetailViewUrl()}">{$MODEL->getName()}</a>
-			</div>
-			<div class='span4'>
-				{$MODEL->getDisplayValue('amount')}
-			</div>
-			<div class='span4'>
-				{$MODEL->getDisplayValue('related_to')}
+       {foreach item=MODEL from=$MODELS}
+		    <div class='row-fluid'>
+               {foreach item=HEADER key=KEY_VALUE from=$MODULE_HEADER}
+                <div class='span4'>
+			   {if $KEY_VALUE eq 'potentialname'}
+                    <a href="{$MODEL->getDetailViewUrl()}">{$MODEL->getName()}</a>
+               {else}  
+                   {$MODEL->getDisplayValue({$KEY_VALUE})}
+                 {/if}
+                </div>
+                 {/foreach}
+                         
 			</div>
 		</div>
 		{/foreach}

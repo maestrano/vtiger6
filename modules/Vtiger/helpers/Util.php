@@ -214,14 +214,11 @@ class Vtiger_Util_Helper {
 		$currentUser = Users_Record_Model::getCurrentUserModel();
 		$dateTimeInUserFormat = Vtiger_Datetime_UIType::getDisplayDateTimeValue($dateTime);
 
-		list($dateInUserFormat, $timeInUserFormat) = explode(' ', $dateTimeInUserFormat);
+		list($dateInUserFormat, $timeInUserFormat,$meridiem) = explode(' ', $dateTimeInUserFormat);
 		list($hours, $minutes, $seconds) = explode(':', $timeInUserFormat);
-
-		$displayTime = $hours .':'. $minutes;
-		if ($currentUser->get('hour_format') === '12') {
-			$displayTime = Vtiger_Time_UIType::getTimeValueInAMorPM($displayTime);
-		}
-
+        
+		$displayTime = $hours .':'. $minutes .' '. $meridiem;
+        
 		/**
 		 * To support strtotime() for 'mm-dd-yyyy' format the seperator should be '/'
 		 * For more referrences
@@ -450,9 +447,12 @@ class Vtiger_Util_Helper {
 
 		$date = $dateTimeField->getDisplayDate($userModel);
 		$time = $dateTimeField->getDisplayTime($userModel);
-
-		return $date . ' ' .$time;
-	}
+        //Convert time to user preferred value 
+        if ($userModel->get('hour_format') == '12') {
+            $time = Vtiger_Time_UIType::getTimeValueInAMorPM($time);
+        }
+        return $date . ' ' . $time;
+    }
 
 	/**
 	 * Function to get the time value in user preferred hour format
@@ -541,7 +541,11 @@ class Vtiger_Util_Helper {
                     if($fieldInfo->getFieldDataType() == "time") {
  		                $fieldValue = Vtiger_Time_UIType::getTimeValueWithSeconds($fieldValue);
  		            }
-
+                  
+                     if($fieldName == 'amount' && $fieldInfo->getFieldDataType() == 'currency'){
+                        $fieldValue = CurrencyField::convertToDBFormat($fieldValue);
+                    }
+                    
                     if($fieldName == 'date_start' || $fieldName == 'due_date' || $fieldInfo->getFieldDataType() == "datetime" ) {
 	 	                $dateValues = explode(',', $fieldValue);
 	 	                //Indicate whether it is fist date in the between condition

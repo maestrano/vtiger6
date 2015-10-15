@@ -87,7 +87,7 @@
 		<tbody>
 			<tr>
 				<td>
-					{vtranslate('LBL_NO')} {vtranslate($MODULE, $QUALIFIED_MODULE)} {vtranslate('LBL_FOUND')}
+					{vtranslate('LBL_EQ_ZERO')} {vtranslate($MODULE, $QUALIFIED_MODULE)} {vtranslate('LBL_FOUND')}
 				</td>
 			</tr>
 		</tbody>

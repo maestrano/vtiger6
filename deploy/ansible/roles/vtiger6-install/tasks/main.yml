@@ -92,6 +92,8 @@
     dest: "{{ vtiger_root_path }}/config.inc.php"
     owner: root
     mode: 755
+  tags:
+    - configuration
 
 - name: vTiger | Configuration file app_setup.php
   copy: 
@@ -99,6 +101,15 @@
     dest: "{{ vtiger_root_path }}/app_setup.php"
     owner: root
     mode: 755
+
+- name: vTiger | Configuration file app_upgrade.php
+  copy:
+    src: vtiger-app_upgrade.php
+    dest: "{{ vtiger_root_path }}/app_upgrade.php"
+    owner: root
+    mode: 755
+  tags:
+    - update
 
 - name: vTiger | Configuration file user_privileges
   copy: 
@@ -124,6 +135,13 @@
   shell: "php {{ vtiger_root_path }}/app_setup.php"
   args:
     chdir: "{{ vtiger_root_path }}"
+
+- name: vTiger | Update Application
+  shell: "php {{ vtiger_root_path }}/app_upgrade.php"
+  args:
+    chdir: "{{ vtiger_root_path }}"
+  tags:
+    - update
 
 - name: vTiger | Apply Maestrano patch
   shell: "mysql {{ vtiger_db_name }} -u{{vtiger_db_user}} -p{{vtiger_db_password}} < maestrano/app/db/1_add_mno_uid_field.sql"
