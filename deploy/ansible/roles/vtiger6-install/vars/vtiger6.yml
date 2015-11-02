@@ -1,7 +1,7 @@
 # vTiger installation
 vtiger_db_user: vtiger6
 vtiger_db_password: vtiger6
-vtiger_db_name: vtiger6
+vtiger_db_name: vtigercrm6
 vtiger_root_path: /var/lib/vtigercrm/webapp/
 
 # vTiger default configuration
