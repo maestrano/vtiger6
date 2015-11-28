@@ -171,7 +171,7 @@
     - configuration
 
 - name: vTiger | Import Connec! data
-  shell: "(nohup php initialize.php 1>/var/log/apache2/vtigercrm_initialize.log 2>&1) &"
+  shell: "(nohup php initialize.php 1>>/var/log/apache2/vtigercrm_initialize.log 2>&1) &"
   args:
     chdir: "{{ vtiger_root_path }}/maestrano/scripts"
   sudo_user: www-data
