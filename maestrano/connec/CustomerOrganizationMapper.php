@@ -36,7 +36,7 @@ class CustomerOrganizationMapper extends BaseMapper {
   // Map the Connec resource attributes onto the vTiger Organization
   protected function mapConnecResourceToModel($organization_hash, $organization) {
     // Default type to Customer
-    if($organization->column_fields['accounttype'] == '') { $organization->column_fields['accounttype'] = 'Customer'; }
+    if($this->is_new($organization)) { $organization->column_fields['accounttype'] = 'Customer'; }
 
     // Map hash attributes to Organization
     if($this->is_set($organization_hash['code'])) { $organization->column_fields['account_no'] = $organization_hash['code']; }
