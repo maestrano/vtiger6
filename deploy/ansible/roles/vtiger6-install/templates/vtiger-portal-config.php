@@ -17,11 +17,11 @@ global $Portal_Path;
 
 // CRM URL without out trialing /
 // Example: http://yourdomain.com/crm
-$Server_Path = "http://{{ server_hostname }}";
+$Server_Path = "https://{{ server_hostname }}";
 
 // Portal URL without trialing /
 // Example: http://yourdomain.com/portal
-$Authenticate_Path = "http://{{ server_hostname }}/portal";
+$Authenticate_Path = "https://{{ server_hostname }}/portal";
 
 //Give a temporary directory path which is used when we upload attachment
 $upload_dir = '{{ vtiger_root_path }}/cache/upload/';

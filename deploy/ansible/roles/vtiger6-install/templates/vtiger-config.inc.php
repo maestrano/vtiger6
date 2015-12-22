@@ -81,7 +81,7 @@ $dbconfigoption['ssl'] = false;
 
 $host_name = $dbconfig['db_hostname'];
 
-$site_URL = 'http://{{ server_hostname }}';
+$site_URL = 'https://{{ server_hostname }}';
 
 // url for customer portal (Example: http://vtiger.com/portal)
 $PORTAL_URL = $site_URL.'/portal';
