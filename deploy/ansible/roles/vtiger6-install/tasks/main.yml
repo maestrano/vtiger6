@@ -86,10 +86,19 @@
     name: apache2 
     state: restarted
 
-- name: vTiger | Configuration file config.php
+- name: vTiger | Configuration file config.inc.php
   template: 
     src: vtiger-config.inc.php
     dest: "{{ vtiger_root_path }}/config.inc.php"
+    owner: root
+    mode: 755
+  tags:
+    - configuration
+
+- name: vTiger | Customer Portal configuration file portal/PortalConfig.php
+  template: 
+    src: vtiger-portal-config.php
+    dest: "{{ vtiger_root_path }}/portal/PortalConfig.php"
     owner: root
     mode: 755
   tags:
