@@ -577,15 +577,31 @@ class Vtiger_Functions {
 
 	static function validateImage($file_details) {
 		global $app_strings;
+		$allowedImageFormats = array('jpeg', 'png', 'jpg', 'pjpeg', 'x-png', 'gif', 'bmp');
+		
+		$mimeTypesList = array_merge($allowedImageFormats, array('x-ms-bmp'));//bmp another format
 		$file_type_details = explode("/", $file_details['type']);
 		$filetype = $file_type_details['1'];
-		if (!empty($filetype))
+		if ($filetype) {
 			$filetype = strtolower($filetype);
-		if (($filetype == "jpeg" ) || ($filetype == "png") || ($filetype == "jpg" ) || ($filetype == "pjpeg" ) || ($filetype == "x-png") || ($filetype == "gif") || ($filetype == 'bmp')) {
-			$saveimage = 'true';
-		} else {
+		}
+
+		$saveimage = 'true';
+		if (!in_array($filetype, $allowedImageFormats)) {
 			$saveimage = 'false';
-			$_SESSION['image_type_error'] .= "<br> &nbsp;&nbsp;<b>" . $file_details[name] . "</b>" . $app_strings['MSG_IS_NOT_UPLOADED'];
+		}
+
+		//mime type check
+		$mimeType = mime_content_type($file_details['tmp_name']);
+		$mimeTypeContents = explode('/', $mimeType);
+		if (!$file_details['size'] || !in_array($mimeTypeContents[1], $mimeTypesList)) {
+			$saveimage = 'false';
+		}
+
+		// Check for php code injection
+		$imageContents = file_get_contents($file_details['tmp_name']);
+		if (preg_match('/(<\?php?(.*?))/i', $imageContents) == 1) {
+			$saveimage = 'false';
 		}
 		return $saveimage;
 	}
@@ -922,4 +938,19 @@ class Vtiger_Functions {
         $noof_group_rows = $adb->num_rows($result);
         return $result;
     }
+    
+   
+     /**
+	 * Check the file MIME Type
+	 * @param $targetFile  Filepath to validate
+	 * @param  $claimedMime Array of bad file extenstions
+	 */
+    static function verifyClaimedMIME($targetFile,$claimedMime) {
+    $fileMimeContentType= mime_content_type($targetFile);
+    if (in_array(strtolower($fileMimeContentType), $claimedMime)) {
+     return false; 
+    }
+    return true;
+    } 
+    
 }

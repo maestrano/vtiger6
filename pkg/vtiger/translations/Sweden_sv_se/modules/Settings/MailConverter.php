@@ -23,7 +23,7 @@ $languageStrings = array(
     'LBL_BACK_TO_MAILBOXES' => 'Tillbaka till Brevlådor',
     'LBL_MARK_MESSAGE_AS' => 'Markera meddelande som',
     //Server Messages
-    'LBL_MAX_LIMIT_ONLY_TWO' => 'Du kan konfigurera endast två brevlådor',
+    'LBL_MAX_LIMIT_EXCEEDED' => 'Du har överskridit ytterligare brevlåda gräns!',
     'LBL_IS_IN_RUNNING_STATE' => 'I körläge',
     'LBL_SAVED_SUCCESSFULLY' => 'Sparat framgångsrikt',
     'LBL_CONNECTION_TO_MAILBOX_FAILED' => 'Anslutning till brevlåda misslyckades!',

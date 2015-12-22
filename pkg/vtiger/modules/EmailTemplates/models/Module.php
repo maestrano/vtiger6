@@ -97,9 +97,9 @@ class EmailTemplates_Module_Model extends Vtiger_Module_Model {
 			$allFields = "";
 		}
 		
-		$option = array('Current Date', '$custom-currentdate$');
-		$allFields[] = $option;
-		$option = array('Current Time', '$custom-currenttime$');
+		$option = array(vtranslate('LBL_CURRENT_DATE'), '$custom-currentdate$');
+        $allFields[] = $option;
+        $option = array(vtranslate('LBL_CURRENT_TIME'), '$custom-currenttime$');
 		$allFields[] = $option;
 		$allOptions['generalFields'] = $allFields;
 		return $allOptions;

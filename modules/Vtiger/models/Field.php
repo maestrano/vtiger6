@@ -535,7 +535,7 @@ class Vtiger_Field_Model extends Vtiger_Field {
 	 * @param <String> $type
 	 * @return <Array> - 2 date values representing the range for the given type of Standard filter
 	 */
-	protected static function getDateForStdFilterBytype($type) {
+		protected static function getDateForStdFilterBytype($type, $userPeferredDayOfTheWeek = false) {
 		$today = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
         $todayName =  date('l', strtotime( $today));
 
@@ -550,25 +550,32 @@ class Vtiger_Field_Model extends Vtiger_Field {
 		$nextmonth1 = date("Y-m-t", strtotime($nextmonth0));
 
           // (Last Week) If Today is "Sunday" then "-2 week Sunday" will give before last week Sunday date
-        if($todayName == "Sunday")
-            $lastweek0 = date("Y-m-d",strtotime("-1 week Sunday"));
+        if(!$userPeferredDayOfTheWeek){
+            $userPeferredDayOfTheWeek = 'Sunday';
+        }
+
+        if($todayName == $userPeferredDayOfTheWeek)
+            $lastweek0 = date("Y-m-d",strtotime("-1 week $userPeferredDayOfTheWeek"));
         else
-            $lastweek0 = date("Y-m-d", strtotime("-2 week Sunday"));
-		$lastweek1 = date("Y-m-d", strtotime("-1 week Saturday"));
+            $lastweek0 = date("Y-m-d", strtotime("-2 week $userPeferredDayOfTheWeek"));
+        $prvDay = date('l',  strtotime(date('Y-m-d', strtotime('-1 day', strtotime($lastweek0)))));
+        $lastweek1 = date("Y-m-d", strtotime("-1 week $prvDay"));
 
         // (This Week) If Today is "Sunday" then "-1 week Sunday" will give last week Sunday date
-        if($todayName == "Sunday")
-            $thisweek0 = date("Y-m-d",strtotime("-0 week Sunday"));
+        if($todayName == $userPeferredDayOfTheWeek)
+            $thisweek0 = date("Y-m-d",strtotime("-0 week $userPeferredDayOfTheWeek"));
         else
-            $thisweek0 = date("Y-m-d", strtotime("-1 week Sunday"));
-		$thisweek1 = date("Y-m-d", strtotime("this Saturday"));
+            $thisweek0 = date("Y-m-d", strtotime("-1 week $userPeferredDayOfTheWeek"));
+        $prvDay = date('l',  strtotime(date('Y-m-d', strtotime('-1 day', strtotime($thisweek0)))));
+		$thisweek1 = date("Y-m-d", strtotime("this $prvDay"));
 
          // (Next Week) If Today is "Sunday" then "this Sunday" will give Today's date
-		if($todayName == "Sunday")
-            $nextweek0 = date("Y-m-d",strtotime("+1 week Sunday"));
+		if($todayName == $userPeferredDayOfTheWeek)
+            $nextweek0 = date("Y-m-d",strtotime("+1 week $userPeferredDayOfTheWeek"));
         else
-            $nextweek0 = date("Y-m-d", strtotime("this Sunday"));
-		$nextweek1 = date("Y-m-d", strtotime("+1 week Saturday"));
+            $nextweek0 = date("Y-m-d", strtotime("this $userPeferredDayOfTheWeek"));
+        $prvDay = date('l',  strtotime(date('Y-m-d', strtotime('-1 day', strtotime($nextweek0)))));
+		$nextweek1 = date("Y-m-d", strtotime("+1 week $prvDay"));
 
 		$next7days = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 6, date("Y")));
 		$next30days = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 29, date("Y")));
@@ -735,8 +742,11 @@ class Vtiger_Field_Model extends Vtiger_Field {
 								'next120days' => array('label' => 'LBL_NEXT_120_DAYS')
 							);
 
+		$currentUserModel = Users_Record_Model::getCurrentUserModel();
+        $userPeferredDayOfTheWeek = $currentUserModel->get('dayoftheweek');
+        
 		foreach($dateFilters as $filterType => $filterDetails) {
-			$dateValues = self::getDateForStdFilterBytype($filterType);
+			$dateValues = self::getDateForStdFilterBytype($filterType,$userPeferredDayOfTheWeek);
 			$dateFilters[$filterType]['startdate'] = $dateValues[0];
 			$dateFilters[$filterType]['enddate'] = $dateValues[1];
 		}

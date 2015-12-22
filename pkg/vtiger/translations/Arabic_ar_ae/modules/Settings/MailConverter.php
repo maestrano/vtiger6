@@ -40,11 +40,11 @@ $languageStrings = array(
     'TO_CHANGE_THE_FOLDER_SELECTION_DESELECT_ANY_OF_THE_SELECTED_FOLDERS' => "لتغيير التحديد قم بإلغاء تحديد مجلد أي من المجلدات المحددة",
     '' => "",
     '' => "",
-    'LBL_MAX_LIMIT_ONLY_TWO' => "يمكنك تكوين علب البريد اثنين فقط",
+    'LBL_MAX_LIMIT_EXCEEDED' => "لقد تجاوزت الحد الأقصى علبة بريد إضافية!",
     'LBL_IS_IN_RUNNING_STATE' => "في إدارة الدولة",
     'LBL_SAVED_SUCCESSFULLY' => "تم الحفظ بنجاح",
     'LBL_CONNECTION_TO_MAILBOX_FAILED' => "ربط إلى علبة فشلت! لا يسمح 
-    الأحرف الخاصة لاسم الخادم واسم المستخدم.",
+    الأحرف الخاصة لاسم الخادم.",
     'LBL_DELETED_SUCCESSFULLY' => "حذف بنجاح",
     'LBL_RULE_DELETION_FAILED' => "فشل الحذف حكم",
     'LBL_RULES_SEQUENCE_INFO_IS_EMPTY' => "قواعد معلومات تسلسل فارغة",

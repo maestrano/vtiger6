@@ -69,7 +69,7 @@ class EmailTemplate {
 		$referenceFields = $meta->getReferenceFieldDetails();
 		$fieldColumnMapping = $meta->getFieldColumnMapping();
 		$columnTableMapping = $meta->getColumnTableMapping();
-
+        $currentUsersModel = Users_Record_Model::getCurrentUserModel();
 		if ($this->isProcessingReferenceField($params)) {
 			$parentFieldColumnMapping = $meta->getFieldColumnMapping();
 			$module = $params['referencedMeta']->getEntityName();
@@ -140,7 +140,14 @@ class EmailTemplate {
 				$values = array();
 				foreach ($it as $row) {
 					foreach ($fieldList as $field) {
-						$values[$field] = $row->get($fieldColumnMapping[$field]);
+						     $moduleModel = Vtiger_Module_Model::getInstance($module); 
+ 	                         $fieldModel = Vtiger_Field_Model::getInstance($field, $moduleModel); 
+ 		                     $value = $row->get($fieldColumnMapping[$field]); 
+ 		                        if($fieldModel->isReferenceField()) { 
+ 		                            $values[$field] = $value; 
+ 		                        } else { 
+ 		                            $values[$field] = $fieldModel->getDisplayValue($value, $recordId); 
+ 		                        } 
 					}
 				}
 				$moduleFields = $meta->getModuleFields();
@@ -193,7 +200,7 @@ class EmailTemplate {
 							$values[$fieldName] = getTranslatedString(
 									$values[$fieldName], $module);
 						} elseif (strcasecmp($webserviceField->getFieldDataType(), 'datetime') === 0) {
-							$values[$fieldName] = $values[$fieldName] . ' ' . DateTimeField::getDBTimeZone();
+							$values[$fieldName] = $values[$fieldName] . ' ' . $currentUsersModel->time_zone; 
 						}
 					}
 				}

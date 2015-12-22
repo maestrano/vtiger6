@@ -160,6 +160,7 @@ $languageStrings = array(
 	'Asia/Vladivostok'             => '(UTC+10:00) Vladivostok'     , 
 	'Pacific/Guam'                 => '(UTC+10:00) Guam, Port Moresby', 
 	'Asia/Yakutsk'                 => '(UTC+10:00) Yakutsk'         , 
+    'Etc/GMT-11' => '(UTC+11:00) Solomon Is., New Caledonia'        ,
 	'Pacific/Fiji'                 => '(UTC+12:00) Fiji'            , 
 	'Asia/Kamchatka'               => '(UTC+12:00) Kamchatka'       , 
 	'Pacific/Auckland'             => '(UTC+12:00) Auckland'        , 

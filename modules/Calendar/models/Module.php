@@ -451,7 +451,7 @@ class Calendar_Module_Model extends Vtiger_Module_Model {
 								AND vtiger_crmentity.smownerid = ? AND vtiger_crmentity.deleted = 0
 								AND ((DATE_FORMAT(vtiger_activity_reminder_popup.date_start,'%Y-%m-%d') <= ?)
 								AND (TIME_FORMAT(vtiger_activity_reminder_popup.time_start,'%H:%i') <= ?))
-                                                                AND vtiger_activity.eventstatus <> 'Held' LIMIT 20";
+                                AND vtiger_activity.eventstatus <> 'Held' AND (vtiger_activity.status <> 'Completed' OR vtiger_activity.status IS NULL) LIMIT 20";
 			$result = $db->pquery($reminderActivitiesResult, array($currentUserModel->getId(), $date, $time));
 			$rows = $db->num_rows($result);
 			for($i=0; $i<$rows; $i++) {

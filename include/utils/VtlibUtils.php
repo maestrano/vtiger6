@@ -652,7 +652,7 @@ function vtlib_purify($input, $ignore=false) {
 		}
 		$purified_cache[$md5OfInput] = $value;
 	}
-	$value = str_replace('&amp;','&',$value);
+	 $value = str_replace('&amp;','&',$value);
 	return $value;
 }
 

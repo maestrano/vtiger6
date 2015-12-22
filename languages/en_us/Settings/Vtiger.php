@@ -195,7 +195,8 @@ $languageStrings = array(
 	'website' => 'Website',
         'vatid'=>'VAT ID', 
         //Exchange Connector
-        'LBL_EXCHANGE_CONNECTOR' => 'Exchange Connector',
+     'LBL_EXCHANGE_CONNECTOR' => 'Exchange Connector',
+   'LBL_DEFAULT_LAYOUT' => 'Default Layout',   
 );
 
 $jsLanguageStrings = array(
