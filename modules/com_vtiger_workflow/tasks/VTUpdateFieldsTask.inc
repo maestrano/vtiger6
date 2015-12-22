@@ -58,8 +58,23 @@ class VTUpdateFieldsTask extends VTTask {
 
 				if ($fieldValueType == 'fieldname') {
 					$fieldDataType = $fieldInstance->getFieldDataType();
-					$fieldValue = $focus->column_fields[$fieldValue];
-                    $fieldValueInDB = $fieldValue;
+				   $rightOperandFieldInstance = $moduleFields[$fieldValue];
+						if($rightOperandFieldInstance) {
+							$rightOperandFieldType = $rightOperandFieldInstance->getFieldDataType();
+						}
+                        // while getting the focus currency fields are converted to user format
+						$currencyfieldValueInDB = $focus->column_fields[$fieldValue . "_raw"];
+						$currencyfieldConvertedValue = $focus->column_fields[$fieldValue . "_raw_converted"];
+                        $fieldValue = $focus->column_fields[$fieldValue];
+                        $fieldValueInDB = $fieldValue;
+
+					// for currency field value should be in database format
+					if (!empty($currencyfieldValueInDB) && $fieldDataType == "currency" && $fieldInstance->getUIType() != 72) {
+						$fieldValueInDB = $currencyfieldValueInDB;
+						if (!empty($currencyfieldConvertedValue)) {
+							$fieldValue = $currencyfieldConvertedValue;
+						}
+					}
 					if($fieldDataType == 'date') {
 						//Convert the DB Date Time Format to User Date Time Format
 						$dateTime = new DateTimeField($fieldValue);
@@ -78,6 +93,28 @@ class VTUpdateFieldsTask extends VTTask {
                         $dateTime = new DateTimeField($date->format('Y-m-d').' '. $fieldValue);
                         $fieldValue = $dateTime->getDisplayTime();
                     }
+                    if($rightOperandFieldType == "reference") {
+                        if(!empty($fieldValue)) {
+                            if(!empty($rightOperandFieldInstance)){
+                                $referenceList = $rightOperandFieldInstance->getReferenceList();
+                                if((count($referenceList) == 1) && $referenceList[0] == "Users") {
+                                    $userRecordLabels = Vtiger_Functions::getOwnerRecordLabels($fieldValue);
+                                    $fieldValue = $userRecordLabels[$fieldValue];
+                                }elseif((count($referenceList) == 1) && $referenceList[0] == "Currency"){
+									$fieldValue = getCurrencyName($fieldValue);
+								}elseif($rightOperandFieldInstance->getFieldName()=="roleid"){
+									$fieldValue = getRoleName($fieldValue);
+								}else{
+                                    $fieldValue = Vtiger_Util_Helper::getRecordName($fieldValue);
+                                }
+                            }else{
+                                $fieldValue = Vtiger_Util_Helper::getRecordName($fieldValue);
+                            }
+                        }else{
+                            //Not value is there for reference fields . So skip this field mapping
+                            continue;
+                        }
+                        }
                     // End
 				} elseif ($fieldValueType == 'expression') {
 					require_once 'modules/com_vtiger_workflow/expression_engine/include.inc';

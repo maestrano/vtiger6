@@ -38,7 +38,8 @@
 	</div>
 	{foreachelse}
 		<span class="noDataMsg">
-			{if $smarty.request.name eq 'OverdueActivities'}
+                    {assign var=REQUEST_NAME value={getPurifiedSmartyParameters('name')}}
+			{if $REQUEST_NAME eq 'OverdueActivities'}
 				{vtranslate('LBL_NO_OVERDUE_ACTIVITIES', $MODULE_NAME)}
 			{else}
 				{vtranslate('LBL_NO_SCHEDULED_ACTIVITIES', $MODULE_NAME)}

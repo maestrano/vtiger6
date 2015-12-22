@@ -1025,12 +1025,16 @@ class QueryGenerator {
                     }
                 }
 			} else   if(in_array($field->getFieldDataType(), $inEqualityFieldTypes)){
-                if ($operator == 'g' || $operator == 'l') {
-                    $value = substr($value, 4);
-                } else if ($operator == 'h' || $operator == 'm') {
-                    $value = substr($value, 5);
-                }
-               
+              global $default_charset;
+                $table = get_html_translation_table(HTML_ENTITIES, ENT_COMPAT,$default_charset);
+                $chars = implode('', array_keys($table));
+                        if (preg_match("/[{$chars}]+/", $value) === 1){
+                         if ($operator == 'g' || $operator == 'l') {
+                            $value = substr($value, 4);
+                        } else if ($operator == 'h' || $operator == 'm') {
+                            $value = substr($value, 5);
+                        }
+                       }
             } else if ($field->getFieldDataType() === 'currency') {
 				$uiType = $field->getUIType();
 				if ($uiType == 72) {

@@ -67,7 +67,7 @@ class Install_Utils_Model {
 			$directiveValues['register_globals'] = 'On';
 		if (ini_get(('output_buffering') < '4096' && ini_get('output_buffering') != '0') || stripos(ini_get('output_buffering'), 'Off') > -1)
 			$directiveValues['output_buffering'] = 'Off';
-		if (ini_get('max_execution_time') < 600)
+		if (ini_get('max_execution_time') != 0)
 			$directiveValues['max_execution_time'] = ini_get('max_execution_time');
 		if (ini_get('memory_limit') < 32)
 			$directiveValues['memory_limit'] = ini_get('memory_limit');
@@ -98,7 +98,7 @@ class Install_Utils_Model {
 		'file_uploads' => 'On',
 		'register_globals' => 'On',
 		'output_buffering' => 'On',
-		'max_execution_time' => '600',
+		'max_execution_time' => '0',
 		'memory_limit' => '32',
 		'error_reporting' => 'E_WARNING & ~E_NOTICE',
 		'log_errors' => 'Off',

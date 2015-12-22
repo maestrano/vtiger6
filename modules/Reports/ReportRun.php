@@ -1562,8 +1562,11 @@ class ReportRun extends CRMEntity
 	 */
 
 
-	function getStandarFiltersStartAndEndDate($type)
+		function getStandarFiltersStartAndEndDate($type)
 	{
+        global $current_user;
+        $userPeferredDayOfTheWeek = $current_user->column_fields['dayoftheweek'];
+
 		$today = date("Y-m-d",mktime(0, 0, 0, date("m")  , date("d"), date("Y")));
         $todayName =  date('l', strtotime( $today));
 
@@ -1577,26 +1580,29 @@ class ReportRun extends CRMEntity
 		$nextmonth0 = date("Y-m-d",mktime(0, 0, 0, date("m")+1, "01",   date("Y")));
 		$nextmonth1 = date("Y-m-t", strtotime("+1 Month"));
 
-        // (Last Week) If Today is "Sunday" then "-2 week Sunday" will give before last week Sunday date
-        if($todayName == "Sunday")
-            $lastweek0 = date("Y-m-d",strtotime("-1 week Sunday"));
+          // (Last Week) If Today is "Sunday" then "-2 week Sunday" will give before last week Sunday date
+        if($todayName == $userPeferredDayOfTheWeek)
+            $lastweek0 = date("Y-m-d",strtotime("-1 week $userPeferredDayOfTheWeek"));
         else
-            $lastweek0 = date("Y-m-d",strtotime("-2 week Sunday"));
-		$lastweek1 = date("Y-m-d",strtotime("-1 week Saturday"));
+            $lastweek0 = date("Y-m-d", strtotime("-2 week $userPeferredDayOfTheWeek"));
+        $prvDay = date('l',  strtotime(date('Y-m-d', strtotime('-1 day', strtotime($lastweek0)))));
+        $lastweek1 = date("Y-m-d", strtotime("-1 week $prvDay"));
 
         // (This Week) If Today is "Sunday" then "-1 week Sunday" will give last week Sunday date
-        if($todayName == "Sunday")
-            $thisweek0 = date("Y-m-d",strtotime("-0 week Sunday"));
+        if($todayName == $userPeferredDayOfTheWeek)
+            $thisweek0 = date("Y-m-d",strtotime("-0 week $userPeferredDayOfTheWeek"));
         else
-            $thisweek0 = date("Y-m-d",strtotime("-1 week Sunday"));
-		$thisweek1 = date("Y-m-d",strtotime("this Saturday"));
+            $thisweek0 = date("Y-m-d", strtotime("-1 week $userPeferredDayOfTheWeek"));
+        $prvDay = date('l',  strtotime(date('Y-m-d', strtotime('-1 day', strtotime($thisweek0)))));
+		$thisweek1 = date("Y-m-d", strtotime("this $prvDay"));
 
-        // (Next Week) If Today is "Sunday" then "this Sunday" will give Today's date
-		if($todayName == "Sunday")
-            $nextweek0 = date("Y-m-d",strtotime("+1 week Sunday"));
+         // (Next Week) If Today is "Sunday" then "this Sunday" will give Today's date
+		if($todayName == $userPeferredDayOfTheWeek)
+            $nextweek0 = date("Y-m-d",strtotime("+1 week $userPeferredDayOfTheWeek"));
         else
-            $nextweek0 = date("Y-m-d",strtotime("this Sunday"));
-		$nextweek1 = date("Y-m-d",strtotime("+1 week Saturday"));
+            $nextweek0 = date("Y-m-d", strtotime("this $userPeferredDayOfTheWeek"));
+        $prvDay = date('l',  strtotime(date('Y-m-d', strtotime('-1 day', strtotime($nextweek0)))));
+		$nextweek1 = date("Y-m-d", strtotime("+1 week $prvDay"));
 
 		$next7days = date("Y-m-d",mktime(0, 0, 0, date("m")  , date("d")+6, date("Y")));
 		$next30days = date("Y-m-d",mktime(0, 0, 0, date("m")  , date("d")+29, date("Y")));

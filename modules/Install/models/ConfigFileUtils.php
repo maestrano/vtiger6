@@ -278,13 +278,22 @@ ini_set('memory_limit','64M');
 // Maximum time limit for PHP script execution (in seconds)
 \$php_max_execution_time = 0;
 
+// Maximum number of  Mailboxes in mail converter
+\$max_mailboxes = 3;
+
 // Set the default timezone as per your preference
 //\$default_timezone = '';
+
 
 /** If timezone is configured, try to set it */
 if(isset(\$default_timezone) && function_exists('date_default_timezone_set')) {
 	@date_default_timezone_set(\$default_timezone);
-}";
+}
+
+//Set the default layout 
+\$default_layout = 'vlayout';
+
+include_once 'config.security.php';";
 		return $configFileContents;
 	}
 }

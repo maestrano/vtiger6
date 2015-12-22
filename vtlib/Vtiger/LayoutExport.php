@@ -10,7 +10,7 @@
 include_once('vtlib/Vtiger/Package.php');
 
 /**
- * Provides API to package vtiger CRM language files.
+ * Provides API to package vtiger CRM layout files.
  * @package vtlib
  */
 class Vtiger_LayoutExport extends Vtiger_Package {
@@ -46,7 +46,7 @@ class Vtiger_LayoutExport extends Vtiger_Package {
 
     /**
      * Export Module as a zip file.
-     * @param Vtiger_Module Instance of module
+     * @param Layout name to be export
      * @param Path Output directory path
      * @param String Zipfilename to use
      * @param Boolean True for sending the output as download
@@ -85,7 +85,7 @@ class Vtiger_LayoutExport extends Vtiger_Package {
     }
 
     /**
-     * Export Language Handler
+     * Export Layout Handler
      * @access private
      */
     function export_Layout($layoutName) {
@@ -128,7 +128,7 @@ class Vtiger_LayoutExport extends Vtiger_Package {
 
 
     /**
-     * Initialize Language Schema
+     * Initialize Layout Schema
      * @access private
      */
     static function __initSchema() {
@@ -140,19 +140,14 @@ class Vtiger_LayoutExport extends Vtiger_Package {
                             name VARCHAR(50), label VARCHAR(30), lastupdated DATETIME, isdefault INT(1), active INT(1))',
                             true
                     );
-                    global $languages, $adb;
-                    foreach($languages as $langkey=>$langlabel) {
-                            $uniqueid = self::__getUniqueId();
-                            $adb->pquery('INSERT INTO '.self::TABLENAME.'(id,name,label,lastupdated,isdefault,active) VALUES(?,?,?,?,?,?)',
-                                    Array($uniqueid, $langlabel,$langlabel,date('Y-m-d H:i:s',time()), 0,1));
-                    }
+                   
             }
     }
     
     /**
-     * Register language pack information.
+     * Register layout pack information.
      */
-    static function register($label, $name='', $isdefault=false, $isactive=true, $overrideCore=false) {
+    static function register($name, $label='', $isdefault=false, $isactive=true, $overrideCore=false) {
             self::__initSchema();
 
             $prefix = trim($prefix);
@@ -174,7 +169,18 @@ class Vtiger_LayoutExport extends Vtiger_Package {
                     $adb->pquery('INSERT INTO '.self::TABLENAME.' (id,name,label,lastupdated,isdefault,active) VALUES(?,?,?,?,?,?)',
                             Array($uniqueid, $name, $label, $datetime, $useisdefault, $useisactive));
             }
-            self::log("Registering Language $label [$prefix] ... DONE");		
+            self::log("Registering Layout $name ... DONE");		
     }
+    
+    
+        static function deregister($name) {
+	     if(strtolower($name) == 'vlayout') return;
+
+		 self::__initSchema();
+
+		global $adb;
+	    $adb->pquery('DELETE FROM '.self::TABLENAME.' WHERE name=?', Array($name));
+		self::log("Deregistering Layout $name ... DONE");
+	}
 
 }

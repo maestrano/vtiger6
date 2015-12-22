@@ -1092,7 +1092,16 @@ class Users extends CRMEntity {
         if(!isset($ownerid) || $ownerid=='')
             $ownerid = $current_user->id;
 
-        $file = $file_details['name'];
+        $save_file = 'true'; 
+        //only images are allowed for these modules 
+        if($module == 'Users') { 
+            $save_file = validateImageFile($file_details); 
+        } 
+        if ($save_file == 'false') { 
+                return; 
+        } 
+
+        $file = $file_details['name']; 
         $binFile = sanitizeUploadFileName($file, $upload_badext);
 
         $filename = ltrim(basename(" ".$binFile)); //allowed filename like UTF-8 characters
@@ -1107,11 +1116,6 @@ class Users extends CRMEntity {
         //upload the file in server
         $upload_status = move_uploaded_file($filetmp_name,$upload_file_path.$current_id."_".$binFile);
 
-        $save_file = 'true';
-        //only images are allowed for these modules
-        if($module == 'Users') {
-            $save_file = validateImageFile($file_details);
-        }
         if($save_file == 'true') {
 
             $sql1 = "insert into vtiger_crmentity (crmid,smcreatorid,smownerid,setype,description,createdtime,modifiedtime) values(?,?,?,?,?,?,?)";

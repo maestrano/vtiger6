@@ -7,6 +7,8 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ************************************************************************************/
+require_once('vtlib/Vtiger/Layout.php'); 
+
 class Settings_ModuleManager_Basic_Action extends Settings_Vtiger_IndexAjax_View {
     function __construct() {
 		parent::__construct();
@@ -49,7 +51,10 @@ class Settings_ModuleManager_Basic_Action extends Settings_Vtiger_IndexAjax_View
         $importType = $request->get('module_import_type');
         if(strtolower($importType) == 'language') {
                 $package = new Vtiger_Language();
-        } else {
+        }else  if(strtolower($importType) == 'layout') {
+                 $package = new Vtiger_Layout();
+                 }
+        else {
                 $package = new Vtiger_Package();
         }
 
@@ -73,11 +78,13 @@ class Settings_ModuleManager_Basic_Action extends Settings_Vtiger_IndexAjax_View
         $importType = $request->get('module_import_type');
         if(strtolower($importType) == 'language') {
                 $package = new Vtiger_Language();
-        } else {
+        } else if(strtolower($importType) == 'layout') { 
+            $package = new Vtiger_Layout(); 
+        } else { 
                 $package = new Vtiger_Package();
         }
 
-        if (strtolower($importType) == 'language') {
+        if (strtolower($importType) == 'language' || strtolower($importType) == 'layout' ) {
                 $package->import($uploadFileName);
         } else {
                 $package->update(Vtiger_Module::getInstance($importModuleName), $uploadFileName);
