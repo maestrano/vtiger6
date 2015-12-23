@@ -39,7 +39,7 @@ class MailManager_Settings_View extends MailManager_MainUI_View {
 			$model = $this->getMailBoxModel();
 			$model->setServer($request->get('_mbox_server'));
 			$model->setUsername($request->get('_mbox_user'));
-			$model->setPassword($request->get('_mbox_pwd'));
+			$model->setPassword($request->getRaw('_mbox_pwd'));
 			$model->setProtocol($request->get('_mbox_protocol', 'IMAP4'));
 			$model->setSSLType($request->get('_mbox_ssltype', 'ssl'));
 			$model->setCertValidate($request->get('_mbox_certvalidate', 'novalidate-cert'));

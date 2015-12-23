@@ -161,6 +161,7 @@ $languageStrings = array(
 	'Asia/Vladivostok'             => '(UTC+10:00) Владивосток', 
 	'Pacific/Guam'                 => '(UTC+10:00) Guam, Port Moresby', 
 	'Asia/Yakutsk'                 => '(UTC+10:00) Якутск'    , 
+    'Etc/GMT-11'                   => '(UTC+11:00) Solomon Is., New Caledonia', //TODO Review
 	'Pacific/Fiji'                 => '(UTC+12:00) Fiji'            , 
 	'Asia/Kamchatka'               => '(UTC+12:00) Камчатка', 
 	'Pacific/Auckland'             => '(UTC+12:00) Auckland'        , 

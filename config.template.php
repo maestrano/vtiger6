@@ -14,7 +14,7 @@
 ********************************************************************************/
 
 // Adjust error_reporting favourable to deployment.
-version_compare(PHP_VERSION, '5.5.0') <= 0 ? error_reporting(E_WARNING & ~E_NOTICE & ~E_DEPRECATED) : error_reporting(E_WARNING & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT); // PRODUCTION
+version_compare(PHP_VERSION, '5.5.0') <= 0 ? error_reporting(E_WARNING & ~E_NOTICE & ~E_DEPRECATED & E_ERROR) : error_reporting(E_WARNING & ~E_NOTICE & ~E_DEPRECATED  & E_ERROR & ~E_STRICT); // PRODUCTION
 //ini_set('display_errors','on'); version_compare(PHP_VERSION, '5.5.0') <= 0 ? error_reporting(E_WARNING & ~E_NOTICE & ~E_DEPRECATED) : error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);   // DEBUGGING
 
 
@@ -31,9 +31,6 @@ $WORLD_CLOCK_DISPLAY = 'true';
 $CALCULATOR_DISPLAY = 'true';
 $CHAT_DISPLAY = 'true'; 
 $USE_RTE = 'true';
-
-// url for customer portal (Example: http://vtiger.com/portal)
-$PORTAL_URL = 'http://vtiger.com/customerportal';
 
 // helpdesk support email id and support name (Example: 'support@vtiger.com' and 'vtiger support')
 $HELPDESK_SUPPORT_EMAIL_ID = '_USER_SUPPORT_EMAIL_';
@@ -86,6 +83,8 @@ $host_name = $dbconfig['db_hostname'];
 
 $site_URL = '_SITE_URL_';
 
+// url for customer portal (Example: http://vtiger.com/portal)
+$PORTAL_URL = $site_URL.'/customerportal';
 // root directory path
 $root_directory = '_VT_ROOTDIR_';
 
@@ -201,4 +200,9 @@ $default_timezone = 'UTC';
 if(isset($default_timezone) && function_exists('date_default_timezone_set')) {
 	@date_default_timezone_set($default_timezone);
 }
+
+//Set the default layout 
+$default_layout = 'vlayout';
+
+include_once 'config.security.php';
 ?>

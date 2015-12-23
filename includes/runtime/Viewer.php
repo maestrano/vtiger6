@@ -48,7 +48,16 @@ class Vtiger_Viewer extends SmartyBC {
 			$templatesDir = $THISDIR . '/../../layouts/'.$media;
 			$compileDir = $THISDIR . '/../../test/templates_c/'.$media;
 		}
-		if(empty($templatesDir) || !file_exists($templatesDir)) {
+		global $default_layout;
+          $checkforlayout = file_exists($THISDIR . '/../../layouts/'.$default_layout) ;
+          if($default_layout && $checkforlayout )
+        {
+            self::$currentLayout = $default_layout;
+			$templatesDir = $THISDIR . '/../../layouts/'.$default_layout;
+			$compileDir = $THISDIR . '/../../test/templates_c/'.$default_layout;
+            
+        }
+       else  if(empty($templatesDir) || !file_exists($templatesDir)) {
 			self::$currentLayout = self::getDefaultLayoutName();
 			$templatesDir = $THISDIR . '/../../layouts/'.self::getDefaultLayoutName();
 			$compileDir = $THISDIR . '/../../test/templates_c/'.self::getDefaultLayoutName();
@@ -209,4 +218,7 @@ function vresource_url($url) {
         $url = $url .'?v='.$vtiger_current_version;
     }
     return $url;
+}
+function getPurifiedSmartyParameters($param){
+    return htmlentities($_REQUEST[$param]);
 }

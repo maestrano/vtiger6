@@ -209,15 +209,14 @@ class Vtiger_MailScannerAction {
             $this->lookup = 'FROM';
             return $this->__LinkToRecord($mailscanner, $mailrecord);
         }
-		$lastname = $mailrecord->_subject;
-		if ($lastname == '')
-			$lastname = $mailrecord->_from[0];
+                $name = $this->getName($mailrecord);
 		$email = $mailrecord->_from[0];
 		$description = $mailrecord->getBodyText();
 
 		$contact = new Contacts();
-        $this->setDefaultValue('Contacts', $contact);
-		$contact->column_fields['lastname'] = $lastname;
+                $this->setDefaultValue('Contacts', $contact);
+		$contact->column_fields['firstname'] = $name[0];
+                $contact->column_fields['lastname'] = $name[1];
 		$contact->column_fields['email'] = $email;
 		$contact->column_fields['assigned_user_id'] =  $mailscannerrule->assigned_to;
 		$contact->column_fields['description'] = $description;
@@ -236,15 +235,14 @@ class Vtiger_MailScannerAction {
             $this->lookup = 'FROM';
             return $this->__LinkToRecord($mailscanner, $mailrecord);
         }
-		$lastname = $mailrecord->_subject;
-		if ($lastname == '')
-			$lastname = $mailrecord->_from[0];
+		$name = $this->getName($mailrecord);
 		$email = $mailrecord->_from[0];
 		$description = $mailrecord->getBodyText();
 
 		$lead = new Leads();
         $this->setDefaultValue('Leads', $lead);
-		$lead->column_fields['lastname'] = $lastname;
+		$lead->column_fields['firstname'] = $name[0];
+        $lead->column_fields['lastname'] = $name[1];
 		$lead->column_fields['email'] = $email;
 		$lead->column_fields['assigned_user_id'] = $mailscannerrule->assigned_to;
 		$lead->column_fields['description'] = $description;
@@ -263,15 +261,13 @@ class Vtiger_MailScannerAction {
             $this->lookup = 'FROM';
             return $this->__LinkToRecord($mailscanner, $mailrecord);
         }
-		$accountname = $mailrecord->_subject;
-		if ($accountname == '')
-			$accountname = $mailrecord->_from[0];
+		$name = $this->getName($mailrecord);
 		$email = $mailrecord->_from[0];
 		$description = $mailrecord->getBodyText();
 
 		$account = new Accounts();
         $this->setDefaultValue('Accounts', $account);
-		$account->column_fields['accountname'] = $accountname;
+		$account->column_fields['accountname'] = $name[0].' '.$name[1];
 		$account->column_fields['email1'] = $email;
 		$account->column_fields['assigned_user_id'] =  $mailscannerrule->assigned_to;
 		$account->column_fields['description'] = $description;
@@ -393,7 +389,11 @@ class Vtiger_MailScannerAction {
 		if(!$current_user) {
 			$current_user = Users::getActiveAdminUser();
 		}
-
+        $assignedToId = $linkfocus->column_fields['assigned_user_id'];
+        if(vtws_getOwnerType($assignedToId) == 'Groups') {
+            $assignedToId = Users::getActiveAdminId();
+        }
+        
 		$focus = new Emails();
 		$focus->column_fields['parent_type'] = $module;
 		$focus->column_fields['activitytype'] = 'Emails';
@@ -401,7 +401,7 @@ class Vtiger_MailScannerAction {
 		$focus->column_fields['subject'] = $mailrecord->_subject;
 
 		$focus->column_fields['description'] = $mailrecord->getBodyHTML();
-		$focus->column_fields['assigned_user_id'] = $linkfocus->column_fields['assigned_user_id'];
+		$focus->column_fields['assigned_user_id'] = $assignedToId;
 		$focus->column_fields["date_start"] = date('Y-m-d', $mailrecord->_date);
 		$focus->column_fields["time_start"] = gmdate("H:i:s");
 		$focus->column_fields["email_flag"] = 'MAILSCANNER';
@@ -530,5 +530,31 @@ class Vtiger_MailScannerAction {
             }
         }
     }
+    
+    /**
+     * Function to get Mail Sender's Name
+     * @param <Vtiger_MailRecord Object> $mailrecord
+     * @return <Array> containing First Name and Last Name
+     */
+    function getName($mailrecord) {
+        $name = $mailrecord->_fromname;
+        if(!empty($name)) {
+            $nameParts = explode(' ', $name);
+            if(count($nameParts) > 1) {
+                $firstName = $nameParts[0];
+                unset($nameParts[0]);
+                $lastName = implode(' ', $nameParts);
+            } else {
+                $firstName = '';
+                $lastName = $nameParts[0];
+            }
+        } else {
+            $firstName = '';
+            $lastName = $mailrecord->_from[0];
+        }
+        
+        return array($firstName, $lastName);
+    }
+    
 }
 ?>

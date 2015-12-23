@@ -29,7 +29,9 @@ class Vtiger_MailRecord {
 	var $_subject;
 	// BODY (either HTML / PLAIN message)
 	var $_body;
-	// CHARSET of the body content
+     // Name of Mail Sender 
+    var $_fromname;
+    // CHARSET of the body content
 	var $_charset;
 	// If HTML message was set as body content
 	var $_isbodyhtml;
@@ -214,6 +216,7 @@ class Vtiger_MailRecord {
 		$this->_uniqueid = $mailheader->message_id;
 
 		$this->_from = $this->__getEmailIdList($mailheader->from);
+                $this->_fromname = self::__mime_decode($mailheader->from[0]->personal);
 		$this->_to   = $this->__getEmailIdList($mailheader->to);
 		$this->_cc   = $this->__getEmailIdList($mailheader->cc);
 		$this->_bcc  = $this->__getEmailIdList($mailheader->bcc);

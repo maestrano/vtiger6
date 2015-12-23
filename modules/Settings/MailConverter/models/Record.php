@@ -203,12 +203,7 @@ class Settings_MailConverter_Record_Model extends Settings_Vtiger_Record_Model {
 			return false;
 		}
 
-		//Checking User Name
-		$userName = $this->get('username');
-		if($userName && !validateEmailId($userName) && !validateAlphanumericInput($userName)) {
-			return false;
-		}
-
+		
 		$isConnected = true;
 		$scannerOldInfo = new Vtiger_MailScannerInfo($this->get('scannerOldName'));
 

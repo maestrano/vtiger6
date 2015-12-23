@@ -34,7 +34,7 @@ class Events_Field_Model extends Calendar_Field_Model {
 				$displayValue = $value. ' ' . $recordInstance->get('time_end');
 				$value = $this->getUITypeModel()->getDisplayValue($displayValue);
 					list($endDate, $endTime,$meridiem) = explode(' ', $value);
-				return $endDate . ' ' . $endTime.' '. $meridiem;;
+				return $endDate . ' ' . $endTime.' '. $meridiem;
 
 			}
 		}
