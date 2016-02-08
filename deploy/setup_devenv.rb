@@ -56,10 +56,10 @@ def link_volume(target,path)
   puts "Linking app source volume..."
 
   `sudo rm -rf #{path}`
-  `mkdir -p #{path}`
+  # `mkdir -p #{path}`
   `ln -s #{target}/webapp #{path}`
   # Git will ignore permission changes
-  `cd #{path}/webapp && git config --local core.filemode false`
+  `sudo sh -c 'cd #{path} && git config --local core.filemode false'`
 
   puts "...Work directory available in #{path}"
 end
