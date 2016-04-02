@@ -68,7 +68,7 @@
     - update
 
 - name: vTiger | Configure Apache virtual host
-  template: 
+  template:
     src: etc-apache24-confd-vtiger6-conf
     dest: /etc/apache2/sites-available/vtigercrm.conf
     owner: root
@@ -76,18 +76,18 @@
   tags:
     - configuration
 
-- name: vTiger | Enable Apache virtual host 
+- name: vTiger | Enable Apache virtual host
   file: src=/etc/apache2/sites-available/vtigercrm.conf dest=/etc/apache2/sites-enabled/vtigercrm.conf state=link
   tags:
     - configuration
 
 - name: Apache | Restart the Apache service
-  service: 
-    name: apache2 
+  service:
+    name: apache2
     state: restarted
 
 - name: vTiger | Configuration file config.inc.php
-  template: 
+  template:
     src: vtiger-config.inc.php
     dest: "{{ vtiger_root_path }}/config.inc.php"
     owner: root
@@ -96,7 +96,7 @@
     - configuration
 
 - name: vTiger | Customer Portal configuration file portal/PortalConfig.php
-  template: 
+  template:
     src: vtiger-portal-config.php
     dest: "{{ vtiger_root_path }}/portal/PortalConfig.php"
     owner: root
@@ -105,7 +105,7 @@
     - configuration
 
 - name: vTiger | Configuration file app_setup.php
-  copy: 
+  copy:
     src: vtiger-app_setup.php
     dest: "{{ vtiger_root_path }}/app_setup.php"
     owner: root
@@ -121,17 +121,17 @@
     - update
 
 - name: vTiger | Configuration file user_privileges
-  copy: 
+  copy:
     src: "{{ item }}"
     dest: "{{ vtiger_root_path }}/user_privileges/{{ item }}"
-    owner: root
+    owner: www-data
     mode: 755
   with_items:
     - sharing_privileges_1.php
     - user_privileges_1.php
 
 - name: vTiger | Configuration file maestrano.json
-  template: 
+  template:
     src: vtiger-maestrano.json
     dest: "{{ vtiger_root_path }}/maestrano.json"
     owner: www-data
