@@ -19,25 +19,20 @@ include_once 'modules/Webforms/model/WebformsFieldModel.php';
 include_once 'include/QueryGenerator/QueryGenerator.php';
 include_once 'includes/main/WebUI.php';
 
-// Include Maestrano libraries
-require_once 'vendor/maestrano/maestrano-php/lib/Maestrano.php';
-require_once 'maestrano/connec/init.php';
-Maestrano::configure('maestrano.json');
-
 class Webform_Capture {
-
+	
 	function captureNow($request) {
 		$currentLanguage = Vtiger_Language_Handler::getLanguage();
 		$moduleLanguageStrings = Vtiger_Language_Handler::getModuleStringsFromFile($currentLanguage);
 		vglobal('app_strings', $moduleLanguageStrings['languageStrings']);
-
+		
 		$returnURL = false;
 		try {
 			if(!vtlib_isModuleActive('Webforms')) throw new Exception('webforms is not active');
-
+			
 			$webform = Webforms_Model::retrieveWithPublicId(vtlib_purify($request['publicid']));
 			if (empty($webform)) throw new Exception("Webform not found.");
-
+			
 			$returnURL = $webform->getReturnUrl();
             $roundrobin = $webform->getRoundrobin();
 
@@ -61,7 +56,7 @@ class Webform_Capture {
 						$fieldData=vtlib_purify($request[$webformNeutralizedField]);
 						$fieldData = decode_html($fieldData);
 					}
-
+				
 					$parameters[$webformField->getFieldName()] = stripslashes($fieldData);
 				}
 				if($webformField->getRequired()){
@@ -79,10 +74,10 @@ class Webform_Capture {
                 $ownerType = vtws_getOwnerType($ownerId);
                 $parameters['assigned_user_id'] = vtws_getWebserviceEntityId($ownerType, $ownerId);
             }
-
+			
 			// Create the record
 			$record=vtws_create($webform->getTargetModule(), $parameters, $user);
-
+			
 			$this->sendResponse($returnURL, 'ok');
 			return;
 

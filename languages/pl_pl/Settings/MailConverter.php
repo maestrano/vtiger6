@@ -23,7 +23,7 @@ $languageStrings = array(
 	'LBL_MARK_MESSAGE_AS' => 'Oznacz wiadomość jako',
 	
 	//Server Messages
-	'LBL_MAX_LIMIT_ONLY_TWO' => 'Możesz konfigurować tylko dwie skrzynki mailowe',
+	'LBL_MAX_LIMIT_EXCEEDED' => 'Przekroczono dodatkowy limit skrzynki pocztowej !',
 	'LBL_IS_IN_RUNNING_STATE' => 'Czy uruchomiony',
 	'LBL_SAVED_SUCCESSFULLY' => 'Zapisano poprawnie',
 	'LBL_CONNECTION_TO_MAILBOX_FAILED' => 'Połączenie ze skrzynką mailową jest niepoprawne!',
